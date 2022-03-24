@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from fire import Fire
-from matplotlib.colors import CenteredNorm, LogNorm
+from matplotlib.colors import LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import h5py
 
