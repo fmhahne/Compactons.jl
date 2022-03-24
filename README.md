@@ -1,12 +1,16 @@
 # Compactons.jl
 
-## Install oficial Julia binaries
+Simulations for interacting compactons in scalar field theories with non-analitycal (V-shaped) potentials.
+
+## Prequisites
+
+Install oficial Julia binaries:
 
 ```sh
 curl -fsSL https://install.julialang.org | sh
 ```
 
-## Install Julia dependecies
+Install required Julia packages:
 
 ```julia
 julia
@@ -15,24 +19,17 @@ julia> ]
 (Compactons.jl) pkg> instantiate
 ```
 
-## Install Python dependencies
+Install required Python dependencies:
 
 ```sh
 python -m pip install -r requirements.txt
 ```
 
-## Generate data from simulation
+## Generating data and figures
 
 ```sh
 cd <simulation name> # i.e. kink-oscillon-scattering
-mkdir -p data
-julia --project=.. -t auto <simulation name>.jl # i.e. kink-oscillon-scattering.jl
-```
-
-## Generate heatmaps from data
-
-```sh
-cd <simulation name> # i.e. kink-oscillon-scattering
-mkdir -p fig
+mkdir -p data fig
+julia --project=.. -t auto <simulation name>.jl
 python fig.py
 ```
