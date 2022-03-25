@@ -20,7 +20,7 @@ for l ∈ 0.5:0.5:3.0
         N = length(x)
 
         η₀ = kink.(x .+ π / 2) + oscillon.(α * l, x .+ l / 2, l=l)
-        ∂ₜη₀ = oscillon_t.(α * l, x .+ l / 2, l=l)
+        ∂ₜη₀ = ∂ₜoscillon.(α * l, x .+ l / 2, l=l)
 
         hamiltonian = SavedValues(Float64, Vector{Float64})
         callback = SavingCallback(quadraticHamiltonian, hamiltonian, saveat=tsave)

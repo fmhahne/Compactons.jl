@@ -14,8 +14,8 @@ Threads.@threads for V ∈ 0.00:1e-2:0.99
     id = @sprintf "V=%.2f" V
     println("Starting simulation for " * id)
 
-    η₀ = moving_kink.(0.0, -abs.(x) .+ π / γ(V), V)
-    ∂ₜη₀ = moving_kink_t.(0, -abs.(x) .+ π / γ(V), V)
+    η₀ = kink.(0.0, -abs.(x) .+ π / γ(V), V)
+    ∂ₜη₀ = ∂ₜkink.(0, -abs.(x) .+ π / γ(V), V)
 
     if V < 0.5
         tsave = 0.0:1e-2:20.0

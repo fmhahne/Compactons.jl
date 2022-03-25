@@ -24,8 +24,8 @@ Threads.@threads for l ∈ 0.5:0.5:3.0
             x = -tsave[end]:dx:tsave[end]
             N = length(x)
 
-            η₀ = moving_kink.(0.0, x .+ π / γ(V), V) + oscillon.(α * l, x, l=l)
-            ∂ₜη₀ = moving_kink_t.(0.0, x .+ π / γ(V), V) + oscillon_t.(α * l, x, l=l)
+            η₀ = kink.(0.0, x .+ π / γ(V), V) + oscillon.(α * l, x, l=l)
+            ∂ₜη₀ = ∂ₜkink.(0.0, x .+ π / γ(V), V) + ∂ₜoscillon.(α * l, x, l=l)
 
             hamiltonian = SavedValues(Float64, Vector{Float64})
             callback = SavingCallback(quadraticHamiltonian, hamiltonian, saveat=tsave)

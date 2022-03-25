@@ -45,7 +45,7 @@ function oscillon(t, x; v₀=0.0, l=1.0)
     end
 end
 
-function oscillon_t(t, x; v₀=0.0, l=1.0)
+function ∂ₜoscillon(t, x; v₀=0.0, l=1.0)
     τₗ = τ(t, l)
 
     if x_L(τₗ, v₀, l) <= x && x <= τₗ
@@ -59,7 +59,7 @@ function oscillon_t(t, x; v₀=0.0, l=1.0)
     end
 end
 
-function oscillon_x(t, x; v₀=0.0, l=1.0)
+function ∂ₓoscillon(t, x; v₀=0.0, l=1.0)
     τₗ = τ(t, l)
     σₗ = σ(t, l)
 
@@ -74,25 +74,27 @@ function oscillon_x(t, x; v₀=0.0, l=1.0)
     end
 end
 
-function moving_oscillon(t, x, V; v₀=0.0, l=1.0)
+# Moving oscillon
+
+function oscillon(t, x, V; v₀=0.0, l=1.0)
     t′ = γ(V) * (t - V * x)
     x′ = γ(V) * (x - V * t)
 
     oscillon(t′, x′, v₀=v₀, l=l)
 end
 
-function moving_oscillon(t, x, V; v₀=0.0, l=1.0)
+function ∂ₜoscillon(t, x, V; v₀=0.0, l=1.0)
     t′ = γ(V) * (t - V * x)
     x′ = γ(V) * (x - V * t)
 
-    γ(V) * (oscillon_t(t′, x′; v₀=v₀, l=l) - V * oscillon_x(t′, x′; v₀=v₀, l=l))
+    γ(V) * (∂ₜoscillon(t′, x′; v₀=v₀, l=l) - V * ∂ₓoscillon(t′, x′; v₀=v₀, l=l))
 end
 
-function moving_oscillon_x(t, x, V; v₀=0.0, l=1.0)
+function ∂ₓoscillon(t, x, V; v₀=0.0, l=1.0)
     t′ = γ(V) * (t - V * x)
     x′ = γ(V) * (x - V * t)
 
-    γ(V) * (oscillon_x(t′, x′; v₀=v₀, l=l) - V * oscillon_t(t′, x′; v₀=v₀, l=l))
+    γ(V) * (∂ₓoscillon(t′, x′; v₀=v₀, l=l) - V * ∂ₜoscillon(t′, x′; v₀=v₀, l=l))
 end
 
 # Kink
@@ -107,7 +109,7 @@ function kink(x)
     end
 end
 
-function kink_x(x)
+function ∂ₓkink(x)
     if x >= 0 && x <= pi
         sin(x)
     else
@@ -115,21 +117,23 @@ function kink_x(x)
     end
 end
 
-function moving_kink(t, x, V)
+# Moving kink
+
+function kink(t, x, V)
     x′ = γ(V) * (x - V * t)
 
     kink(x′)
 end
 
-function moving_kink_t(t, x, V)
+function ∂ₜkink(t, x, V)
     x′ = γ(V) * (x - V * t)
 
-    -V * γ(V) * kink_x(x′)
+    -V * γ(V) * ∂ₓkink(x′)
 end
 
 
-function moving_kink_x(t, x, V)
+function ∂ₓkink(t, x, V)
     x′ = γ(V) * (x - V * t)
 
-    γ(V) * kink_x(x′)
+    γ(V) * ∂ₓkink(x′)
 end
