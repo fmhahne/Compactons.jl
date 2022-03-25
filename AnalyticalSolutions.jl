@@ -1,4 +1,4 @@
-# Lorentz factor
+# Lorentz transformations
 
 γ(V) = 1.0 / √(1 - V^2)
 
@@ -75,63 +75,61 @@ function oscillon_x(t, x; v₀=0.0, l=1.0)
 end
 
 function moving_oscillon(t, x, V; v₀=0.0, l=1.0)
-    t_prime = γ(V) * (t - V * x)
-    x_prime = γ(V) * (x - V * t)
+    t′ = γ(V) * (t - V * x)
+    x′ = γ(V) * (x - V * t)
 
-    oscillon(t_prime, x_prime, v₀=v₀, l=l)
+    oscillon(t′, x′, v₀=v₀, l=l)
 end
 
-function moving_oscillon_t(t, x, V; v₀=0.0, l=1.0)
-    t_prime = γ(V) * (t - V * x)
-    x_prime = γ(V) * (x - V * t)
+function moving_oscillon(t, x, V; v₀=0.0, l=1.0)
+    t′ = γ(V) * (t - V * x)
+    x′ = γ(V) * (x - V * t)
 
-    γ(V) * (oscillon_t(t_prime, x_prime; v₀=v₀, l=l) - V * oscillon_x(t_prime, x_prime; v₀=v₀, l=l))
+    γ(V) * (oscillon_t(t′, x′; v₀=v₀, l=l) - V * oscillon_x(t′, x′; v₀=v₀, l=l))
 end
 
 function moving_oscillon_x(t, x, V; v₀=0.0, l=1.0)
-    t_prime = γ(V) * (t - V * x)
-    x_prime = γ(V) * (x - V * t)
+    t′ = γ(V) * (t - V * x)
+    x′ = γ(V) * (x - V * t)
 
-    γ(V) * (oscillon_x(t_prime, x_prime; v₀=v₀, l=l) - V * oscillon_t(t_prime, x_prime; v₀=v₀, l=l))
+    γ(V) * (oscillon_x(t′, x′; v₀=v₀, l=l) - V * oscillon_t(t′, x′; v₀=v₀, l=l))
 end
 
 # Kink
 
 function kink(x)
     if x <= 0
-        return 0.0
+        0.0
     elseif x <= π
-        return 1 - cos(x)
+        1 - cos(x)
     else
-        return 2.0
+        2.0
     end
 end
 
 function kink_x(x)
     if x >= 0 && x <= pi
-        return sin(x)
+        sin(x)
     else
-        return 0.0
+        0.0
     end
 end
 
-
 function moving_kink(t, x, V)
-    γ(V) = 1.0 / sqrt(1 - V^2)
-    x_prime = γ(V) * (x - V * t)
+    x′ = γ(V) * (x - V * t)
 
-    return kink(x_prime)
+    kink(x′)
 end
 
 function moving_kink_t(t, x, V)
-    x_prime = γ(V) * (x - V * t)
+    x′ = γ(V) * (x - V * t)
 
-    return -V * γ(V) * kink_x(x_prime)
+    -V * γ(V) * kink_x(x′)
 end
 
 
 function moving_kink_x(t, x, V)
-    x_prime = γ(V) * (x - V * t)
+    x′ = γ(V) * (x - V * t)
 
-    return γ(V) * kink_x(x_prime)
+    γ(V) * kink_x(x′)
 end
