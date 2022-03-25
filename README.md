@@ -19,7 +19,7 @@ julia> ]
 (Compactons.jl) pkg> instantiate
 ```
 
-Install required Python dependencies:
+Install required Python packages:
 
 ```sh
 python -m pip install -r requirements.txt
