@@ -4,6 +4,8 @@ using DifferentialEquations, HDF5
 include("../AnalyticalSolutions.jl")
 include("../VShapeModels.jl")
 
+mkpath("data")
+
 const dx = 8e-4
 const x = -10.0:dx:10.0
 const N = length(x)

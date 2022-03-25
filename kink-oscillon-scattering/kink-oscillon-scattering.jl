@@ -4,6 +4,8 @@ using DifferentialEquations, HDF5
 include("../AnalyticalSolutions.jl")
 include("../VShapeModels.jl")
 
+mkpath("data")
+
 const dx = 8e-4
 
 Threads.@threads for l ∈ 0.5:0.5:3.0

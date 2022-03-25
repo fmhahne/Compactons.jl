@@ -29,7 +29,6 @@ python -m pip install -r requirements.txt
 
 ```sh
 cd <simulation name> # i.e. kink-oscillon-scattering
-mkdir -p data fig
 julia --project=.. -t auto <simulation name>.jl
 python fig.py
 ```

@@ -1,8 +1,12 @@
+import os
+
+import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import CenteredNorm, LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
-import h5py
+
+os.makedirs("fig", exist_ok=True)
 
 
 def heatmap(ax, data, **kwargs):
