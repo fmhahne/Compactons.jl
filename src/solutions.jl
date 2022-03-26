@@ -1,3 +1,7 @@
+export γ
+export oscillon, ∂ₜoscillon, ∂ₓoscillon
+export kink, ∂ₜkink, ∂ₓkink
+
 # Lorentz transformations
 
 γ(V) = 1.0 / √(1 - V^2)

@@ -1,5 +1,9 @@
 using LoopVectorization
 
+export signumGordon!, signumGordonHamiltonian
+export quadratic!, quadraticHamiltonian
+export toy!, toyHamiltonian
+
 function signumGordon!(∂ₜₜφ, ∂ₜφ, φ, (N, dx), t)
     ∂ₜₜφ[1] = 0.0
     @tturbo for i ∈ 2:N-1

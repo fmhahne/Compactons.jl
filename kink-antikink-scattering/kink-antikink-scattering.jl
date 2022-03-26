@@ -1,8 +1,6 @@
 using Printf
 using DifferentialEquations, HDF5
-
-include("../AnalyticalSolutions.jl")
-include("../VShapeModels.jl")
+using Compactons
 
 mkpath("data")
 
