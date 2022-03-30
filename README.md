@@ -28,7 +28,6 @@ python -m pip install -r requirements.txt
 ## Generating data and figures
 
 ```sh
-cd <simulation name> # i.e. kink-oscillon-scattering
-julia --project=.. -t auto <simulation name>.jl
-python fig.py
+julia --project -t auto scripts/<simulation name>.jl
+python scripts/<simulation name>_plots.py
 ```

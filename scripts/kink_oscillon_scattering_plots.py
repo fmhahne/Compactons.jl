@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib.colors import CenteredNorm, LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-os.makedirs("fig", exist_ok=True)
+os.makedirs("plots/kink_oscillon_scattering", exist_ok=True)
 
 
 def heatmap(ax, data, **kwargs):
@@ -36,7 +36,7 @@ def kink(t, x, V=0.0):
 for l in np.linspace(0.5, 3, 6):
     for V in np.linspace(0, 0.9, 10):
         for alpha in np.linspace(0, 0.75, 4):
-            with h5py.File(f"data/{l=:0.2f},{V=:0.2f},{alpha=:0.2f}.h5", "r") as f:
+            with h5py.File(f"data/kink_oscillon_scattering/{l=:0.2f},{V=:0.2f},{alpha=:0.2f}.h5", "r") as f:
                 field = np.array(f["field"])
                 hamiltonian = np.array(f["hamiltonian"])
                 t = np.array(f["t"])
@@ -48,7 +48,7 @@ for l in np.linspace(0.5, 3, 6):
             fig, ax = plt.subplots(figsize=figsize, tight_layout=True, dpi=300)
             heatmap(ax, field, extent=extent)
             ax.set_xlim(-t[-1] / 2, t[-1] / 2)
-            fig.savefig(f"fig/{l=:0.2f},{V=:0.2f},{alpha=:0.2f}.pdf")
+            fig.savefig(f"plots/kink_oscillon_scattering/{l=:0.2f},{V=:0.2f},{alpha=:0.2f}.pdf")
             fig.clear()
 
             fig, ax = plt.subplots(figsize=figsize, tight_layout=True, dpi=300)
@@ -60,7 +60,7 @@ for l in np.linspace(0.5, 3, 6):
                 cmap="magma",
             )
             ax.set_xlim(-t[-1] / 2, t[-1] / 2)
-            fig.savefig(f"fig/{l=:0.2f},{V=:0.2f},{alpha=:0.2f}-energy.pdf")
+            fig.savefig(f"plots/kink_oscillon_scattering/{l=:0.2f},{V=:0.2f},{alpha=:0.2f}-energy.pdf")
             fig.clear()
 
             xx, tt = np.meshgrid(x, t)
@@ -69,7 +69,7 @@ for l in np.linspace(0.5, 3, 6):
             fig, ax = plt.subplots(figsize=figsize, tight_layout=True, dpi=300)
             heatmap(ax, perturbation, extent=extent, norm=CenteredNorm(), cmap="RdBu")
             ax.set_xlim(-t[-1] / 2, t[-1] / 2)
-            fig.savefig(f"fig/{l=:0.2f},{V=:0.2f},{alpha=:0.2f}-perturbation.pdf")
+            fig.savefig(f"plots/kink_oscillon_scattering/{l=:0.2f},{V=:0.2f},{alpha=:0.2f}-perturbation.pdf")
             fig.clear()
 
             plt.close("all")
