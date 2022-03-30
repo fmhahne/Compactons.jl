@@ -114,7 +114,7 @@ function kink(x)
 end
 
 function ∂ₓkink(x)
-    if 0 ≤ x ≤ pi
+    if 0 ≤ x ≤ π
         sin(x)
     else
         0.0
