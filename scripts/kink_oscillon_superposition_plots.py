@@ -1,10 +1,13 @@
 import os
 
 import h5py
-import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
+from matplotlib import pyplot as plt
 from matplotlib.colors import CenteredNorm, LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+
+matplotlib.rcParams.update({"font.size": 8})
 
 os.makedirs("plots/kink_oscillon_superposition", exist_ok=True)
 
@@ -44,7 +47,7 @@ for l in np.linspace(0.5, 3, 6):
             x = np.array(f["x"])
 
         extent = (x[0], x[-1], t[0], t[-1])
-        figsize = (3.2, 3.1)
+        figsize = (3.1, 2.5)
 
         fig, ax = plt.subplots(figsize=figsize, tight_layout=True, dpi=300)
         heatmap(ax, field, extent=extent)
