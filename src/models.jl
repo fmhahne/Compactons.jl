@@ -57,7 +57,7 @@ end
 function toy!(∂ₜₜη, ∂ₜη, η, (N, dx), t)
     ∂ₜₜη[1] = 0.0
     @tturbo for i ∈ 2:N-1
-        ∂ₜₜη[i] = (η[i+1] + η[i-1] - 2η[i]) / dx^2 - sign(mod(η[i] - 1, 2) - 1)
+        ∂ₜₜη[i] = (η[i+1] + η[i-1] - 2η[i]) / dx^2 - sign(mod(η[i] - 1, 2) - sign(mod(η[i] - 1, 2)))
     end
     ∂ₜₜη[N] = 0.0
 
