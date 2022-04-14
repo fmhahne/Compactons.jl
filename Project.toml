@@ -4,6 +4,7 @@ authors = ["Fernando Miguel Hahne <fernandomhahne@gmail.com>"]
 [deps]
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
 HDF5 = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
 LoopVectorization = "bdcacae8-1622-11e9-2a5c-532679323890"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
