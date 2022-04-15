@@ -8,8 +8,8 @@ for l ∈ 0.5:0.5:3.0
         filename = @sprintf "data/kink_oscillon_superposition/l=%.2f,alpha=%.2f.h5" l α
         print("Producing $filename … ")
 
-        xsave, tsave, field, hamiltonian = kink_oscillon_superposition(l, α)
-        save_data(filename, xsave, tsave, field, hamiltonian)
+        x, t, η, H = kink_oscillon_superposition(l, α)
+        save_data(filename, x, t, η, H)
         println("done")
     end
 end
