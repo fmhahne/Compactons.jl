@@ -20,8 +20,8 @@ quadratic = Model(
 )
 
 toy = Model(
-    η -> sign(mod(η - 1, 2) - sign(mod(η - 1, 2))),
-    η -> abs(mod(η - 1, 2) - 1)
+    η -> abs(mod(η - 1, 2) - 1),
+    η -> sign(mod(η - 1, 2) - sign(mod(η - 1, 2)))
 )
 
 function fieldeq!(∂ₜₜφ, ∂ₜφ, φ, (model, N, dx), t)
