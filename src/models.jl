@@ -1,7 +1,7 @@
 using LoopVectorization
 
 export Model
-export fieldeq!, gethamiltonian
+export fieldeq!, gethamiltonian, getenergy
 export signumgordon, quadratic, toy
 
 struct Model
@@ -34,6 +34,8 @@ function fieldeq!(∂ₜₜφ, ∂ₜφ, φ, (model, N, dx), t)
     nothing
 end
 
+𝒯(∂ₜφ, ∂ₓφ) = (∂ₜφ^2 + ∂ₓφ^2) / 2
+
 function gethamiltonian(u, t, integrator)
     model, N, dx = integrator.p
     save_idxs = integrator.opts.save_idxs .- N
@@ -42,9 +44,23 @@ function gethamiltonian(u, t, integrator)
     ∂ₜφ = @views u[1:N]
 
     H = zero(φ)
-    @inbounds for i ∈ intersect(2:N-1, save_idxs)
-        H[i] = ((φ[i+1] - φ[i-1]) / (2dx))^2 / 2 + (∂ₜφ[i])^2 / 2 + model.V(φ[i])
+    Threads.@threads for i ∈ intersect(2:N-1, save_idxs)
+        @inbounds H[i] = 𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i])
     end
 
     return H[save_idxs]
+end
+
+function getenergy(u, t, integrator)
+    model, N, dx = integrator.p
+
+    φ = @views u[N+1:2N]
+    ∂ₜφ = @views u[1:N]
+
+    E = 0.0
+    for i ∈ 2:N-1
+        @inbounds E += dx * (𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]))
+    end
+
+    return E
 end
