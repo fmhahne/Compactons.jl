@@ -12,22 +12,15 @@ curl -fsSL https://install.julialang.org | sh
 
 Install required Julia packages:
 
-```julia
+```
 julia
 julia> ]
 (@v1.7) pkg> activate .
-(Compactons.jl) pkg> instantiate
+(Compactons) pkg> instantiate
 ```
 
-Install required Python packages:
-
-```sh
-python -m pip install -r requirements.txt
-```
-
-## Generating data and figures
+## Generating data
 
 ```sh
 julia --project -t auto scripts/<simulation name>.jl
-python scripts/<simulation name>_plots.py
 ```

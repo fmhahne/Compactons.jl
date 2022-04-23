@@ -1,7 +1,7 @@
 using LoopVectorization
 
 export Model
-export fieldeq!, hamiltonian
+export fieldeq!, gethamiltonian
 export signumgordon, quadratic, toy
 
 struct Model
@@ -34,7 +34,7 @@ function fieldeq!(∂ₜₜφ, ∂ₜφ, φ, (model, N, dx), t)
     nothing
 end
 
-function hamiltonian(u, t, integrator)
+function gethamiltonian(u, t, integrator)
     model, N, dx = integrator.p
     save_idxs = integrator.opts.save_idxs .- N
 

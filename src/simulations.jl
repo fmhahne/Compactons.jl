@@ -1,13 +1,13 @@
-using DifferentialEquations, HDF5
+using DifferentialEquations
 
-export produce_data, save_data
+export producedata
 export kink_antikink_scattering, kink_oscillon_scattering, kink_oscillon_superposition, perturbed_kink
 
 const dx = 8e-4
 
-function produce_data(∂ₜφ₀, φ₀, p, tsave, save_idxs)
+function producedata(∂ₜφ₀, φ₀, p, tsave, save_idxs)
     savedhamiltonian = SavedValues(Float64, Vector{Float64})
-    callback = SavingCallback(hamiltonian, savedhamiltonian, saveat=tsave)
+    callback = SavingCallback(gethamiltonian, savedhamiltonian, saveat=tsave)
 
     tspan = (tsave[1], tsave[end])
     prob = SecondOrderODEProblem(fieldeq!, ∂ₜφ₀, φ₀, tspan, p)
@@ -16,17 +16,6 @@ function produce_data(∂ₜφ₀, φ₀, p, tsave, save_idxs)
     φ = reduce(hcat, sol.u)
     H = reduce(hcat, savedhamiltonian.saveval)
     return φ, H
-end
-
-function save_data(filename, xsave, tsave, φ, H)
-    h5open(filename, "w") do file
-        file["x", deflate=3] = collect(xsave)
-        file["t", deflate=3] = collect(tsave)
-        file["field", deflate=3] = φ
-        file["hamiltonian", deflate=3] = H
-    end
-
-    return nothing
 end
 
 function xgrid(tsave)
@@ -45,7 +34,7 @@ function kink_antikink_scattering(V)
     η₀ = kink.(0.0, -abs.(x) .+ π / γ(V), V)
     ∂ₜη₀ = ∂ₜkink.(0, -abs.(x) .+ π / γ(V), V)
 
-    η, H = produce_data(∂ₜη₀, η₀, (quadratic, N, dx), tsave, save_idxs)
+    η, H = producedata(∂ₜη₀, η₀, (quadratic, N, dx), tsave, save_idxs)
     return xsave, tsave, η, H
 end
 
@@ -56,7 +45,7 @@ function kink_oscillon_scattering(l, V, α)
     η₀ = kink.(0.0, x .+ π / γ(V), V) + oscillon.(α * l, x, l=l)
     ∂ₜη₀ = ∂ₜkink.(0.0, x .+ π / γ(V), V) + ∂ₜoscillon.(α * l, x, l=l)
 
-    η, H = produce_data(∂ₜη₀, η₀, (quadratic, N, dx), tsave, save_idxs)
+    η, H = producedata(∂ₜη₀, η₀, (quadratic, N, dx), tsave, save_idxs)
     return xsave, tsave, η, H
 end
 
@@ -67,7 +56,7 @@ function kink_oscillon_superposition(l, α)
     η₀ = kink.(x .+ π / 2) + oscillon.(α * l, x .+ l / 2, l=l)
     ∂ₜη₀ = ∂ₜoscillon.(α * l, x .+ l / 2, l=l)
 
-    η, H = produce_data(∂ₜη₀, η₀, (quadratic, N, dx), tsave, save_idxs)
+    η, H = producedata(∂ₜη₀, η₀, (quadratic, N, dx), tsave, save_idxs)
     return xsave, tsave, η, H
 end
 
@@ -79,6 +68,6 @@ function perturbed_kink(ϵ)
     η₀ = kink.(x / (1.0 + ϵ) .+ π / 2)
     ∂ₜη₀ = zero(x)
 
-    η, H = produce_data(∂ₜη₀, η₀, (quadratic, N, dx), tsave, save_idxs)
+    η, H = producedata(∂ₜη₀, η₀, (quadratic, N, dx), tsave, save_idxs)
     return xsave, tsave, η, H
 end

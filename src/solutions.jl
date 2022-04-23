@@ -113,6 +113,8 @@ function kink(x)
     end
 end
 
+kink(t, x) = kink(x)
+
 function ∂ₓkink(x)
     if 0 ≤ x ≤ π
         sin(x)
@@ -120,6 +122,8 @@ function ∂ₓkink(x)
         0.0
     end
 end
+
+∂ₓkink(t, x) = ∂ₓkink(x)
 
 # Moving kink
 
