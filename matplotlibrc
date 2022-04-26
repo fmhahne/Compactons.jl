@@ -1,6 +1,6 @@
 axes.prop_cycle : cycler("ls", ["solid", "dashed", "dotted", "dashdot"])
 figure.autolayout : True
 figure.dpi : 300
-figure.figsize : 4.79, 3.39
+figure.figsize : 4.5, 3
 font.size : 8
 legend.frameon : False
