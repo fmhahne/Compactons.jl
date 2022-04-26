@@ -1,7 +1,7 @@
-using PythonCall
+using PythonCall, PythonPlot
+const plt = PythonPlot.pyplot
+const mpl = PythonPlot.matplotlib
 
-mpl = pyimport("matplotlib")
-plt = pyimport("matplotlib.pyplot")
 axes_grid1 = pyimport("mpl_toolkits.axes_grid1")
 
 function heatmap!(ax, x, t, data; kwargs...)
