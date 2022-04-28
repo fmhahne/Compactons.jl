@@ -2,6 +2,8 @@ using PythonCall
 
 mpl = pyimport("matplotlib")
 plt = pyimport("matplotlib.pyplot")
+
+mpl.use("agg")
 axes_grid1 = pyimport("mpl_toolkits.axes_grid1")
 
 function heatmap!(ax, x, t, data; kwargs...)
