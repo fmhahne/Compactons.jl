@@ -15,7 +15,7 @@ signumgordon = Model(
 )
 
 quadratic = Model(
-    η -> abs(mod(η, 2)) - mod(η, 2)^2 / 2,
+    η -> mod(η, 2) - mod(η, 2)^2 / 2,
     η -> sign(mod(η, 2)) - mod(η, 2)
 )
 
