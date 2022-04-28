@@ -44,7 +44,7 @@ function gethamiltonian(u, t, integrator)
     ∂ₜφ = @views u[1:N]
 
     H = zero(φ)
-    Threads.@threads for i ∈ intersect(2:N-1, save_idxs)
+    for i ∈ intersect(2:N-1, save_idxs)
         @inbounds H[i] = 𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i])
     end
 
