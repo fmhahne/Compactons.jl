@@ -115,6 +115,8 @@ end
 
 kink(t, x) = kink(x)
 
+∂ₜkink(t, x) = 0.0
+
 function ∂ₓkink(x)
     if 0 ≤ x ≤ π
         sin(x)
