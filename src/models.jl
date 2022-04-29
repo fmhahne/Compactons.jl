@@ -61,10 +61,5 @@ function getenergy(u, t, integrator)
     N = length(φ)
     model, dx = integrator.p
 
-    E = 0.0
-    for i ∈ 2:N-1
-        @inbounds E += dx * (𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]))
-    end
-
-    return E
+    return dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i ∈ 2:N-1)
 end
