@@ -24,7 +24,9 @@ toy = Model(
     η -> sign(mod(η - 1, 2) - sign(mod(η - 1, 2)))
 )
 
-function fieldeq!(∂ₜₜφ, ∂ₜφ, φ, (model, N, dx), t)
+function fieldeq!(∂ₜₜφ, ∂ₜφ, φ, (model, dx), t)
+    N = length(φ)
+
     ∂ₜₜφ[1] = 0
     @tturbo for i ∈ 2:N-1
         ∂ₜₜφ[i] = (φ[i+1] + φ[i-1] - 2φ[i]) / dx^2 - model.V′(φ[i])
@@ -37,11 +39,12 @@ end
 𝒯(∂ₜφ, ∂ₓφ) = (∂ₜφ^2 + ∂ₓφ^2) / 2
 
 function gethamiltonian(u, t, integrator)
-    model, N, dx = integrator.p
-    save_idxs = integrator.opts.save_idxs .- N
+    φ = @views u[end÷2+1:end]
+    ∂ₜφ = @views u[begin:end÷2]
 
-    φ = @views u[N+1:2N]
-    ∂ₜφ = @views u[1:N]
+    N = length(φ)
+    model, dx = integrator.p
+    save_idxs = integrator.opts.save_idxs .- N
 
     H = zero(φ)
     for i ∈ intersect(2:N-1, save_idxs)
@@ -52,10 +55,11 @@ function gethamiltonian(u, t, integrator)
 end
 
 function getenergy(u, t, integrator)
-    model, N, dx = integrator.p
+    φ = @views u[end÷2+1:end]
+    ∂ₜφ = @views u[begin:end÷2]
 
-    φ = @views u[N+1:2N]
-    ∂ₜφ = @views u[1:N]
+    N = length(φ)
+    model, dx = integrator.p
 
     E = 0.0
     for i ∈ 2:N-1
