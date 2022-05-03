@@ -4,3 +4,12 @@ figure.dpi : 300
 figure.figsize : 4.5, 3
 font.size : 8
 legend.frameon : False
+
+# Thinner lines
+lines.linewidth : 1
+axes.linewidth : 0.5
+grid.linewidth : 0.5
+xtick.major.width : 0.5
+ytick.major.width : 0.5
+xtick.minor.width : 0.5
+ytick.minor.width : 0.5
