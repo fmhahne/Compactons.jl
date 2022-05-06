@@ -5,17 +5,98 @@ using Compactons
 
 mkpath("data/kink_oscillon_scattering_energies")
 
-let l = 1.0
-    filename = @sprintf "data/kink_oscillon_scattering_energies/l=%.2f.jld2" l
+let l = 1.0, V = 0.75
     energies = Dict()
 
-    for V ∈ 0.00:0.01:0.99
-        for α ∈ 0.00:0.01:0.99
-            print("Simulating l=$l, V=$V, α=$α … ")
-            energies[(V=V, α=α)] = kink_oscillon_scattering_energies(l, V, α)
+    for α ∈ 0.00:0.01:0.99
+        for v₀ ∈ 0.00:0.01:0.99
+            print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
+            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
             println("done")
         end
     end
 
+    filename = "data/kink_oscillon_scattering_energies/l=$l,V=$V.jld2"
+    jldsave(filename, true; energies)
+end
+
+let l = 1.0, α = 0.0
+    energies = Dict()
+
+    for V ∈ 0.00:0.01:0.99
+        for v₀ ∈ 0.00:0.01:0.99
+            print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
+            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
+            println("done")
+        end
+    end
+
+    filename = "data/kink_oscillon_scattering_energies/l=$l,alpha=$α.jld2"
+    jldsave(filename, true; energies)
+end
+
+let l = 1.0, v₀ = 0.0
+    energies = Dict()
+
+    for V ∈ 0.00:0.01:0.99
+        for α ∈ 0.00:0.01:0.99
+            print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
+            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
+            println("done")
+        end
+    end
+
+    filename = "data/kink_oscillon_scattering_energies/l=$l,v0=$v₀.jld2"
+    jldsave(filename, true; energies)
+end
+
+let V = 0.75, α = 0.0
+    energies = Dict()
+
+    for l ∈ 0.50:0.025:3.00
+        for v₀ ∈ 0.00:0.01:0.99
+            print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
+            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
+            println("done")
+        end
+    end
+
+    filename = "data/kink_oscillon_scattering_energies/V=$V,alpha=$α.jld2"
+    jldsave(filename, true; energies)
+end
+
+let V = 0.75, v₀ = 0.0
+    energies = Dict()
+
+    for l ∈ 0.50:0.025:3.00
+        for α ∈ 0.00:0.01:0.99
+            print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
+            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
+            println("done")
+        end
+    end
+
+    filename = "data/kink_oscillon_scattering_energies/V=$V,v0=$v₀.jld2"
+    jldsave(filename, true; energies)
+end
+
+let α = 0.00, v₀ = 0.0
+    energies = Dict()
+
+    for l ∈ 0.50:0.025:3.00
+        for V ∈ 0.00:0.01:0.99
+            print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
+            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
+            println("done")
+        end
+    end
+
+    filename = "data/kink_oscillon_scattering_energies/alpha=$α,v0=$v₀.jld2"
     jldsave(filename, true; energies)
 end

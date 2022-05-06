@@ -81,7 +81,7 @@ function x_R(α, V; l=1.0, v₀=0.0)
     l * γ(V) / (1 + a * v₀ * V) * ((1 - V^2) * (1 + v₀ * b) + α * (V + v₀ * a))
 end
 
-function kink_oscillon_scattering(l, V, α, v₀=0.0; dx=1e-3, sampling=10)
+function kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
     tsave = 0.0:(dx*sampling):10.0
 
     x = -tsave[end]:dx:tsave[end]
