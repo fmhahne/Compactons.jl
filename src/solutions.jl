@@ -1,5 +1,5 @@
 export γ
-export oscillon, ∂ₜoscillon, ∂ₓoscillon
+export oscillon, ∂ₜoscillon, ∂ₓoscillon, x_L, x_R
 export kink, ∂ₜkink, ∂ₓkink
 
 # Lorentz transformations
@@ -8,10 +8,10 @@ export kink, ∂ₜkink, ∂ₓkink
 
 # Oscillon
 
-x_L(t, v₀, l) = v₀ * t
-x_R(t, v₀, l) = x_L(t, v₀, l) + l
+x_L(t; v₀=0.0, l=1.0) = v₀ * t
+x_R(t; v₀=0.0, l=1.0) = x_L(t; v₀, l) + l
 
-function F(x, v₀, l)
+function F(x; v₀=0.0, l=1.0)
     if 0 ≤ x ≤ (1 + v₀) * l / 2
         -0.25 / (1.0 + v₀) * x^2
     elseif (1 + v₀) * l / 2 < x ≤ l
@@ -21,7 +21,7 @@ function F(x, v₀, l)
     end
 end
 
-function f(x, v₀, l)
+function f(x; v₀=0.0, l=1.0)
     if 0 ≤ x ≤ (1 + v₀) * l / 2
         -x / (1 + v₀)
     elseif (1 + v₀) * l / 2 < x ≤ l
@@ -38,12 +38,12 @@ function oscillon(t, x; v₀=0.0, l=1.0)
     τₗ = τ(t, l)
     σₗ = σ(t, l)
 
-    if (x_L(τₗ, v₀, l) ≤ x ≤ τₗ)
-        σₗ * (F(x + τₗ, v₀, l) - F(x - τₗ + l, v₀, l) + τₗ^2 / 2.0 - l^2 / 8.0)
+    if (x_L(τₗ; v₀, l) ≤ x ≤ τₗ)
+        σₗ * (F(x + τₗ; v₀, l) - F(x - τₗ + l; v₀, l) + τₗ^2 / 2.0 - l^2 / 8.0)
     elseif (τₗ < x ≤ l - τₗ)
-        σₗ * (F(x + τₗ, v₀, l) - F(x - τₗ, v₀, l) + τₗ^2 / 2.0)
-    elseif (l - τₗ < x ≤ x_R(τₗ, v₀, l))
-        σₗ * (F(x + τₗ - l, v₀, l) - F(x - τₗ, v₀, l) + τₗ^2 / 2.0 - l^2 / 8.0)
+        σₗ * (F(x + τₗ; v₀, l) - F(x - τₗ; v₀, l) + τₗ^2 / 2.0)
+    elseif (l - τₗ < x ≤ x_R(τₗ; v₀, l))
+        σₗ * (F(x + τₗ - l; v₀, l) - F(x - τₗ; v₀, l) + τₗ^2 / 2.0 - l^2 / 8.0)
     else
         0.0
     end
@@ -52,12 +52,12 @@ end
 function ∂ₜoscillon(t, x; v₀=0.0, l=1.0)
     τₗ = τ(t, l)
 
-    if x_L(τₗ, v₀, l) ≤ x ≤ τₗ
-        0.5 * f(x + τₗ, v₀, l) + 0.5 * f(x - τₗ + l, v₀, l) + τₗ
+    if x_L(τₗ; v₀, l) ≤ x ≤ τₗ
+        0.5 * f(x + τₗ; v₀, l) + 0.5 * f(x - τₗ + l; v₀, l) + τₗ
     elseif τₗ < x ≤ l - τₗ
-        0.5 * f(x + τₗ, v₀, l) + 0.5 * f(x - τₗ, v₀, l) + τₗ
-    elseif l - τₗ < x ≤ x_R(τₗ, v₀, l)
-        0.5 * f(x + τₗ - l, v₀, l) + 0.5 * f(x - τₗ, v₀, l) + τₗ
+        0.5 * f(x + τₗ; v₀, l) + 0.5 * f(x - τₗ; v₀, l) + τₗ
+    elseif l - τₗ < x ≤ x_R(τₗ; v₀, l)
+        0.5 * f(x + τₗ - l; v₀, l) + 0.5 * f(x - τₗ; v₀, l) + τₗ
     else
         0.0
     end
@@ -67,12 +67,12 @@ function ∂ₓoscillon(t, x; v₀=0.0, l=1.0)
     τₗ = τ(t, l)
     σₗ = σ(t, l)
 
-    if x_L(τₗ, v₀, l) ≤ x ≤ τₗ
-        σₗ * 0.5 * (f(x + τₗ, v₀, l) - f(x - τₗ + l, v₀, l))
+    if x_L(τₗ; v₀, l) ≤ x ≤ τₗ
+        σₗ * 0.5 * (f(x + τₗ; v₀, l) - f(x - τₗ + l; v₀, l))
     elseif τₗ < x ≤ l - τₗ
-        σₗ * 0.5 * (f(x + τₗ, v₀, l) - f(x - τₗ, v₀, l))
-    elseif l - τₗ < x ≤ x_R(τₗ, v₀, l)
-        σₗ * 0.5 * (f(x + τₗ - l, v₀, l) - f(x - τₗ, v₀, l))
+        σₗ * 0.5 * (f(x + τₗ; v₀, l) - f(x - τₗ; v₀, l))
+    elseif l - τₗ < x ≤ x_R(τₗ; v₀, l)
+        σₗ * 0.5 * (f(x + τₗ - l; v₀, l) - f(x - τₗ; v₀, l))
     else
         0.0
     end

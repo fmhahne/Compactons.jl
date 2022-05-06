@@ -76,7 +76,7 @@ function ab(α, V; v₀=0.0)
     end
 end
 
-function x₀(α, V; l=1.0, v₀=0.0)
+function x_R(α, V; l=1.0, v₀=0.0)
     a, b = ab(α, V; v₀)
     l * γ(V) / (1 + a * v₀ * V) * ((1 - V^2) * (1 + v₀ * b) + α * (V + v₀ * a))
 end
@@ -87,8 +87,8 @@ function kink_oscillon_scattering(l, V, α, v₀=0.0; dx=1e-3, sampling=10)
     x = -tsave[end]:dx:tsave[end]
     xsave = x[begin:sampling:end]
 
-    η₀ = kink.(0.0, x) + oscillon.(l * α * γ(V), x .+ x₀(α, V; l, v₀), V; l, v₀)
-    ∂ₜη₀ = ∂ₜkink.(0.0, x) + ∂ₜoscillon.(l * α * γ(V), x .+ x₀(α, V; l, v₀), V; l, v₀)
+    η₀ = kink.(0.0, x) + oscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
+    ∂ₜη₀ = ∂ₜkink.(0.0, x) + ∂ₜoscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
 
     energies = SavedValues(Float64, Vector{Float64})
     cbenergies = SavingCallback(getenergies, energies; saveat=tsave)
