@@ -41,6 +41,10 @@ function αᵤ(V; v₀=0.0)
     end
 end
 
+function αₛ(V; v₀=0.0)
+    (1 + v₀ * V) / 2
+end
+
 function ab(α, V; v₀=0.0)
     Vc = 1 / (2 + v₀)
 
@@ -76,10 +80,25 @@ function ab(α, V; v₀=0.0)
     end
 end
 
+function a′b′(α, V; v₀=0.0)
+    if α ≤ αₛ(V; v₀)
+        (1, 0)
+    else
+        (-1, 1)
+    end
+end
+
 function x_R(α, V; l=1.0, v₀=0.0)
     a, b = ab(α, V; v₀)
     l * γ(V) / (1 + a * v₀ * V) * ((1 - V^2) * (1 + v₀ * b) + α * (V + v₀ * a))
 end
+
+function x_L(α, V; l=1.0, v₀=0.0)
+    a′, b′ = a′b′(α, V; v₀)
+    l * γ(V) / (1 + a′ * v₀ * V) * ((1 - V^2) * (v₀ * b′) + α * (V + v₀ * a′))
+end
+
+L(α, V; l=1.0, v₀=0.0) = x_R(α, V; l, v₀) - x_L(α, V; l, v₀)
 
 function kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
     tsave = 0.0:(dx*sampling):10.0
