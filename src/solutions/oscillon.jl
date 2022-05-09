@@ -2,10 +2,23 @@
 export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
 
-x_L(t; v₀=0.0, l=1.0) = v₀ * t
-x_R(t; v₀=0.0, l=1.0) = x_L(t; v₀, l) + l
+"""
+    x_L(t; l=1.0, v₀=0.0)
 
-function F(x; v₀=0.0, l=1.0)
+Position of the left border at time t ∈ [0, l/2] of a signum--Gordon oscillon at rest, with
+size ``l`` and swaying velocity ``v₀``.
+"""
+x_L(t; l=1.0, v₀=0.0) = v₀ * t
+
+"""
+    x_L(t; l=1.0, v₀=0.0)
+
+Position of the right border at time t ∈ [0, l/2] of a signum--Gordon oscillon at rest, with
+size ``l`` and swaying velocity ``v₀``.
+"""
+x_R(t; l=1.0, v₀=0.0) = x_L(t; v₀, l) + l
+
+function F(x; l=1.0, v₀=0.0)
     if 0 ≤ x ≤ (1 + v₀) * l / 2
         -0.25 / (1.0 + v₀) * x^2
     elseif (1 + v₀) * l / 2 < x ≤ l
@@ -15,7 +28,7 @@ function F(x; v₀=0.0, l=1.0)
     end
 end
 
-function f(x; v₀=0.0, l=1.0)
+function f(x; l=1.0, v₀=0.0)
     if 0 ≤ x ≤ (1 + v₀) * l / 2
         -x / (1 + v₀)
     elseif (1 + v₀) * l / 2 < x ≤ l
@@ -28,7 +41,13 @@ end
 τ(t, l) = abs(mod(t - l / 2, l) - l / 2)
 σ(t, l) = sign(mod(t - l / 2, l) - l / 2)
 
-function oscillon(t, x; v₀=0.0, l=1.0)
+"""
+    oscillon(t, x; l=1.0, v₀=0.0)
+
+Field ``φ(t,x)`` for a signum--Gordon oscillon at rest, with size ``l`` and swaying velocity
+``v₀``.
+"""
+function oscillon(t, x; l=1.0, v₀=0.0)
     τₗ = τ(t, l)
     σₗ = σ(t, l)
 
@@ -43,7 +62,13 @@ function oscillon(t, x; v₀=0.0, l=1.0)
     end
 end
 
-function ∂ₜoscillon(t, x; v₀=0.0, l=1.0)
+"""
+    ∂ₜoscillon(t, x; l=1.0, v₀=0.0)
+
+Partial derivative ``∂ₜφ(t,x)`` for an signum--Gordon oscillon at rest, with size ``l`` and
+swaying velocity ``v₀``.
+"""
+function ∂ₜoscillon(t, x; l=1.0, v₀=0.0)
     τₗ = τ(t, l)
 
     if x_L(τₗ; v₀, l) ≤ x ≤ τₗ
@@ -57,7 +82,13 @@ function ∂ₜoscillon(t, x; v₀=0.0, l=1.0)
     end
 end
 
-function ∂ₓoscillon(t, x; v₀=0.0, l=1.0)
+"""
+    ∂ₓoscillon(t, x; l=1.0, v₀=0.0)
+
+Partial derivative ``∂ₜφ(t,x)`` for an signum--Gordon oscillon at rest, with size ``l`` and
+swaying velocity ``v₀``.
+"""
+function ∂ₓoscillon(t, x; l=1.0, v₀=0.0)
     τₗ = τ(t, l)
     σₗ = σ(t, l)
 
@@ -74,19 +105,37 @@ end
 
 # Moving oscillon
 
-function oscillon(t, x, V; v₀=0.0, l=1.0)
+"""
+    oscillon(t, x, V; l=1.0, v₀=0.0)
+
+Field ``φ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity ``V``. On its
+frame of reference, the oscillon is of size ``l`` and swaying velocity ``v₀``.
+"""
+function oscillon(t, x, V; l=1.0, v₀=0.0)
     t′, x′ = boost(t, x, V)
 
     oscillon(t′, x′; v₀, l)
 end
 
-function ∂ₜoscillon(t, x, V; v₀=0.0, l=1.0)
+"""
+    ∂ₜoscillon(t, x, V; l=1.0, v₀=0.0)
+
+Partial derivative ``∂ₜφ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity
+``V``. On its frame of reference, the oscillon is of size ``l`` and swaying velocity ``v₀``.
+"""
+function ∂ₜoscillon(t, x, V; l=1.0, v₀=0.0)
     t′, x′ = boost(t, x, V)
 
     γ(V) * (∂ₜoscillon(t′, x′; v₀, l) - V * ∂ₓoscillon(t′, x′; v₀, l))
 end
 
-function ∂ₓoscillon(t, x, V; v₀=0.0, l=1.0)
+"""
+    ∂ₓoscillon(t, x, V; l=1.0, v₀=0.0)
+
+Partial derivative ``∂ₓφ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity
+``V``. On its frame of reference, the oscillon is of size ``l`` and swaying velocity ``v₀``.
+"""
+function ∂ₓoscillon(t, x, V; l=1.0, v₀=0.0)
     t′, x′ = boost(t, x, V)
 
     γ(V) * (∂ₓoscillon(t′, x′; v₀, l) - V * ∂ₜoscillon(t′, x′; v₀, l))
@@ -163,14 +212,34 @@ function a′b′(α, V; v₀=0.0)
     end
 end
 
-function x_R(α, V; l=1.0, v₀=0.0)
-    a, b = ab(α, V; v₀)
-    l * γ(V) / (1 + a * v₀ * V) * ((1 - V^2) * (1 + v₀ * b) + α * (V + v₀ * a))
-end
+"""
+    x_L(α, V; l=1.0, v₀=0.0)
 
+Position of the left border of a signum--Gordon oscillon moving uniformly with velocity
+``V`` when its phase is ``α``. On its frame of reference, the oscillon is of size ``l`` and
+swaying velocity ``v₀``.
+"""
 function x_L(α, V; l=1.0, v₀=0.0)
     a′, b′ = a′b′(α, V; v₀)
     l * γ(V) / (1 + a′ * v₀ * V) * ((1 - V^2) * (v₀ * b′) + α * (V + v₀ * a′))
 end
 
+"""
+    x_R(α, V; l=1.0, v₀=0.0)
+
+Position of the right border of a signum--Gordon oscillon moving uniformly with velocity
+``V`` when its phase is ``α``. On its frame of reference, the oscillon is of size ``l`` and
+swaying velocity ``v₀``.
+"""
+function x_R(α, V; l=1.0, v₀=0.0)
+    a, b = ab(α, V; v₀)
+    l * γ(V) / (1 + a * v₀ * V) * ((1 - V^2) * (1 + v₀ * b) + α * (V + v₀ * a))
+end
+
+"""
+    L(α, V; l=1.0, v₀=0.0)
+
+Size of a signum--Gordon oscillon moving uniformly with velocity ``V`` when its phase is
+``α``. On its frame of reference, the oscillon is of size ``l`` and swaying velocity ``v₀``.
+"""
 L(α, V; l=1.0, v₀=0.0) = x_R(α, V; l, v₀) - x_L(α, V; l, v₀)
