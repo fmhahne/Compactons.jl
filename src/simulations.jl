@@ -46,7 +46,6 @@ function kink_oscillon_superposition(l, α; dx=8e-4, sampling=10)
     return xsave, tsave, η, H
 end
 
-
 function perturbed_kink(ϵ; dx=8e-4, sampling=10)
     tsave = 0.0:1e-2:10.0
 
@@ -58,4 +57,39 @@ function perturbed_kink(ϵ; dx=8e-4, sampling=10)
 
     η, H = producedata(∂ₜη₀, η₀, (quadratic, dx), tsave; sampling=sampling)
     return xsave, tsave, η, H
+end
+
+function getenergies(u, t, integrator)
+    φ = @views u[end÷2+1:end]
+    ∂ₜφ = @views u[begin:end÷2]
+
+    N = length(φ)
+    model, dx = integrator.p
+
+    N₁ = N ÷ 2
+    N₂ = N ÷ 2 + round(Int, π / dx)
+
+    E₁ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i ∈ 2:N₁)
+    E₂ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i ∈ N₁+1:N₂) - π / 2
+    E₃ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i ∈ N₂+1:N-1)
+
+    return [E₁; E₂; E₃]
+end
+
+function kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
+    tsave = 0.0:(dx*sampling):10.0
+
+    x = -tsave[end]:dx:tsave[end]
+    xsave = x[begin:sampling:end]
+
+    η₀ = kink.(0.0, x) + oscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
+    ∂ₜη₀ = ∂ₜkink.(0.0, x) + ∂ₜoscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
+
+    energies = SavedValues(Float64, Vector{Float64})
+    cbenergies = SavingCallback(getenergies, energies; saveat=tsave)
+
+    η, H = producedata(∂ₜη₀, η₀, (quadratic, dx), tsave; callbacks=[cbenergies], dt=0.1dx, sampling)
+    E = reduce(hcat, energies.saveval)
+
+    return (x=xsave, t=tsave, η=η, H=H, E₁=E[1, :], E₂=E[2, :], E₃=E[3, :])
 end

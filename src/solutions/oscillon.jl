@@ -1,12 +1,6 @@
-export γ
-export oscillon, ∂ₜoscillon, ∂ₓoscillon, x_L, x_R
-export kink, ∂ₜkink, ∂ₓkink
-
-# Lorentz transformations
-
-γ(V) = 1.0 / √(1 - V^2)
-
 # Oscillon
+export oscillon, ∂ₜoscillon, ∂ₓoscillon
+export x_L, x_R, L
 
 x_L(t; v₀=0.0, l=1.0) = v₀ * t
 x_R(t; v₀=0.0, l=1.0) = x_L(t; v₀, l) + l
@@ -81,69 +75,102 @@ end
 # Moving oscillon
 
 function oscillon(t, x, V; v₀=0.0, l=1.0)
-    t′ = γ(V) * (t - V * x)
-    x′ = γ(V) * (x - V * t)
+    t′, x′ = boost(t, x, V)
 
-    oscillon(t′, x′, v₀=v₀, l=l)
+    oscillon(t′, x′; v₀, l)
 end
 
 function ∂ₜoscillon(t, x, V; v₀=0.0, l=1.0)
-    t′ = γ(V) * (t - V * x)
-    x′ = γ(V) * (x - V * t)
+    t′, x′ = boost(t, x, V)
 
-    γ(V) * (∂ₜoscillon(t′, x′; v₀=v₀, l=l) - V * ∂ₓoscillon(t′, x′; v₀=v₀, l=l))
+    γ(V) * (∂ₜoscillon(t′, x′; v₀, l) - V * ∂ₓoscillon(t′, x′; v₀, l))
 end
 
 function ∂ₓoscillon(t, x, V; v₀=0.0, l=1.0)
-    t′ = γ(V) * (t - V * x)
-    x′ = γ(V) * (x - V * t)
+    t′, x′ = boost(t, x, V)
 
-    γ(V) * (∂ₓoscillon(t′, x′; v₀=v₀, l=l) - V * ∂ₜoscillon(t′, x′; v₀=v₀, l=l))
+    γ(V) * (∂ₓoscillon(t′, x′; v₀, l) - V * ∂ₜoscillon(t′, x′; v₀, l))
 end
 
-# Kink
-
-function kink(x)
-    if x ≤ 0
-        0.0
-    elseif x ≤ π
-        1 - cos(x)
+function αₗ(V; v₀=0.0)
+    if V ≥ 0
+        (-1 + V * (2 + v₀)) / 2
     else
-        2.0
+        (1 - V * (2 + v₀)) / 2
     end
 end
 
-kink(t, x) = kink(x)
-
-∂ₜkink(t, x) = 0.0
-
-function ∂ₓkink(x)
-    if 0 ≤ x ≤ π
-        sin(x)
+function α₀(V; v₀=0.0)
+    if V ≥ 0
+        V
     else
-        0.0
+        1 - V
     end
 end
 
-∂ₓkink(t, x) = ∂ₓkink(x)
-
-# Moving kink
-
-function kink(t, x, V)
-    x′ = γ(V) * (x - V * t)
-
-    kink(x′)
+function αᵤ(V; v₀=0.0)
+    if V ≥ 0
+        (1 + V * (2 + v₀)) / 2
+    else
+        (3 - V * (2 + v₀)) / 2
+    end
 end
 
-function ∂ₜkink(t, x, V)
-    x′ = γ(V) * (x - V * t)
-
-    -V * γ(V) * ∂ₓkink(x′)
+function αₛ(V; v₀=0.0)
+    (1 + v₀ * V) / 2
 end
 
+function ab(α, V; v₀=0.0)
+    Vc = 1 / (2 + v₀)
 
-function ∂ₓkink(t, x, V)
-    x′ = γ(V) * (x - V * t)
+    A = (1, 1)
+    B = (-1, 0)
+    C = (1, 0)
+    D = (-1, 1)
+    E = (1, -1)
+    F = (-1, 2)
 
-    γ(V) * ∂ₓkink(x′)
+    if abs(V) == Vc
+        if α ≤ α₀(V; v₀)
+            V > 0 ? B : D
+        else
+            V > 0 ? C : E
+        end
+    elseif abs(V) < Vc
+        if α ≤ α₀(V; v₀)
+            V > 0 ? B : D
+        elseif α ≤ αᵤ(V; v₀)
+            V > 0 ? C : E
+        else
+            V > 0 ? D : F
+        end
+    else
+        if α ≤ αₗ(V; v₀)
+            V > 0 ? A : C
+        elseif α ≤ α₀(V; v₀)
+            V > 0 ? B : D
+        else
+            V > 0 ? C : E
+        end
+    end
 end
+
+function a′b′(α, V; v₀=0.0)
+    if α ≤ αₛ(V; v₀)
+        (1, 0)
+    else
+        (-1, 1)
+    end
+end
+
+function x_R(α, V; l=1.0, v₀=0.0)
+    a, b = ab(α, V; v₀)
+    l * γ(V) / (1 + a * v₀ * V) * ((1 - V^2) * (1 + v₀ * b) + α * (V + v₀ * a))
+end
+
+function x_L(α, V; l=1.0, v₀=0.0)
+    a′, b′ = a′b′(α, V; v₀)
+    l * γ(V) / (1 + a′ * v₀ * V) * ((1 - V^2) * (v₀ * b′) + α * (V + v₀ * a′))
+end
+
+L(α, V; l=1.0, v₀=0.0) = x_R(α, V; l, v₀) - x_L(α, V; l, v₀)
