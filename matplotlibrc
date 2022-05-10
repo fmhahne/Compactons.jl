@@ -1,6 +1,6 @@
 figure.autolayout : True
 figure.dpi : 300
-figure.figsize : 4.5, 3
+figure.figsize : 4.5, 2.78
 font.size : 8
 legend.frameon : False
 
