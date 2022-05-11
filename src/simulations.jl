@@ -88,7 +88,7 @@ function kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
     energies = SavedValues(Float64, Vector{Float64})
     cbenergies = SavingCallback(getenergies, energies; saveat=tsave)
 
-    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling)
+    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling, callbacks=[cbenergies])
     E = reduce(hcat, energies.saveval)
 
     return (x=xsave, t=tsave, η=η, H=H, E₁=E[1, :], E₂=E[2, :], E₃=E[3, :])
