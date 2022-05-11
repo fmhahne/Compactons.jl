@@ -1,7 +1,7 @@
 using DifferentialEquations
 
 export producedata
-export kink_antikink_scattering, kink_oscillon_scattering, kink_oscillon_superposition, perturbed_kink
+export kink_antikink_scattering, kink_oscillon_scattering, kink_oscillon_superposition, nonbps_kink
 
 function producedata(model, ∂ₜφ₀, φ₀, tsave; dx, dt=dx / 10, sampling=10, callbacks=[])
     savedhamiltonian = SavedValues(Float64, Vector{Float64})
@@ -46,7 +46,7 @@ function kink_oscillon_superposition(l, α; dx=1e-3, sampling=10)
     return xsave, tsave, η, H
 end
 
-function perturbed_kink(ϵ; dx=1e-3, sampling=10)
+function nonbps_kink(ϵ; dx=1e-3, sampling=10)
     tsave = 0.0:(dx*sampling):10.0
 
     x = -tsave[end]:dx:tsave[end]

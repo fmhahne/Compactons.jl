@@ -4,10 +4,10 @@ using JLD2, CodecZlib, UnPack
 include("../src/plots.jl")
 plt.style.use("matplotlibrc")
 
-mkpath("plots/perturbed_kink")
+mkpath("plots/nonbps_kink")
 
-for ϵ ∈ -0.50:0.05:0.50
-    basename = @sprintf "perturbed_kink/eps=%.2f" ϵ
+for ϵ ∈ -0.30:0.05:0.30
+    basename = @sprintf "nonbps_kink/eps=%.2f" ϵ
     @unpack t, x, η, H = load("data/$basename.jld2")
 
     figsize = (3.1, 2.6)
