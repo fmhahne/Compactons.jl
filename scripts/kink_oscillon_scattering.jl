@@ -1,55 +1,193 @@
-using Printf
-using JLD2, CodecZlib
-using UnPack
+using DrWatson
 using Compactons
-
-mkpath("data/kink_oscillon_scattering")
+include(srcdir("plots.jl"))
 
 ls = 0.5:0.5:2.0
 Vs = 0.0:0.25:0.75
 αs = 0.0:0.25:0.75
 v₀s = 0.0:0.25:0.75
 
-let V = 0.75, α = 0.0, v₀ = 0.0
-    for l ∈ ls
-        filename = @sprintf "data/kink_oscillon_scattering/l=%.2f,V=%.2f,alpha=%.2f,v0=%.2f.jld2" l V α v₀
-        print("Producing $filename … ")
+xlim = (-2, 8)
 
-        @unpack x, t, η, H, E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
-        jldsave(filename, true; x, t, η, H, E₁, E₂, E₃)
-        println("done")
+let V = 0.75, α = 0.0, v₀ = 0.0
+    fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.5), sharex=true, sharey=true)
+
+    for (l, ax) ∈ zip(ls, axs)
+        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        @unpack x, t, η, H, E₁, E₂, E₃ = data
+
+        χ = η - kink.(t', x)
+        heatmap!(ax, x, t, χ; cmap="RdBu", norm=mpl.colors.CenteredNorm())
+        ax.set_xlim(xlim...)
+        ax.set_title("\$l = $l\$")
+        ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
+        ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
     end
+
+    axs[1, 1].set_ylabel(raw"$t$")
+    axs[2, 1].set_ylabel(raw"$t$")
+    axs[2, 1].set_xlabel(raw"$x$")
+    axs[2, 2].set_xlabel(raw"$x$")
+
+    fig.savefig(plotsdir("kink_oscillon_scattering", "l.pdf"))
+    fig
 end
 
 let l = 0.5, α = 0.0, v₀ = 0.0
-    for V ∈ Vs
-        filename = @sprintf "data/kink_oscillon_scattering/l=%.2f,V=%.2f,alpha=%.2f,v0=%.2f.jld2" l V α v₀
-        print("Producing $filename … ")
+    fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false)
 
-        @unpack x, t, η, H, E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
-        jldsave(filename, true; x, t, η, H, E₁, E₂, E₃)
-        println("done")
+    norm = mpl.colors.CenteredNorm()
+    cmap = mpl.cm.get_cmap("RdBu")
+    cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+
+    for (V, ax) ∈ zip(Vs, axs)
+        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        @unpack x, t, η, H, E₁, E₂, E₃ = data
+
+        χ = η - kink.(t', x)
+        ax.imshow(χ'; origin="lower", extent=[x[begin], x[end], t[begin], t[end]], cmap=cmap, norm=norm)
+        ax.set_xlim(xlim...)
+        ax.set_title("\$V = $V\$")
+        ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
+        ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+
+        cb.set_array(χ)
+        cb.autoscale()
     end
+
+    axs[1, 1].set_ylabel(raw"$t$")
+    axs[2, 1].set_ylabel(raw"$t$")
+    axs[2, 1].set_xlabel(raw"$x$")
+    axs[2, 2].set_xlabel(raw"$x$")
+
+    fig.tight_layout()
+    fig.subplots_adjust(right=0.85)
+    cax = fig.add_axes([0.87, 0.15, 0.015, 0.7])
+    fig.colorbar(cb, cax=cax)
+
+    fig.savefig(plotsdir("kink_oscillon_scattering", "V.pdf"))
+    fig
 end
 
-let l = 1, V = 0.6, v₀ = 0.0
-    for α ∈ αs
-        filename = @sprintf "data/kink_oscillon_scattering/l=%.2f,V=%.2f,alpha=%.2f,v0=%.2f.jld2" l V α v₀
-        print("Producing $filename … ")
+let l = 1.0, V = 0.6, v₀ = 0.0
+    fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false)
 
-        @unpack x, t, η, H, E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
-        jldsave(filename, true; x, t, η, H, E₁, E₂, E₃)
-        println("done")
+    norm = mpl.colors.CenteredNorm()
+    cmap = mpl.cm.get_cmap("RdBu")
+    cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+
+    for (α, ax) ∈ zip(αs, axs)
+        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        @unpack x, t, η, H, E₁, E₂, E₃ = data
+
+        χ = η - kink.(t', x)
+        ax.imshow(χ'; origin="lower", extent=[x[begin], x[end], t[begin], t[end]], cmap=cmap, norm=norm)
+        ax.set_xlim(xlim...)
+        ax.set_title("\$\\alpha = $α\$")
+        ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
+        ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+
+        cb.set_array(χ)
+        cb.autoscale()
     end
+
+    axs[1, 1].set_ylabel(raw"$t$")
+    axs[2, 1].set_ylabel(raw"$t$")
+    axs[2, 1].set_xlabel(raw"$x$")
+    axs[2, 2].set_xlabel(raw"$x$")
+
+    fig.tight_layout()
+    fig.subplots_adjust(right=0.85)
+    cax = fig.add_axes([0.87, 0.15, 0.015, 0.7])
+    fig.colorbar(cb, cax=cax)
+
+    fig.savefig(plotsdir("kink_oscillon_scattering", "alpha.pdf"))
+    fig
 end
 
-let l = 0.75, V = 0.8, α = 0
-    for v₀ ∈ v₀s
-        filename = @sprintf "data/kink_oscillon_scattering/l=%.2f,V=%.2f,alpha=%.2f,v0=%.2f.jld2" l V α v₀
-        print("Producing $filename … ")
+let l = 0.75, V = 0.8, α = 0.0
+    fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false)
 
-        @unpack x, t, η, H, E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
-        jldsave(filename, true; x, t, η, H, E₁, E₂, E₃)
-        println("done")
+    norm = mpl.colors.CenteredNorm()
+    cmap = mpl.cm.get_cmap("RdBu")
+    cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+
+    for (v₀, ax) ∈ zip(v₀s, axs)
+        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        @unpack x, t, η, H, E₁, E₂, E₃ = data
+
+        χ = η - kink.(t', x)
+        ax.imshow(χ'; origin="lower", extent=[x[begin], x[end], t[begin], t[end]], cmap=cmap, norm=norm)
+        ax.set_xlim(xlim...)
+        ax.set_title("\$v_0 = $v₀\$")
+        ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
+        ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+
+        cb.set_array(χ)
+        cb.autoscale()
     end
+
+    axs[1, 1].set_ylabel(raw"$t$")
+    axs[2, 1].set_ylabel(raw"$t$")
+    axs[2, 1].set_xlabel(raw"$x$")
+    axs[2, 2].set_xlabel(raw"$x$")
+
+    fig.tight_layout()
+    fig.subplots_adjust(right=0.85)
+    cax = fig.add_axes([0.87, 0.15, 0.015, 0.7])
+    fig.colorbar(cb, cax=cax)
+
+    fig.savefig(plotsdir("kink_oscillon_scattering", "v0.pdf"))
+    fig
+end
+
+let l = 1.0, Vs = [0.6, 0.75], αs = [0.0, 0.50], v₀ = 0.0
+    fig, axs = plt.subplots(2, 2; figsize=(6.2, 6.2 * 2 / (1 + √5)), sharex=true, sharey=true, tight_layout=false)
+
+    for ((V, α), ax) ∈ zip(Iterators.product(Vs, αs), axs)
+        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        @unpack x, t, η, H, E₁, E₂, E₃ = data
+
+        ax.plot(t, E₁ / E₁[begin]; label=raw"$E_1(t) / E_\mathrm{osc}$")
+        ax.plot(t, E₂ / E₁[begin]; label=raw"$E_2(t) / E_\mathrm{osc}$")
+        ax.plot(t, E₃ / E₁[begin]; label=raw"$E_3(t) / E_\mathrm{osc}$")
+        ax.set_title("\$V = $V\$, \$\\alpha = $α\$")
+    end
+
+    fig.tight_layout()
+    handles, labels = axs[1, 1].get_legend_handles_labels()
+    fig.subplots_adjust(bottom=0.15)
+    fig.legend(handles, labels; loc="lower center", ncol=3, bbox_to_anchor=(0.5, 0))
+
+    axs[2, 1].set_xlabel(raw"$t$")
+    axs[2, 2].set_xlabel(raw"$t$")
+
+    fig.savefig(plotsdir("kink_oscillon_scattering", "energies-vs-time.pdf"))
+    fig
+end
+
+let l = 0.5, V = 0.8, α = 0.0, v₀ = 0.0
+    fig, ax = plt.subplots(sharex=true, sharey=true)
+
+    data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+    @unpack x, t, η, H, E₁, E₂, E₃ = data
+
+    χ = η - kink.(t', x)
+
+    ax.plot(x, χ[:, begin]; label=raw"$ t = 0 $")
+
+    n = findfirst(t .== 0.15)
+    ax.plot(x, χ[:, n]; label="\$ t = $(t[n]) \$")
+
+    n = findfirst(t .== 0.30)
+    ax.plot(x, χ[:, n]; label="\$ t = $(t[n]) \$")
+
+    ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
+    ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+    ax.set_xlim(-0.5, 0.5)
+
+    ax.legend()
+
+    fig.savefig(plotsdir("kink_oscillon_scattering", "profile.pdf"))
+    fig
 end

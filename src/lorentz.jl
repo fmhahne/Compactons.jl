@@ -1,5 +1,3 @@
-export γ, boost
-
 """
     γ(V)
 

@@ -11,7 +11,7 @@ let l = 1.0, V = 0.75
     for α ∈ 0.00:0.01:0.99
         for v₀ ∈ 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
-            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
             println("done")
         end
@@ -27,7 +27,7 @@ let l = 1.0, α = 0.0
     for V ∈ 0.00:0.01:0.99
         for v₀ ∈ 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
-            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
             println("done")
         end
@@ -43,7 +43,7 @@ let l = 1.0, v₀ = 0.0
     for V ∈ 0.00:0.01:0.99
         for α ∈ 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
-            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
             println("done")
         end
@@ -59,7 +59,7 @@ let V = 0.75, α = 0.0
     for l ∈ 0.50:0.025:3.00
         for v₀ ∈ 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
-            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
             println("done")
         end
@@ -75,7 +75,7 @@ let V = 0.75, v₀ = 0.0
     for l ∈ 0.50:0.025:3.00
         for α ∈ 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
-            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
             println("done")
         end
@@ -91,7 +91,7 @@ let α = 0.00, v₀ = 0.0
     for l ∈ 0.50:0.025:3.00
         for V ∈ 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
-            @unpack E₁, E₂, E₃ = kink_oscillon_scattering(l, V, α, v₀; dx=5e-3, sampling=2)
+            @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
             println("done")
         end

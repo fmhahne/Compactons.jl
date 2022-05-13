@@ -19,8 +19,8 @@ julia> ]
 (Compactons) pkg> instantiate
 ```
 
-## Generating data
+## Generating data and plots
 
 ```sh
-julia --project -t auto scripts/<simulation name>.jl
+julia --project -t auto scripts/<script name>.jl
 ```

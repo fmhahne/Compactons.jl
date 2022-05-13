@@ -1,6 +1,4 @@
-# Oscillon
-export oscillon, ∂ₜoscillon, ∂ₓoscillon
-export x_L, x_R, L
+# Oscillon at rest
 
 """
     x_L(t; l=1.0, v₀=0.0)

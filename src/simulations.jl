@@ -1,8 +1,3 @@
-using DifferentialEquations
-
-export producedata
-export kink_antikink_scattering, kink_oscillon_scattering, kink_oscillon_superposition, nonbps_kink
-
 function producedata(model, ∂ₜφ₀, φ₀, tsave; dx, dt=dx / 10, sampling=10, callbacks=[])
     savedhamiltonian = SavedValues(Float64, Vector{Float64})
     cbhamiltonian = SavingCallback(gethamiltonian, savedhamiltonian, saveat=tsave)
@@ -17,36 +12,18 @@ function producedata(model, ∂ₜφ₀, φ₀, tsave; dx, dt=dx / 10, sampling=
 
     φ = reduce(hcat, sol.u)
     H = reduce(hcat, savedhamiltonian.saveval)
+
     return φ, H
 end
 
-function kink_antikink_scattering(V; dx=8e-4, sampling=10)
-    tsave = ifelse(V < 0.5, 0.0:(dx*sampling):20.0, 0.0:(dx*sampling):10.0)
+simulation(parameters) = error("Simulation $(typeof(parameters)) not implemented")
 
-    x = -tsave[end]:dx:tsave[end]
-    xsave = x[begin:sampling:end]
-
-    η₀ = kink.(0.0, -abs.(x) .+ π / γ(V), V)
-    ∂ₜη₀ = ∂ₜkink.(0, -abs.(x) .+ π / γ(V), V)
-
-    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=1e-4)
-    return xsave, tsave, η, H
+struct NonBPSKink{T<:Real}
+    ϵ::T
 end
 
-function kink_oscillon_superposition(l, α; dx=1e-3, sampling=10)
-    tsave = 0.0:(dx*sampling):10.0
-
-    x = -tsave[end]:dx:tsave[end]
-    xsave = x[begin:sampling:end]
-
-    η₀ = kink.(x .+ π / 2) + oscillon.(α * l, x .+ l / 2, l=l)
-    ∂ₜη₀ = ∂ₜoscillon.(α * l, x .+ l / 2, l=l)
-
-    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling)
-    return xsave, tsave, η, H
-end
-
-function nonbps_kink(ϵ; dx=1e-3, sampling=10)
+function simulation(parameters::NonBPSKink; dx=1e-3, sampling=10)
+    ϵ = parameters.ϵ
     tsave = 0.0:(dx*sampling):10.0
 
     x = -tsave[end]:dx:tsave[end]
@@ -56,7 +33,33 @@ function nonbps_kink(ϵ; dx=1e-3, sampling=10)
     ∂ₜη₀ = zero(x)
 
     η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling)
-    return xsave, tsave, η, H
+    Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
+end
+
+struct KinkAntikink{T<:Real}
+    V::T
+end
+
+function simulation(parameters::KinkAntikink; dx=8e-4, sampling=10)
+    V = parameters.V
+    tsave = ifelse(V < 0.5, 0.0:(dx*sampling):20.0, 0.0:(dx*sampling):10.0)
+
+    x = -tsave[end]:dx:tsave[end]
+    xsave = x[begin:sampling:end]
+
+    η₀ = kink.(0.0, -abs.(x) .+ π / γ(V), V)
+    ∂ₜη₀ = ∂ₜkink.(0, -abs.(x) .+ π / γ(V), V)
+
+    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=1e-4)
+    Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
+end
+
+@with_kw struct KinkOscillon{T<:Real}
+    l::T
+    V::T
+    α::T
+    v₀::T
+    x₀::T = x_R(α, V; l, v₀)
 end
 
 function getenergies(u, t, integrator)
@@ -76,14 +79,15 @@ function getenergies(u, t, integrator)
     return [E₁; E₂; E₃]
 end
 
-function kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
+function simulation(parameters::KinkOscillon; dx=1e-3, sampling=10)
+    @unpack l, V, α, v₀, x₀ = parameters
     tsave = 0.0:(dx*sampling):10.0
 
     x = -tsave[end]:dx:tsave[end]
     xsave = x[begin:sampling:end]
 
-    η₀ = kink.(0.0, x) + oscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
-    ∂ₜη₀ = ∂ₜkink.(0.0, x) + ∂ₜoscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
+    η₀ = kink.(0.0, x) + oscillon.(l * α * γ(V), x .+ x₀, V; l, v₀)
+    ∂ₜη₀ = ∂ₜkink.(0.0, x) + ∂ₜoscillon.(l * α * γ(V), x .+ x₀, V; l, v₀)
 
     energies = SavedValues(Float64, Vector{Float64})
     cbenergies = SavingCallback(getenergies, energies; saveat=tsave)
@@ -91,5 +95,8 @@ function kink_oscillon_scattering(l, V, α, v₀; dx=1e-3, sampling=10)
     η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling, callbacks=[cbenergies])
     E = reduce(hcat, energies.saveval)
 
-    return (x=xsave, t=tsave, η=η, H=H, E₁=E[1, :], E₂=E[2, :], E₃=E[3, :])
+    return Dict(
+        "x" => xsave, "t" => tsave, "η" => η, "H" => H,
+        "E₁" => E[1, :], "E₂" => E[2, :], "E₃" => E[3, :]
+    )
 end

@@ -1,5 +1,4 @@
-# Kink
-export kink, ∂ₜkink, ∂ₓkink
+# Kink at rest
 
 """
     kink(x)
