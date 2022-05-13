@@ -1,3 +1,5 @@
+ENV["QT_QPA_PLATFORM"] = "wayland"
+
 using PyPlot
 using PyCall
 
@@ -18,20 +20,35 @@ rcParams["ytick.major.width"] = 0.5
 rcParams["xtick.minor.width"] = 0.5
 rcParams["ytick.minor.width"] = 0.5
 
-mpl.use("agg")
-
 axes_grid1 = pyimport("mpl_toolkits.axes_grid1")
 
-function heatmap!(ax, x, t, data; kwargs...)
-    extent = (x[1], x[end], t[1], t[end])
+function heatmap!(ax, x, t, data; colorbar=false, kwargs...)
+    extent = (x[begin], x[end], t[begin], t[end])
     implot = ax.imshow(data'; origin="lower", extent=extent, kwargs...)
+    ax.set_xlabel(raw"$x$")
+    ax.set_ylabel(raw"$t$")
 
-    ax.set_xlabel("\$x\$")
-    ax.set_ylabel("\$t\$")
+    if colorbar
+        divider = axes_grid1.make_axes_locatable(ax)
+        cax = divider.append_axes("right"; size=0.1, pad=0.05)
+        plt.colorbar(implot; ax=ax, cax=cax)
+    end
 
-    divider = axes_grid1.make_axes_locatable(ax)
-    cax = divider.append_axes("right", size=0.1, pad=0.05)
-    plt.colorbar(implot, ax=ax, cax=cax)
+    nothing
+end
+
+function shared_colorbar!(fig, cb)
+    fig.tight_layout()
+    fig.subplots_adjust(right=0.85)
+    cax = fig.add_axes([0.87, 0.16, 0.015, 0.74])
+    fig.colorbar(cb, cax=cax)
+
+    nothing
+end
+
+function show_kink_borders!(ax; color="black")
+    ax.axvline(0; linewidth=0.5, color=color, linestyle="dashed")
+    ax.axvline(float(π); linewidth=0.5, color=color, linestyle="dashed")
 
     nothing
 end

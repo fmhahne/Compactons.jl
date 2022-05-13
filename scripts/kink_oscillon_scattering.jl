@@ -17,17 +17,13 @@ let V = 0.75, α = 0.0, v₀ = 0.0
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         χ = η - kink.(t', x)
-        heatmap!(ax, x, t, χ; cmap="RdBu", norm=mpl.colors.CenteredNorm())
+        heatmap!(ax, x, t, χ; colorbar=true, cmap="RdBu", norm=mpl.colors.CenteredNorm())
+        show_kink_borders!(ax)
+
         ax.set_xlim(xlim...)
         ax.set_title("\$l = $l\$")
-        ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
-        ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+        ax.label_outer()
     end
-
-    axs[1, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_xlabel(raw"$x$")
-    axs[2, 2].set_xlabel(raw"$x$")
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "l.pdf"))
     fig
@@ -45,25 +41,18 @@ let l = 0.5, α = 0.0, v₀ = 0.0
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         χ = η - kink.(t', x)
-        ax.imshow(χ'; origin="lower", extent=[x[begin], x[end], t[begin], t[end]], cmap=cmap, norm=norm)
+        heatmap!(ax, x, t, χ; cmap="RdBu", norm=mpl.colors.CenteredNorm())
+        show_kink_borders!(ax)
+
         ax.set_xlim(xlim...)
         ax.set_title("\$V = $V\$")
-        ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
-        ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+        ax.label_outer()
 
         cb.set_array(χ)
         cb.autoscale()
     end
 
-    axs[1, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_xlabel(raw"$x$")
-    axs[2, 2].set_xlabel(raw"$x$")
-
-    fig.tight_layout()
-    fig.subplots_adjust(right=0.85)
-    cax = fig.add_axes([0.87, 0.15, 0.015, 0.7])
-    fig.colorbar(cb, cax=cax)
+    shared_colorbar!(fig, cb)
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "V.pdf"))
     fig
@@ -81,25 +70,18 @@ let l = 1.0, V = 0.6, v₀ = 0.0
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         χ = η - kink.(t', x)
-        ax.imshow(χ'; origin="lower", extent=[x[begin], x[end], t[begin], t[end]], cmap=cmap, norm=norm)
+        heatmap!(ax, x, t, χ; cmap="RdBu", norm=mpl.colors.CenteredNorm())
+        show_kink_borders!(ax)
+
         ax.set_xlim(xlim...)
         ax.set_title("\$\\alpha = $α\$")
-        ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
-        ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+        ax.label_outer()
 
         cb.set_array(χ)
         cb.autoscale()
     end
 
-    axs[1, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_xlabel(raw"$x$")
-    axs[2, 2].set_xlabel(raw"$x$")
-
-    fig.tight_layout()
-    fig.subplots_adjust(right=0.85)
-    cax = fig.add_axes([0.87, 0.15, 0.015, 0.7])
-    fig.colorbar(cb, cax=cax)
+    shared_colorbar!(fig, cb)
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "alpha.pdf"))
     fig
@@ -117,25 +99,18 @@ let l = 0.75, V = 0.8, α = 0.0
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         χ = η - kink.(t', x)
-        ax.imshow(χ'; origin="lower", extent=[x[begin], x[end], t[begin], t[end]], cmap=cmap, norm=norm)
+        heatmap!(ax, x, t, χ; cmap="RdBu", norm=mpl.colors.CenteredNorm())
+        show_kink_borders!(ax)
+
         ax.set_xlim(xlim...)
         ax.set_title("\$v_0 = $v₀\$")
-        ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
-        ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+        ax.label_outer()
 
         cb.set_array(χ)
         cb.autoscale()
     end
 
-    axs[1, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_xlabel(raw"$x$")
-    axs[2, 2].set_xlabel(raw"$x$")
-
-    fig.tight_layout()
-    fig.subplots_adjust(right=0.85)
-    cax = fig.add_axes([0.87, 0.15, 0.015, 0.7])
-    fig.colorbar(cb, cax=cax)
+    shared_colorbar!(fig, cb)
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "v0.pdf"))
     fig
@@ -151,16 +126,15 @@ let l = 1.0, Vs = [0.6, 0.75], αs = [0.0, 0.50], v₀ = 0.0
         ax.plot(t, E₁ / E₁[begin]; label=raw"$E_1(t) / E_\mathrm{osc}$")
         ax.plot(t, E₂ / E₁[begin]; label=raw"$E_2(t) / E_\mathrm{osc}$")
         ax.plot(t, E₃ / E₁[begin]; label=raw"$E_3(t) / E_\mathrm{osc}$")
+
         ax.set_title("\$V = $V\$, \$\\alpha = $α\$")
+        ax.label_outer()
     end
 
     fig.tight_layout()
     handles, labels = axs[1, 1].get_legend_handles_labels()
     fig.subplots_adjust(bottom=0.15)
     fig.legend(handles, labels; loc="lower center", ncol=3, bbox_to_anchor=(0.5, 0))
-
-    axs[2, 1].set_xlabel(raw"$t$")
-    axs[2, 2].set_xlabel(raw"$t$")
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "energies-vs-time.pdf"))
     fig
@@ -182,9 +156,10 @@ let l = 0.5, V = 0.8, α = 0.0, v₀ = 0.0
     n = findfirst(t .== 0.30)
     ax.plot(x, χ[:, n]; label="\$ t = $(t[n]) \$")
 
-    ax.axvline(0; linewidth=0.5, color="black", linestyle="dashed")
-    ax.axvline(float(π); linewidth=0.5, color="black", linestyle="dashed")
+    show_kink_borders!(ax)
+
     ax.set_xlim(-0.5, 0.5)
+    ax.set_xlabel(raw"$x$")
 
     ax.legend()
 

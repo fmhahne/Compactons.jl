@@ -13,23 +13,17 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
         data, _ = produce_or_load(datadir("nonbps_kink"), NonBPSKink(ϵ), simulation)
         @unpack x, t, η, H = data
 
-        ax.imshow(H'; origin="lower", extent=[x[begin], x[end], t[begin], t[end]], cmap=cmap, norm=norm)
+        heatmap!(ax, x, t, H; cmap=cmap, norm=norm)
+
         ax.set_xlim(-5, 5)
         ax.set_title("\$\\epsilon = $ϵ \$")
+        ax.label_outer()
 
         cb.set_array(H)
         cb.autoscale()
     end
 
-    axs[1, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_ylabel(raw"$t$")
-    axs[2, 1].set_xlabel(raw"$x$")
-    axs[2, 2].set_xlabel(raw"$x$")
-
-    fig.tight_layout()
-    fig.subplots_adjust(right=0.85)
-    cax = fig.add_axes([0.87, 0.15, 0.015, 0.7])
-    fig.colorbar(cb, cax=cax)
+    shared_colorbar!(fig, cb)
 
     fig.savefig(plotsdir("nonbps_kink", "hamiltonian.pdf"))
     fig
