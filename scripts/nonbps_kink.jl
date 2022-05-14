@@ -9,7 +9,7 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
     norm = mpl.colors.SymLogNorm(1e-5, clip=true)
     cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
 
-    for (ϵ, ax) ∈ zip(ϵs, axs)
+    for (ϵ, ax) ∈ zip(ϵs, Iterators.flatten(eachrow(axs)))
         data, _ = produce_or_load(datadir("nonbps_kink"), NonBPSKink(ϵ), simulation)
         @unpack x, t, η, H = data
 

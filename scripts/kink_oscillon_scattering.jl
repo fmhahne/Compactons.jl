@@ -12,7 +12,7 @@ xlim = (-2, 8)
 let V = 0.75, α = 0.0, v₀ = 0.0
     fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.5), sharex=true, sharey=true)
 
-    for (l, ax) ∈ zip(ls, axs)
+    for (l, ax) ∈ zip(ls, Iterators.flatten(eachrow(axs)))
         data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
@@ -36,7 +36,7 @@ let l = 0.5, α = 0.0, v₀ = 0.0
     cmap = mpl.cm.get_cmap("RdBu")
     cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
 
-    for (V, ax) ∈ zip(Vs, axs)
+    for (V, ax) ∈ zip(Vs, Iterators.flatten(eachrow(axs)))
         data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
@@ -65,7 +65,7 @@ let l = 1.0, V = 0.6, v₀ = 0.0
     cmap = mpl.cm.get_cmap("RdBu")
     cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
 
-    for (α, ax) ∈ zip(αs, axs)
+    for (α, ax) ∈ zip(αs, Iterators.flatten(eachrow(axs)))
         data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
@@ -94,7 +94,7 @@ let l = 0.75, V = 0.8, α = 0.0
     cmap = mpl.cm.get_cmap("RdBu")
     cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
 
-    for (v₀, ax) ∈ zip(v₀s, axs)
+    for (v₀, ax) ∈ zip(v₀s, Iterators.flatten(eachrow(axs)))
         data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
@@ -119,7 +119,7 @@ end
 let l = 1.0, Vs = [0.6, 0.75], αs = [0.0, 0.50], v₀ = 0.0
     fig, axs = plt.subplots(2, 2; figsize=(6.2, 6.2 * 2 / (1 + √5)), sharex=true, sharey=true, tight_layout=false)
 
-    for ((V, α), ax) ∈ zip(Iterators.product(Vs, αs), axs)
+    for ((V, α), ax) ∈ zip(Iterators.product(Vs, αs), Iterators.flatten(eachrow(axs)))
         data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
