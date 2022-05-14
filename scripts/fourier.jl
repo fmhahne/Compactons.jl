@@ -41,9 +41,7 @@ let l = 1.0, α = 0.75, v₀ = 0.0, ns = [31, 61, 91]
         g̃ₖ = fft(@. ∂ₜoscillon(l * α * γ(V), x + x₀, V; l, v₀))
 
         for (n, ax) ∈ zip(ns, axs[i, 1:3])
-            if i == 1
-                ax.set_title("\$t = $(t[ns[1]])\$")
-            end
+            ax.set_title("\$V = $V, \\, t = $(t[n])\$")
             ax.plot(x, η[:, n] - kink.(x); label="Simulação", color="black")
             ax.plot(x, real.(χ(t[n], k, f̃ₖ, g̃ₖ)); label="Semi-analítico", color="C3", linestyle="dashed")
             ax.set_xlim(0, float(π))
@@ -52,8 +50,6 @@ let l = 1.0, α = 0.75, v₀ = 0.0, ns = [31, 61, 91]
         end
     end
 
-    axs[1, 1].set_ylabel(raw"$V = 0$"; fontsize="large")
-    axs[2, 1].set_ylabel(raw"$V = 0.75$"; fontsize="large")
     fig.tight_layout()
 
     handles, labels = axs[1, 1].get_legend_handles_labels()
