@@ -1,9 +1,3 @@
-using LoopVectorization
-
-export Model
-export fieldeq!, gethamiltonian, getenergy, 𝒯
-export signumgordon, quadratic, toy
-
 struct Model
     V::Function
     V′::Function
