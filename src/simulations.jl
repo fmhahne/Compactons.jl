@@ -60,6 +60,7 @@ end
     α::T
     v₀::T
     x₀::T = x_R(α, V; l, v₀)
+    model::Model = quadratic
 end
 
 function getenergies(u, t, integrator)
@@ -80,19 +81,27 @@ function getenergies(u, t, integrator)
 end
 
 function simulation(parameters::KinkOscillon; dx=1e-3, sampling=10)
-    @unpack l, V, α, v₀, x₀ = parameters
+    @unpack l, V, α, v₀, x₀, model = parameters
     tsave = 0.0:(dx*sampling):10.0
 
     x = -tsave[end]:dx:tsave[end]
     xsave = x[begin:sampling:end]
 
-    η₀ = kink.(0.0, x) + oscillon.(l * α * γ(V), x .+ x₀, V; l, v₀)
-    ∂ₜη₀ = ∂ₜkink.(0.0, x) + ∂ₜoscillon.(l * α * γ(V), x .+ x₀, V; l, v₀)
+    η₀ = oscillon.(l * α * γ(V), x .+ x₀, V; l, v₀)
+    ∂ₜη₀ = ∂ₜoscillon.(l * α * γ(V), x .+ x₀, V; l, v₀)
+
+    η₀ += if model == quadratic
+        kink.(0, x)
+    elseif model == toy
+        toykink.(0, x)
+    else
+        error("Kink not implemented")
+    end
 
     energies = SavedValues(Float64, Vector{Float64})
     cbenergies = SavingCallback(getenergies, energies; saveat=tsave)
 
-    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling, callbacks=[cbenergies])
+    η, H = producedata(model, ∂ₜη₀, η₀, tsave; dx, sampling, callbacks=[cbenergies])
     E = reduce(hcat, energies.saveval)
 
     return Dict(
