@@ -1,7 +1,7 @@
 """
-    toykink(x)
+    toykink(t, x)
 
-Field ``η(x)`` for a kink at rest in the toy model.
+Field ``η(t, x)`` for a kink at rest in the toy model.
 """
 function toykink(t, x)
     if x ≤ 0
