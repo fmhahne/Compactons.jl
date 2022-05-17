@@ -18,6 +18,11 @@ toy = Model(
     η -> sign(mod(η - 1, 2) - sign(mod(η - 1, 2)))
 )
 
+generalizedmodel(k) = Model(
+    η -> (2 - k) / 2 * (1 - abs(mod(η, 2) - 1)^(k + 1)),
+    η -> -(2 - k) / 2 * (k + 1) * abs(mod(η, 2) - 1)^k * sign(mod(η, 2) - 1) * sign(mod(η, 2))
+)
+
 function fieldeq!(∂ₜₜφ, ∂ₜφ, φ, (model, dx), t)
     N = length(φ)
 
