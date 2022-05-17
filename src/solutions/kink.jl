@@ -23,7 +23,7 @@ Field ``η(t, x)`` for a kink at rest in the quadratic periodic model.
 kink(t, x) = kink(x)
 
 """
-    kink(t, x)
+    ∂ₜkink(t, x)
 
 Partial derivative ``∂ₜη(t, x)`` for a kink at rest in the quadratic periodic model.
 """
