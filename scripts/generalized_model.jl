@@ -27,30 +27,35 @@ let η = -3:1e-3:3, x = -0.5:1e-3:4
     fig
 end
 
-let
-    dx = 5e-4
-    x = -3:dx:3
-    N = length(x)
-
-    tsave = 0.0:1e-2:0.75
-    tspan = tsave[1], tsave[end]
-
-    xsave = x[1:10:N]
-
-    l = 1
-    Δ = 0
-    V = 0
-
+let α = 0.25, l = 1.0, V = 0.0, v₀ = 0.0
     fig, ax = plt.subplots()
-    for k ∈ 0.98:0.01:1.02
-        model = generalizedmodel(k)
-        η₀ = generalizedkink.(0, x .+ x₀(k); k=k) + oscillon.(0.25 * l, x .+ 0.5 * l .- Δ, V; l=l)
-        ∂ₜη₀ = ∂ₜoscillon.(0.25 * l, x .+ 0.5 * l .- Δ, V; l=l)
 
-        η, H = producedata(model, ∂ₜη₀, η₀, tsave; dx, dt=dx / 10, sampling=10)
-        χ = η - generalizedkink.(tsave', xsave .+ x₀(k); k=k)
-        ax.plot(xsave, χ[:, end] - χ[end:-1:1, end]; label="\$k=$k\$")
+    for k ∈ 0.98:0.01:1.02
+        parameters = @strdict l V α v₀ k
+        data, _ = produce_or_load(datadir("generalized_model"), parameters) do parameters
+            @unpack l, V, α, v₀, k = parameters
+            model = generalizedmodel(k)
+
+            dx = 5e-4
+            x = -3:dx:3
+
+            tsave = 0.0:1e-2:0.75
+            tspan = tsave[1], tsave[end]
+            xsave = x[begin:10:end]
+
+            η₀ = @. generalizedkink(0, x + x₀(k); k=k) + oscillon(α * l, x + l / 2, V; l, v₀)
+            ∂ₜη₀ = @. ∂ₜoscillon(α * l, x + l / 2, V; l, v₀)
+
+            η, H = producedata(model, ∂ₜη₀, η₀, tsave; dx, dt=dx / 10, sampling=10)
+            Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
+        end
+
+        @unpack x, t, η, H = data
+        χ = η - generalizedkink.(t', x .+ x₀(k); k=k)
+
+        ax.plot(x, χ[:, end] - χ[end:-1:1, end]; label="\$k=$k\$")
     end
+
     ax.set_xlim(-1.5, 1.5)
     ax.set_title(raw"$\chi(0.75, x) - \chi(0.75, -x)$")
     ax.set_xlabel(raw"$x$")
