@@ -73,3 +73,13 @@ let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
     fig.savefig(plotsdir("oscillon.pdf"))
     fig
 end
+
+let x = -0.1:1e-3:(π+0.1)
+    fig, ax = plt.subplots()
+    ax.plot(x, kink.(x); label=raw"$\eta_K(x)$", color="black")
+    ax.plot(x, @. 2 - kink(x); label=raw"$\eta_\bar{K}(x)$", color="gray", linestyle="dashed")
+    ax.legend()
+    ax.set_xlim(x[begin], x[end])
+    fig.savefig(plotsdir("kink.pdf"))
+    fig
+end
