@@ -48,3 +48,28 @@ let l = 2, V = 0.6, v₀s = [0, 0.5], αs = [0, 0.25]
     fig.savefig(plotsdir("kink_oscillon_scattering", "initial.pdf"))
     fig
 end
+
+let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
+    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), tight_layout=false, sharey=true)
+    norm = mpl.colors.CenteredNorm()
+    cmap = "RdBu"
+    cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+
+    Δ = v₀ * l / 2
+    for (ax, V) ∈ zip(axs, Vs)
+        x = (-V*l):1e-3:(l+Δ+V*l)
+        t = -l:1e-3:l
+        φ = oscillon.(t', x, V; l, v₀)
+
+        heatmap!(ax, x, t, φ; cmap=cmap, norm=norm)
+        ax.set_title("\$ V = $V \$")
+        ax.label_outer()
+
+        cb.set_array(φ)
+        cb.autoscale()
+    end
+
+    shared_colorbar!(fig, cb)
+    fig.savefig(plotsdir("oscillon.pdf"))
+    fig
+end
