@@ -9,7 +9,7 @@ rcParams = PyDict(PyPlot.matplotlib."rcParams")
 
 rcParams["figure.autolayout"] = true
 rcParams["figure.figsize"] = 4.5, 2.78
-rcParams["figure.dpi"] = 300
+rcParams["figure.dpi"] = 250
 rcParams["font.size"] = 8
 rcParams["legend.frameon"] = false
 rcParams["lines.linewidth"] = 1
