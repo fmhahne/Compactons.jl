@@ -54,6 +54,24 @@ function simulation(parameters::KinkAntikink; dx=8e-4, sampling=10)
     Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 
+struct KinkKink{T<:Real}
+    V::T
+end
+
+function simulation(parameters::KinkKink; dx=1e-3, sampling=10)
+    V = parameters.V
+    tsave = ifelse(V < 0.5, 0.0:(dx*sampling):20.0, 0.0:(dx*sampling):10.0)
+
+    x = -tsave[end]:dx:tsave[end]
+    xsave = x[begin:sampling:end]
+
+    η₀ = @. kink(0.0, x + π / γ(V), V) + kink(0.0, x, -V) - 2
+    ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(V), V) + ∂ₜkink(0.0, x, -V)
+
+    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=1e-4)
+    Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
+end
+
 @with_kw struct KinkOscillon{T<:Real}
     l::T
     V::T

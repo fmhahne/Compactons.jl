@@ -12,7 +12,7 @@ export Model
 export signumgordon, quadratic, toy, generalizedmodel
 export fieldeq!, gethamiltonian, getenergy, 𝒯
 export producedata, simulation
-export KinkAntikink, KinkOscillon, NonBPSKink
+export KinkAntikink, KinkKink, KinkOscillon, NonBPSKink
 export kink, ∂ₜkink, ∂ₓkink
 export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
