@@ -36,39 +36,47 @@ function simulation(parameters::NonBPSKink; dx=1e-3, sampling=10)
     Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 
-struct KinkAntikink{T<:Real}
+@with_kw struct KinkAntikink{T<:Real}
     V::T
+    dx::T = 1e-3
+    dt::T = 0.1dx
+    tmax::T = 10.0
+    sampling::Int = 10
 end
 
-function simulation(parameters::KinkAntikink; dx=8e-4, sampling=10)
-    V = parameters.V
-    tsave = ifelse(V < 0.5, 0.0:(dx*sampling):20.0, 0.0:(dx*sampling):10.0)
+function simulation(parameters::KinkAntikink)
+    @unpack V, dx, dt, tmax, sampling = parameters
+    tsave = 0.0:(dx*sampling):tmax
 
-    x = -tsave[end]:dx:tsave[end]
+    x = -tmax:dx:tmax
     xsave = x[begin:sampling:end]
 
     η₀ = kink.(0.0, -abs.(x) .+ π / γ(V), V)
     ∂ₜη₀ = ∂ₜkink.(0, -abs.(x) .+ π / γ(V), V)
 
-    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=1e-4)
+    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, dt, sampling)
     Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 
-struct KinkKink{T<:Real}
+@with_kw struct KinkKink{T<:Real}
     V::T
+    dx::T = 1e-3
+    dt::T = 0.1dx
+    tmax::T = 10.0
+    sampling::Int = 10
 end
 
 function simulation(parameters::KinkKink; dx=1e-3, sampling=10)
-    V = parameters.V
-    tsave = ifelse(V < 0.5, 0.0:(dx*sampling):20.0, 0.0:(dx*sampling):10.0)
+    @unpack V, dx, dt, tmax, sampling = parameters
+    tsave = 0.0:(dx*sampling):tmax
 
-    x = -tsave[end]:dx:tsave[end]
+    x = -tmax:dx:tmax
     xsave = x[begin:sampling:end]
 
     η₀ = @. kink(0.0, x + π / γ(V), V) + kink(0.0, x, -V) - 2
     ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(V), V) + ∂ₜkink(0.0, x, -V)
 
-    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=1e-4)
+    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=0.1dx)
     Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 

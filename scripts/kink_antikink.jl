@@ -2,10 +2,10 @@ using DrWatson
 using Compactons
 include(srcdir("plots.jl"))
 
-fig, axs = plt.subplots(3, 2; figsize=(6.2, 5), sharex=true, sharey=true)
+fig, axs = plt.subplots(3, 2; figsize=(6.2, 6.2), sharex="col", sharey="row", gridspec_kw=Dict("height_ratios" => [20, 15, 10]))
 
-for (i, V) ∈ enumerate([0.3, 0.6, 0.9])
-    data, _ = produce_or_load(datadir("kink_antikink"), KinkAntikink(V), simulation)
+for (i, (V, tmax)) ∈ enumerate(zip([0.3, 0.6, 0.9], [20.0, 15.0, 10.0]))
+    data, _ = produce_or_load(datadir("kink_antikink"), KinkAntikink(; V, tmax), simulation)
     @unpack x, t, η, H = data
 
     heatmap!(axs[i, 1], x, t, η; colorbar=true, norm=mpl.colors.CenteredNorm())
