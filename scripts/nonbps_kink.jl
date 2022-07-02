@@ -1,3 +1,4 @@
+using DelimitedFiles
 using DrWatson
 using Compactons
 include(srcdir("plots.jl"))
@@ -13,7 +14,11 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
         data, _ = produce_or_load(datadir("nonbps_kink"), NonBPSKink(ϵ), simulation)
         @unpack x, t, η, H = data
 
+        b = readdlm(datadir("perturbed_kink", "borders", "$ϵ.csv"), ',', Float64, '\n')
+
         heatmap!(ax, x, t, H; cmap=cmap, norm=norm)
+        ax.plot(π ./ (2 * b[:, 2]), border[:, 1]; color="lime")
+        ax.plot(-π ./ (2 * b[:, 2]), border[:, 1]; color="lime")
 
         ax.set_xlim(-5, 5)
         ax.set_title("\$\\epsilon = $ϵ \$")
@@ -25,7 +30,7 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
 
     shared_colorbar!(fig, cb)
 
-    fig.savefig(plotsdir("nonbps_kink", "hamiltonian.pdf"))
+    fig.savefig(plotsdir("nonbps_kink", "hamiltonian-borders.pdf"))
     fig
 end
 
