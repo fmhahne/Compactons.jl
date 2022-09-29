@@ -4,7 +4,7 @@ Simulations for interacting compactons in scalar field theories with non-analyti
 
 ## Prequisites
 
-Install oficial Julia binaries:
+Install official Julia binaries:
 
 ```sh
 curl -fsSL https://install.julialang.org | sh
