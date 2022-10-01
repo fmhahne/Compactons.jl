@@ -4,7 +4,7 @@ include(srcdir("plots.jl"))
 
 fig, axs = plt.subplots(3, 2; figsize=(6.2, 6.2), sharex="col", sharey="row", gridspec_kw=Dict("height_ratios" => [20, 15, 10]))
 
-for (i, (V, tmax)) ∈ enumerate(zip([0.3, 0.6, 0.9], [20.0, 15.0, 10.0]))
+for (i, (V, tmax)) in enumerate(zip([0.3, 0.6, 0.9], [20.0, 15.0, 10.0]))
     data, _ = produce_or_load(datadir("kink_antikink"), KinkAntikink(; V, tmax), simulation)
     @unpack x, t, η, H = data
 

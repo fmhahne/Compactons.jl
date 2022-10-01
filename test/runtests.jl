@@ -18,7 +18,7 @@ tsave = 0:1e-2:1.0
 ∂ₜφ₀ = ∂ₜoscillon.(0.0, x, 0.1)
 field1, hamiltonian1 = producedata(signumgordon, ∂ₜφ₀, φ₀, tsave; dx, sampling=1)
 
-for (i, t) ∈ enumerate(tsave)
+for (i, t) in enumerate(tsave)
     @test field1[:, i] ≈ oscillon.(t, x, 0.1) atol = 1e-3
 end
 
@@ -26,6 +26,6 @@ end
 ∂ₜη₀ = ∂ₜkink.(0.0, x, 0.1)
 field2, hamiltonian2 = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=1)
 
-for (i, t) ∈ enumerate(tsave)
+for (i, t) in enumerate(tsave)
     @test field2[:, i] ≈ kink.(t, x, 0.1) atol = 1e-3
 end

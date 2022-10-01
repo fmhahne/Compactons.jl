@@ -33,7 +33,7 @@ function simulation(parameters::NonBPSKink; dx=1e-3, sampling=10)
     ∂ₜη₀ = zero(x)
 
     η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling)
-    Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
+    return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 
 @with_kw struct KinkAntikink{T<:Real}
@@ -55,7 +55,7 @@ function simulation(parameters::KinkAntikink)
     ∂ₜη₀ = ∂ₜkink.(0, -abs.(x) .+ π / γ(V), V)
 
     η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, dt, sampling)
-    Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
+    return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 
 @with_kw struct KinkKink{T<:Real}
@@ -77,7 +77,7 @@ function simulation(parameters::KinkKink; dx=1e-3, sampling=10)
     ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(V), V) + ∂ₜkink(0.0, x, -V)
 
     η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=0.1dx)
-    Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
+    return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 
 @with_kw struct KinkOscillon{T<:Real}
@@ -99,9 +99,9 @@ function getenergies(u, t, integrator)
     N₁ = N ÷ 2
     N₂ = N ÷ 2 + round(Int, π / dx)
 
-    E₁ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i ∈ 2:N₁)
-    E₂ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i ∈ N₁+1:N₂) - π / 2
-    E₃ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i ∈ N₂+1:N-1)
+    E₁ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i in 2:N₁)
+    E₂ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i in N₁+1:N₂) - π / 2
+    E₃ = dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i in N₂+1:N-1)
 
     return [E₁; E₂; E₃]
 end

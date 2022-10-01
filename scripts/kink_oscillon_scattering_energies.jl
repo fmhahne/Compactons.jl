@@ -8,8 +8,8 @@ mkpath("data/kink_oscillon_scattering_energies")
 let l = 1.0, V = 0.75
     energies = Dict()
 
-    for α ∈ 0.00:0.01:0.99
-        for v₀ ∈ 0.00:0.01:0.99
+    for α in 0.00:0.01:0.99
+        for v₀ in 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
             @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
@@ -24,8 +24,8 @@ end
 let l = 1.0, α = 0.0
     energies = Dict()
 
-    for V ∈ 0.00:0.01:0.99
-        for v₀ ∈ 0.00:0.01:0.99
+    for V in 0.00:0.01:0.99
+        for v₀ in 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
             @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
@@ -40,8 +40,8 @@ end
 let l = 1.0, v₀ = 0.0
     energies = Dict()
 
-    for V ∈ 0.00:0.01:0.99
-        for α ∈ 0.00:0.01:0.99
+    for V in 0.00:0.01:0.99
+        for α in 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
             @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
@@ -56,8 +56,8 @@ end
 let V = 0.75, α = 0.0
     energies = Dict()
 
-    for l ∈ 0.50:0.025:3.00
-        for v₀ ∈ 0.00:0.01:0.99
+    for l in 0.50:0.025:3.00
+        for v₀ in 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
             @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
@@ -72,8 +72,8 @@ end
 let V = 0.75, v₀ = 0.0
     energies = Dict()
 
-    for l ∈ 0.50:0.025:3.00
-        for α ∈ 0.00:0.01:0.99
+    for l in 0.50:0.025:3.00
+        for α in 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
             @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)
@@ -88,8 +88,8 @@ end
 let α = 0.00, v₀ = 0.0
     energies = Dict()
 
-    for l ∈ 0.50:0.025:3.00
-        for V ∈ 0.00:0.01:0.99
+    for l in 0.50:0.025:3.00
+        for V in 0.00:0.01:0.99
             print("Simulating l=$l, V=$V, α=$α, v₀=$v₀ … ")
             @unpack E₁, E₂, E₃ = simulation(KinkOscillon(; l, V, α, v₀); dx=5e-3, sampling=2)
             energies[(l=l, V=V, α=α, v₀=v₀)] = (E₁=E₁, E₂=E₂, E₃=E₃)

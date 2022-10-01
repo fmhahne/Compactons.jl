@@ -11,7 +11,7 @@ let V = 0.0, v₀ = 0.0, l = 1.0
     cmap = mpl.cm.get_cmap("magma")
     cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
 
-    for (α, ax) ∈ zip([0, 0.25], axs)
+    for (α, ax) in zip([0, 0.25], axs)
         x₀ = -(π - x_R(α, V; l, v₀) - x_L(α, V; l, v₀)) / 2
         data, _ = produce_or_load(datadir("kink_oscillon_superposition"), KinkOscillon(; l, V, α, v₀, x₀), simulation)
         @unpack x, t, η, H = data
@@ -39,7 +39,7 @@ let V = 0.0, v₀ = 0.0, l = 1.0
     cmap = mpl.cm.get_cmap("RdBu")
     cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
 
-    for (α, ax) ∈ zip([0.25, 0.75], axs)
+    for (α, ax) in zip([0.25, 0.75], axs)
         x₀ = -(π - x_R(α, V; l, v₀) - x_L(α, V; l, v₀)) / 2
         data, _ = produce_or_load(datadir("kink_oscillon_superposition"), KinkOscillon(; l, V, α, v₀, x₀), simulation)
         @unpack x, t, η, H = data
@@ -65,7 +65,7 @@ end
 let l = 1.0, V = 0.75, v₀ = 0.0
     fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=true)
 
-    for (i, α) ∈ enumerate([0.0, 0.25])
+    for (i, α) in enumerate([0.0, 0.25])
         x₀ = -(π - x_R(α, V; l, v₀) - x_L(α, V; l, v₀)) / 2
         data, _ = produce_or_load(datadir("kink_oscillon_superposition"), KinkOscillon(; l, V, α, v₀, x₀), simulation)
         @unpack x, t, η, H = data
@@ -94,7 +94,7 @@ end
 let l = 1.0, V = 0.75, v₀ = 0.0
     fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=true)
 
-    for (i, α) ∈ enumerate([0.0, 0.25])
+    for (i, α) in enumerate([0.0, 0.25])
         x₀ = x_L(α, V; l, v₀)
         data, _ = produce_or_load(datadir("kink_oscillon_superposition"), KinkOscillon(; l, V, α, v₀, x₀), simulation)
         @unpack x, t, η, H = data

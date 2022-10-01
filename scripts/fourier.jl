@@ -40,7 +40,7 @@ let l = 1.0, α = 0.75, v₀ = 0.0, ns = [31, 61, 91]
         f̃ₖ = fft(@. oscillon.(l * α * γ(V), x + x₀, V; l, v₀))
         g̃ₖ = fft(@. ∂ₜoscillon(l * α * γ(V), x + x₀, V; l, v₀))
 
-        for (n, ax) ∈ zip(ns, axs[i, 1:3])
+        for (n, ax) in zip(ns, axs[i, 1:3])
             ax.set_title("\$V = $V, \\, t = $(t[n])\$")
             ax.plot(x, η[:, n] - kink.(x); label="Simulação", color="black")
             ax.plot(x, real.(χ(t[n], k, f̃ₖ, g̃ₖ)); label="Semi-analítico", color="C3", linestyle="dashed")

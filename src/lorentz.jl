@@ -14,5 +14,5 @@ function boost(t, x, V)
     t′ = γ(V) * (t - V * x)
     x′ = γ(V) * (x - V * t)
 
-    (t′, x′)
+    return (t′, x′)
 end

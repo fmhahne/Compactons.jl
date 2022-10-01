@@ -27,12 +27,12 @@ function fieldeq!(∂ₜₜφ, ∂ₜφ, φ, (model, dx), t)
     N = length(φ)
 
     ∂ₜₜφ[1] = 0
-    @tturbo for i ∈ 2:N-1
+    @tturbo for i in 2:N-1
         ∂ₜₜφ[i] = (φ[i+1] + φ[i-1] - 2φ[i]) / dx^2 - model.V′(φ[i])
     end
     ∂ₜₜφ[N] = 0
 
-    nothing
+    return nothing
 end
 
 𝒯(∂ₜφ, ∂ₓφ) = (∂ₜφ^2 + ∂ₓφ^2) / 2
@@ -46,7 +46,7 @@ function gethamiltonian(u, t, integrator)
     save_idxs = integrator.opts.save_idxs .- N
 
     H = zero(φ)
-    for i ∈ intersect(2:N-1, save_idxs)
+    for i in intersect(2:N-1, save_idxs)
         @inbounds H[i] = 𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i])
     end
 
@@ -60,5 +60,5 @@ function getenergy(u, t, integrator)
     N = length(φ)
     model, dx = integrator.p
 
-    return dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i ∈ 2:N-1)
+    return dx * sum(𝒯(∂ₜφ[i], (φ[i+1] - φ[i-1]) / (2dx)) + model.V(φ[i]) for i in 2:N-1)
 end

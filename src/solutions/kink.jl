@@ -60,7 +60,7 @@ model.
 function kink(t, x, V)
     _, x′ = boost(t, x, V)
 
-    kink(x′)
+    return kink(x′)
 end
 
 """
@@ -72,7 +72,7 @@ quadratic periodic model.
 function ∂ₜkink(t, x, V)
     _, x′ = boost(t, x, V)
 
-    -V * γ(V) * ∂ₓkink(x′)
+    return -V * γ(V) * ∂ₓkink(x′)
 end
 
 """
@@ -84,5 +84,5 @@ quadratic periodic model.
 function ∂ₓkink(t, x, V)
     _, x′ = boost(t, x, V)
 
-    γ(V) * ∂ₓkink(x′)
+    return γ(V) * ∂ₓkink(x′)
 end

@@ -32,7 +32,7 @@ let l = 2, V = 0.6, v₀s = [0, 0.5], αs = [0, 0.25]
     x = -5:1e-3:10
     fig, axs = plt.subplots(2, 2; figsize=(6.2, 6.2 * 2 / (1 + √5)), sharex=true, sharey=true, tight_layout=true)
 
-    for ((α, v₀), ax) ∈ zip(Iterators.product(αs, v₀s), axs)
+    for ((α, v₀), ax) in zip(Iterators.product(αs, v₀s), axs)
         η₀ = kink.(0.0, x) + oscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
         ∂ₜη₀ = ∂ₜkink.(0.0, x) + ∂ₜoscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
 
@@ -56,7 +56,7 @@ let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
     cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
 
     Δ = v₀ * l / 2
-    for (ax, V) ∈ zip(axs, Vs)
+    for (ax, V) in zip(axs, Vs)
         x = (-V*l):1e-3:(l+Δ+V*l)
         t = -l:1e-3:l
         φ = oscillon.(t', x, V; l, v₀)

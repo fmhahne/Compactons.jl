@@ -29,7 +29,7 @@ function bc!(residual, u, p, r)
     residual[3] = u(R)[3] - 1.0
     residual[4] = u(R)[4] - 1.0
 
-    nothing
+    return nothing
 end
 
 λ = 1.0

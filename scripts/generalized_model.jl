@@ -5,7 +5,7 @@ include(srcdir("plots.jl"))
 let η = -3:1e-3:3, x = -0.5:1e-3:4
     fig, axs = plt.subplots(1, 2; figsize=(6.2, 3))
 
-    for k ∈ 0:0.25:1
+    for k in 0:0.25:1
         axs[1].plot(η, generalizedmodel(k).V.(η); label="\$k = $k\$")
     end
 
@@ -14,7 +14,7 @@ let η = -3:1e-3:3, x = -0.5:1e-3:4
     axs[1].set_title(raw"$V_k(\eta)$")
     axs[1].set_xlim(η[begin], η[end])
 
-    for k ∈ 0:0.25:1
+    for k in 0:0.25:1
         axs[2].plot(x, generalizedkink.(0, x; k=k); label="\$k = $k\$")
     end
 
@@ -30,7 +30,7 @@ end
 let α = 0.25, l = 1.0, V = 0.0, v₀ = 0.0
     fig, ax = plt.subplots()
 
-    for k ∈ 0.98:0.01:1.02
+    for k in 0.98:0.01:1.02
         parameters = @strdict l V α v₀ k
         data, _ = produce_or_load(datadir("generalized_model"), parameters) do parameters
             @unpack l, V, α, v₀, k = parameters
@@ -47,7 +47,7 @@ let α = 0.25, l = 1.0, V = 0.0, v₀ = 0.0
             ∂ₜη₀ = @. ∂ₜoscillon(α * l, x + l / 2, V; l, v₀)
 
             η, H = producedata(model, ∂ₜη₀, η₀, tsave; dx, dt=dx / 10, sampling=10)
-            Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
+            return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
         end
 
         @unpack x, t, η, H = data

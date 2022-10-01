@@ -112,7 +112,7 @@ frame of reference, the oscillon is of size ``l`` and swaying velocity ``v₀``.
 function oscillon(t, x, V; l=1.0, v₀=0.0)
     t′, x′ = boost(t, x, V)
 
-    oscillon(t′, x′; v₀, l)
+    return oscillon(t′, x′; v₀, l)
 end
 
 """
@@ -124,7 +124,7 @@ Partial derivative ``∂ₜφ(t,x)`` for a signum--Gordon oscillon moving unifor
 function ∂ₜoscillon(t, x, V; l=1.0, v₀=0.0)
     t′, x′ = boost(t, x, V)
 
-    γ(V) * (∂ₜoscillon(t′, x′; v₀, l) - V * ∂ₓoscillon(t′, x′; v₀, l))
+    return γ(V) * (∂ₜoscillon(t′, x′; v₀, l) - V * ∂ₓoscillon(t′, x′; v₀, l))
 end
 
 """
@@ -136,7 +136,7 @@ Partial derivative ``∂ₓφ(t,x)`` for a signum--Gordon oscillon moving unifor
 function ∂ₓoscillon(t, x, V; l=1.0, v₀=0.0)
     t′, x′ = boost(t, x, V)
 
-    γ(V) * (∂ₓoscillon(t′, x′; v₀, l) - V * ∂ₜoscillon(t′, x′; v₀, l))
+    return γ(V) * (∂ₓoscillon(t′, x′; v₀, l) - V * ∂ₜoscillon(t′, x′; v₀, l))
 end
 
 function αₗ(V; v₀=0.0)
@@ -164,7 +164,7 @@ function αᵤ(V; v₀=0.0)
 end
 
 function αₛ(V; v₀=0.0)
-    (1 + v₀ * V) / 2
+    return (1 + v₀ * V) / 2
 end
 
 function ab(α, V; v₀=0.0)
@@ -219,7 +219,7 @@ swaying velocity ``v₀``.
 """
 function x_L(α, V; l=1.0, v₀=0.0)
     a′, b′ = a′b′(α, V; v₀)
-    l * γ(V) / (1 + a′ * v₀ * V) * ((1 - V^2) * (v₀ * b′) + α * (V + v₀ * a′))
+    return l * γ(V) / (1 + a′ * v₀ * V) * ((1 - V^2) * (v₀ * b′) + α * (V + v₀ * a′))
 end
 
 """
@@ -231,7 +231,7 @@ swaying velocity ``v₀``.
 """
 function x_R(α, V; l=1.0, v₀=0.0)
     a, b = ab(α, V; v₀)
-    l * γ(V) / (1 + a * v₀ * V) * ((1 - V^2) * (1 + v₀ * b) + α * (V + v₀ * a))
+    return l * γ(V) / (1 + a * v₀ * V) * ((1 - V^2) * (1 + v₀ * b) + α * (V + v₀ * a))
 end
 
 """

@@ -34,7 +34,7 @@ function heatmap!(ax, x, t, data; colorbar=false, kwargs...)
         plt.colorbar(implot; ax=ax, cax=cax)
     end
 
-    nothing
+    return nothing
 end
 
 function shared_colorbar!(fig, cb)
@@ -43,12 +43,12 @@ function shared_colorbar!(fig, cb)
     cax = fig.add_axes([0.87, 0.16, 0.015, 0.74])
     fig.colorbar(cb, cax=cax)
 
-    nothing
+    return nothing
 end
 
 function show_kink_borders!(ax; color="black")
     ax.axvline(0; linewidth=0.5, color=color, linestyle="dashed")
     ax.axvline(float(π); linewidth=0.5, color=color, linestyle="dashed")
 
-    nothing
+    return nothing
 end
