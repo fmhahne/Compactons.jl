@@ -1,6 +1,6 @@
 # Compactons.jl
 
-Simulations for interacting compactons in scalar field theories with non-analytical (V-shaped) potentials.
+Julia module and scripts used to produce the simulations for the paper "[Compact kink and its interaction with compact oscillons](https://arxiv.org/abs/2207.07064)".
 
 ## Prequisites
 
