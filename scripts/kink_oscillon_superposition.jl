@@ -1,5 +1,5 @@
 using DrWatson
-using Compactons
+using KinkOscillonInteraction
 include(srcdir("plots.jl"))
 
 xlim = (-5, 5) .+ π / 2

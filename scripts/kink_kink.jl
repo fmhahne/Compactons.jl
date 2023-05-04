@@ -1,5 +1,5 @@
 using DrWatson
-using Compactons
+using KinkOscillonInteraction
 include(srcdir("plots.jl"))
 
 V = 0.65

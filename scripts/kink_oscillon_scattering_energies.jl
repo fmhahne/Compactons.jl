@@ -1,7 +1,7 @@
 using Printf
 using JLD2, CodecZlib
 using UnPack
-using Compactons
+using KinkOscillonInteraction
 
 mkpath("data/kink_oscillon_scattering_energies")
 

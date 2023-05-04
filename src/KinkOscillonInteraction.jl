@@ -1,4 +1,4 @@
-module Compactons
+module KinkOscillonInteraction
 
 using DifferentialEquations
 using HypergeometricFunctions: _₂F₁general2 as _₂F₁
