@@ -7,7 +7,7 @@ params = KinkKink(; V)
 data, _ = produce_or_load(datadir("kink_kink"), params, simulation)
 @unpack x, t, η, H = data
 
-fig, axs = plt.subplots(1, 2; figsize=(6.2, 2.4), sharey=true)
+fig, axs = plt.subplots(1, 2; figsize=(6, 2.2), sharey=true)
 
 heatmap!(axs[1], x, t, η; colorbar=true, norm=mpl.colors.CenteredNorm())
 axs[1].set_xlim(-7, 7)
