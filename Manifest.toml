@@ -2,7 +2,7 @@
 
 julia_version = "1.9.3"
 manifest_format = "2.0"
-project_hash = "c66d5ed94fd5507bcfed0d98f748f24f7671bd9a"
+project_hash = "9ae9096e8f06cc350810f3ebea72119f334115d4"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "f5c25e8a5b29b5e941b7408bc8cc79fea4d9ef9a"
@@ -914,6 +914,11 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "f689897ccbe049adb19a065c495e75f372ecd42b"
 uuid = "1d63c593-3942-5779-bab2-d838dc0a180e"
 version = "15.0.4+0"
+
+[[deps.LRUCache]]
+git-tree-sha1 = "48c10e3cc27e30de82463c27bef0b8bdbd1dc634"
+uuid = "8ac3fa9e-de4c-5943-b1dc-09c6b5f20637"
+version = "1.4.1"
 
 [[deps.LZO_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1885,6 +1890,18 @@ git-tree-sha1 = "f02eb61eb5c97b48c153861c72fbbfdddc607e06"
 uuid = "7792a7ef-975c-4747-a70f-980b88e8d1da"
 version = "0.4.17"
 
+[[deps.Strided]]
+deps = ["LinearAlgebra", "StridedViews", "TupleTools"]
+git-tree-sha1 = "137303f5e0a39f966b462c53ae2c5c6e34c4828b"
+uuid = "5e0ebb24-38b0-5f93-81fe-25c709ecae67"
+version = "2.0.3"
+
+[[deps.StridedViews]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "59cc024139c20d1ed8400c419c6fe608637d583d"
+uuid = "4db3bf67-4bd7-4b4e-b153-31dc3fb37143"
+version = "0.1.2"
+
 [[deps.StructArrays]]
 deps = ["Adapt", "DataAPI", "GPUArraysCore", "StaticArraysCore", "Tables"]
 git-tree-sha1 = "521a0e828e98bb69042fec1809c1b5a680eb7389"
@@ -1945,6 +1962,21 @@ deps = ["LinearAlgebra"]
 git-tree-sha1 = "1feb45f88d133a655e001435632f019a9a1bcdb6"
 uuid = "62fd8b95-f654-4bbd-a8a5-9c27f68ccd50"
 version = "0.1.1"
+
+[[deps.TensorOperations]]
+deps = ["LRUCache", "LinearAlgebra", "Strided", "TupleTools", "VectorInterface"]
+git-tree-sha1 = "91856c4c58b5301cce38ee807d51531bb8edc87e"
+uuid = "6aa20fa7-93e2-5fca-9bc0-fbd0db3c71a2"
+version = "4.0.2"
+
+    [deps.TensorOperations.extensions]
+    TensorOperationsChainRulesCoreExt = "ChainRulesCore"
+    TensorOperationscuTENSORExt = "cuTENSOR"
+
+    [deps.TensorOperations.weakdeps]
+    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
+    Requires = "ae029012-a4dd-5104-9daa-d747884805df"
+    cuTENSOR = "011b41b2-24ef-40a8-b3eb-fa098493e9e1"
 
 [[deps.Test]]
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
@@ -2018,6 +2050,12 @@ deps = ["REPL"]
 git-tree-sha1 = "53915e50200959667e78a92a418594b428dffddf"
 uuid = "1cfade01-22cf-5700-b092-accc4b62d6e1"
 version = "0.4.1"
+
+[[deps.VectorInterface]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "11115aa7150fc4668fe3216681da9af360dda9f5"
+uuid = "409d34a3-91d5-4945-b6ec-7529ddf182d8"
+version = "0.2.0"
 
 [[deps.VectorizationBase]]
 deps = ["ArrayInterface", "CPUSummary", "HostCPUFeatures", "IfElse", "LayoutPointers", "Libdl", "LinearAlgebra", "SIMDTypes", "Static", "StaticArrayInterface"]

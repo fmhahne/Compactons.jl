@@ -6,6 +6,7 @@ using LoopVectorization
 using Parameters
 using Roots
 using SpecialFunctions: gamma as Γ
+using TensorOperations
 
 export γ, boost
 export Model
@@ -18,10 +19,14 @@ export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
 export toykink
 export generalizedkink, x₀
+export collectivecoordinates
+export KKa, KKab
+export KinkKinkBorder
 
 include("lorentz.jl")
 include("models.jl")
 include("simulations.jl")
+include("collectivecoordinates.jl")
 include("solutions/generalizedkink.jl")
 include("solutions/kink.jl")
 include("solutions/oscillon.jl")
