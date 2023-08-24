@@ -22,6 +22,7 @@ export generalizedkink, x₀
 export collectivecoordinates
 export KKa, KKab
 export KinkKinkBorder
+export TriangularDelta
 
 include("lorentz.jl")
 include("models.jl")
