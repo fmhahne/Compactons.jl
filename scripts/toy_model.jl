@@ -60,8 +60,14 @@ let l = 0.2, V = 0.0, α = 0.25, v₀ = 0.0, model = toy
 
     n = 21
     axs[2].plot(x, χ[:, n]; color="black", label="Simulação")
-    axs[2].plot(x, @. (f(x + t[n]) + f(x - t[n])) / 2; color="C3", linestyle="dashed", label="Analítico")
-    axs[2].legend(frameon=true)
+    axs[2].plot(
+        x,
+        @. (f(x + t[n]) + f(x - t[n])) / 2;
+        color="C3",
+        linestyle="dashed",
+        label="Analítico",
+    )
+    axs[2].legend(; frameon=true)
     axs[2].set_xlim(0, √2)
     axs[2].set_xlabel("x")
     axs[2].set_title("\$ \\chi($(t[n]), x) \$")
@@ -80,16 +86,64 @@ let l = 0.2, V = 0.75, α = 0.0, v₀ = 0.0, model = toy
     χ = η - toykink.(t', x)
 
     χC(t, x) = l^2 / 48
-    χ1R(t, x) = (-t + x)^2 + (-t + x) * (-√2 + (√7 * l) / 4) + (96 - 24 * √14 * l + 25 * l^2) / 192
-    χ2R(t, x) = (-5 * (-t + x)^2) / 2 + (-t + x) * (5 / √2 - (√7 * l) / 8) + (-480 + 24 * √14 * l + 23 * l^2) / 384
-    χ3R(t, x) = (-t + x)^2 - (-t + x) * (√2 + (√7 * l) / 4) + (96 + 24 * √14 * l + 13 * l^2) / 192
-    χ4R(t, x) = (5 * (-t + x)^2) / 2 - (-t + x) * (5 / √2 + (3 * √7 * l) / 8) + (160 + 24 * √14 * l + 11 * l^2) / 128
-    χ5R(t, x) = -(-t + x)^2 + (-t + x) * (√2 + (√7 * l) / 4) + (-32 - 8 * √14 * l - 7 * l^2) / 64
-    χ1L(t, x) = -1 / 7 * (t + x)^2 + ((t + x) * (4 * √2 + √7 * l)) / 28 + (-96 - 24 * √14 * l + 7 * l^2) / 1344
-    χ2L(t, x) = -1 / 7 * (t + x)^2 + ((t + x) * (4 * √2 + √7 * l)) / 28 + (-96 - 24 * √14 * l + 7 * l^2) / 1344
-    χ3L(t, x) = (t + x)^2 / 14 + ((t + x) * (-4 * √2 + √7 * l)) / 56 + (32 - 8 * √14 * l + 7 * l^2) / 896
-    χ4L(t, x) = (t + x)^2 / 14 + ((t + x) * (-4 * √2 + √7 * l)) / 56 + (32 - 8 * √14 * l + 7 * l^2) / 896
-    χ5L(t, x) = (t + x)^2 / 14 + ((t + x) * (-4 * √2 + √7 * l)) / 56 + (32 - 8 * √14 * l + 7 * l^2) / 896
+
+    function χ1R(t, x)
+        return (-t + x)^2 +
+               (-t + x) * (-√2 + (√7 * l) / 4) +
+               (96 - 24 * √14 * l + 25 * l^2) / 192
+    end
+
+    function χ2R(t, x)
+        return (-5 * (-t + x)^2) / 2 +
+               (-t + x) * (5 / √2 - (√7 * l) / 8) +
+               (-480 + 24 * √14 * l + 23 * l^2) / 384
+    end
+
+    function χ3R(t, x)
+        return (-t + x)^2 - (-t + x) * (√2 + (√7 * l) / 4) +
+               (96 + 24 * √14 * l + 13 * l^2) / 192
+    end
+
+    function χ4R(t, x)
+        return (5 * (-t + x)^2) / 2 - (-t + x) * (5 / √2 + (3 * √7 * l) / 8) +
+               (160 + 24 * √14 * l + 11 * l^2) / 128
+    end
+
+    function χ5R(t, x)
+        return -(-t + x)^2 +
+               (-t + x) * (√2 + (√7 * l) / 4) +
+               (-32 - 8 * √14 * l - 7 * l^2) / 64
+    end
+
+    function χ1L(t, x)
+        return -1 / 7 * (t + x)^2 +
+               ((t + x) * (4 * √2 + √7 * l)) / 28 +
+               (-96 - 24 * √14 * l + 7 * l^2) / 1344
+    end
+
+    function χ2L(t, x)
+        return -1 / 7 * (t + x)^2 +
+               ((t + x) * (4 * √2 + √7 * l)) / 28 +
+               (-96 - 24 * √14 * l + 7 * l^2) / 1344
+    end
+
+    function χ3L(t, x)
+        return (t + x)^2 / 14 +
+               ((t + x) * (-4 * √2 + √7 * l)) / 56 +
+               (32 - 8 * √14 * l + 7 * l^2) / 896
+    end
+
+    function χ4L(t, x)
+        return (t + x)^2 / 14 +
+               ((t + x) * (-4 * √2 + √7 * l)) / 56 +
+               (32 - 8 * √14 * l + 7 * l^2) / 896
+    end
+
+    function χ5L(t, x)
+        return (t + x)^2 / 14 +
+               ((t + x) * (-4 * √2 + √7 * l)) / 56 +
+               (32 - 8 * √14 * l + 7 * l^2) / 896
+    end
 
     function χsum(t, x)
         xc = √2 / 2 - l / (2γ(V))
@@ -138,7 +192,7 @@ let l = 0.2, V = 0.75, α = 0.0, v₀ = 0.0, model = toy
     n = 21
     axs[2].plot(x, χ[:, n]; color="black", label="Simulação")
     axs[2].plot(x, χsum.(t[n], x); color="C3", linestyle="dashed", label="Analítico")
-    axs[2].legend(frameon=true)
+    axs[2].legend(; frameon=true)
     axs[2].set_xlim(0, √2)
     axs[2].set_xlabel("x")
     axs[2].set_title("\$ \\chi($(t[n]), x) \$")

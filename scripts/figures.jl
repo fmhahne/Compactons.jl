@@ -30,7 +30,9 @@ end
 
 let l = 2, V = 0.6, v₀s = [0, 0.5], αs = [0, 0.25]
     x = -5:1e-3:10
-    fig, axs = plt.subplots(2, 2; figsize=(6.2, 6.2 * 2 / (1 + √5)), sharex=true, sharey=true, tight_layout=true)
+    fig, axs = plt.subplots(
+        2, 2; figsize=(6.2, 6.2 * 2 / (1 + √5)), sharex=true, sharey=true, tight_layout=true
+    )
 
     for ((α, v₀), ax) in zip(Iterators.product(αs, v₀s), axs)
         η₀ = kink.(0.0, x) + oscillon.(l * α * γ(V), x .+ x_R(α, V; l, v₀), V; l, v₀)
@@ -53,12 +55,12 @@ let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
     fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), tight_layout=false, sharey=true)
     norm = mpl.colors.CenteredNorm()
     cmap = "RdBu"
-    cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+    cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
 
     Δ = v₀ * l / 2
     for (ax, V) in zip(axs, Vs)
-        x = (-V*l):1e-3:(l+Δ+V*l)
-        t = -l:1e-3:l
+        x = (-V * l):1e-3:(l + Δ + V * l)
+        t = (-l):1e-3:l
         φ = oscillon.(t', x, V; l, v₀)
 
         heatmap!(ax, x, t, φ; cmap=cmap, norm=norm)
@@ -74,10 +76,12 @@ let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
     fig
 end
 
-let x = -0.1:1e-3:(π+0.1)
+let x = -0.1:1e-3:(π + 0.1)
     fig, ax = plt.subplots()
     ax.plot(x, kink.(x); label=raw"$\eta_K(x)$", color="black")
-    ax.plot(x, @. 2 - kink(x); label=raw"$\eta_\bar{K}(x)$", color="gray", linestyle="dashed")
+    ax.plot(
+        x, @. 2 - kink(x); label=raw"$\eta_\bar{K}(x)$", color="gray", linestyle="dashed"
+    )
     ax.legend()
     ax.set_xlim(x[begin], x[end])
     fig.savefig(plotsdir("kink.pdf"))

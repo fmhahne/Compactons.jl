@@ -39,9 +39,9 @@ end
 
 function shared_colorbar!(fig, cb)
     fig.tight_layout()
-    fig.subplots_adjust(right=0.85)
+    fig.subplots_adjust(; right=0.85)
     cax = fig.add_axes([0.87, 0.16, 0.015, 0.74])
-    fig.colorbar(cb, cax=cax)
+    fig.colorbar(cb; cax=cax)
 
     return nothing
 end

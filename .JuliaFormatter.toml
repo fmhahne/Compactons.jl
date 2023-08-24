@@ -1,4 +1,1 @@
-style = "minimal"
-always_for_in = true
-always_use_return = true
-remove_extra_newlines = true
+style = "blue"

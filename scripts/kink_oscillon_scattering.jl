@@ -13,7 +13,9 @@ let V = 0.75, α = 0.0, v₀ = 0.0
     fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.5), sharex=true, sharey=true)
 
     for (l, ax) in zip(ls, Iterators.flatten(eachrow(axs)))
-        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        data, _ = produce_or_load(
+            datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation
+        )
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         χ = η - kink.(t', x)
@@ -30,14 +32,18 @@ let V = 0.75, α = 0.0, v₀ = 0.0
 end
 
 let l = 0.5, α = 0.0, v₀ = 0.0
-    fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false)
+    fig, axs = plt.subplots(
+        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false
+    )
 
     norm = mpl.colors.CenteredNorm()
     cmap = mpl.cm.get_cmap("RdBu")
-    cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+    cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
 
     for (V, ax) in zip(Vs, Iterators.flatten(eachrow(axs)))
-        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        data, _ = produce_or_load(
+            datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation
+        )
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         χ = η - kink.(t', x)
@@ -59,14 +65,18 @@ let l = 0.5, α = 0.0, v₀ = 0.0
 end
 
 let l = 1.0, V = 0.6, v₀ = 0.0
-    fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false)
+    fig, axs = plt.subplots(
+        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false
+    )
 
     norm = mpl.colors.CenteredNorm()
     cmap = mpl.cm.get_cmap("RdBu")
-    cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+    cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
 
     for (α, ax) in zip(αs, Iterators.flatten(eachrow(axs)))
-        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        data, _ = produce_or_load(
+            datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation
+        )
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         χ = η - kink.(t', x)
@@ -88,14 +98,18 @@ let l = 1.0, V = 0.6, v₀ = 0.0
 end
 
 let l = 0.75, V = 0.8, α = 0.0
-    fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false)
+    fig, axs = plt.subplots(
+        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false
+    )
 
     norm = mpl.colors.CenteredNorm()
     cmap = mpl.cm.get_cmap("RdBu")
-    cb = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+    cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
 
     for (v₀, ax) in zip(v₀s, Iterators.flatten(eachrow(axs)))
-        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        data, _ = produce_or_load(
+            datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation
+        )
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         χ = η - kink.(t', x)
@@ -117,10 +131,19 @@ let l = 0.75, V = 0.8, α = 0.0
 end
 
 let l = 1.0, Vs = [0.6, 0.75], αs = [0.0, 0.50], v₀ = 0.0
-    fig, axs = plt.subplots(2, 2; figsize=(6.2, 6.2 * 2 / (1 + √5)), sharex=true, sharey=true, tight_layout=false)
+    fig, axs = plt.subplots(
+        2,
+        2;
+        figsize=(6.2, 6.2 * 2 / (1 + √5)),
+        sharex=true,
+        sharey=true,
+        tight_layout=false,
+    )
 
     for ((V, α), ax) in zip(Iterators.product(Vs, αs), Iterators.flatten(eachrow(axs)))
-        data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+        data, _ = produce_or_load(
+            datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation
+        )
         @unpack x, t, η, H, E₁, E₂, E₃ = data
 
         ax.plot(t, E₁ / E₁[begin]; label=raw"$E_1(t) / E_\mathrm{osc}$")
@@ -133,7 +156,7 @@ let l = 1.0, Vs = [0.6, 0.75], αs = [0.0, 0.50], v₀ = 0.0
 
     fig.tight_layout()
     handles, labels = axs[1, 1].get_legend_handles_labels()
-    fig.subplots_adjust(bottom=0.15)
+    fig.subplots_adjust(; bottom=0.15)
     fig.legend(handles, labels; loc="lower center", ncol=3, bbox_to_anchor=(0.5, 0))
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "energies-vs-time.pdf"))
@@ -141,9 +164,11 @@ let l = 1.0, Vs = [0.6, 0.75], αs = [0.0, 0.50], v₀ = 0.0
 end
 
 let l = 0.5, V = 0.8, α = 0.0, v₀ = 0.0
-    fig, ax = plt.subplots(sharex=true, sharey=true)
+    fig, ax = plt.subplots(; sharex=true, sharey=true)
 
-    data, _ = produce_or_load(datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation)
+    data, _ = produce_or_load(
+        datadir("kink_oscillon_scattering"), KinkOscillon(; l, V, α, v₀), simulation
+    )
     @unpack x, t, η, H, E₁, E₂, E₃ = data
 
     χ = η - kink.(t', x)
