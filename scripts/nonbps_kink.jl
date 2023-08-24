@@ -1,6 +1,6 @@
 using DelimitedFiles
 using DrWatson
-using KinkOscillonInteraction
+using Compactons
 include(srcdir("plots.jl"))
 
 let ϵs = [-0.15, 0.15, -0.30, 0.30]

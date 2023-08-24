@@ -1,6 +1,6 @@
 using DrWatson
 using DifferentialEquations
-using KinkOscillonInteraction
+using Compactons
 include(srcdir("plots.jl"))
 
 let l = 1.0, V = 0.0, α = 0.25, v₀ = 0.0, model = toy

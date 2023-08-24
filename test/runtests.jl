@@ -1,5 +1,5 @@
 using Test
-using KinkOscillonInteraction
+using Compactons
 
 const dx = 1e-3
 const x = -2:dx:5

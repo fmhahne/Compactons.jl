@@ -1,5 +1,5 @@
 using DrWatson
-using KinkOscillonInteraction
+using Compactons
 include(srcdir("plots.jl"))
 
 let η = -3:1e-3:3, x = -0.5:1e-3:4

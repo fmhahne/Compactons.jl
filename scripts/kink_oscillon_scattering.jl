@@ -1,5 +1,5 @@
 using DrWatson
-using KinkOscillonInteraction
+using Compactons
 include(srcdir("plots.jl"))
 
 ls = 0.5:0.5:2.0

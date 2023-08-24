@@ -1,5 +1,5 @@
 using DrWatson
-using KinkOscillonInteraction
+using Compactons
 include(srcdir("plots.jl"))
 
 fig, axs = plt.subplots(3, 2; figsize=(6.2, 6.2), sharex="col", sharey="row", gridspec_kw=Dict("height_ratios" => [20, 15, 10]))

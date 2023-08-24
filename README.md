@@ -1,4 +1,4 @@
-# KinkOscillonInteraction.jl
+# Compactons.jl
 
 Julia module and scripts used to produce the simulations for the paper "[Compact kink and its interaction with compact oscillons](https://arxiv.org/abs/2207.07064)".
 
@@ -16,7 +16,7 @@ Install required Julia packages:
 julia
 julia> ]
 (@v1.7) pkg> activate .
-(KinkOscillonInteraction) pkg> instantiate
+(Compactons) pkg> instantiate
 ```
 
 ## Generating data and plots

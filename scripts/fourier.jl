@@ -1,6 +1,6 @@
 using DrWatson
 using FFTW
-using KinkOscillonInteraction
+using Compactons
 include(srcdir("plots.jl"))
 
 function C(t, k)

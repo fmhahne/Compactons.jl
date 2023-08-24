@@ -1,6 +1,6 @@
 using DrWatson
 using DifferentialEquations
-using KinkOscillonInteraction
+using Compactons
 include(srcdir("plots.jl"))
 
 Vsave = 0.0:0.001:0.499
