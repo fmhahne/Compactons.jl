@@ -13,14 +13,14 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
     cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
 
     for (ϵ, ax) in zip(ϵs, Iterators.flatten(eachrow(axs)))
-        data, _ = produce_or_load(datadir("nonbps_kink"), NonBPSKink(ϵ), simulation)
+        data, _ = produce_or_load(datadir("deformed_kink"), DeformedKink(ϵ), simulation)
         @unpack x, t, η, H = data
 
-        b = readdlm(datadir("perturbed_kink", "borders", "$ϵ.csv"), ',', Float64, '\n')
+        b = readdlm(datadir("deformed_kink", "borders", "$ϵ.csv"), ',', Float64, '\n')
 
         heatmap!(ax, x, t, H; cmap=cmap, norm=norm)
-        ax.plot(π ./ (2 * b[:, 2]), border[:, 1]; color="lime")
-        ax.plot(-π ./ (2 * b[:, 2]), border[:, 1]; color="lime")
+        ax.plot(π ./ (2 * b[:, 2]), b[:, 1]; color="lime")
+        ax.plot(-π ./ (2 * b[:, 2]), b[:, 1]; color="lime")
 
         ax.set_xlim(-5, 5)
         ax.set_title("\$\\epsilon = $ϵ \$")
@@ -32,13 +32,13 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
 
     shared_colorbar!(fig, cb)
 
-    fig.savefig(plotsdir("nonbps_kink", "hamiltonian-borders.pdf"))
+    fig.savefig(plotsdir("deformed_kink", "hamiltonian-borders.pdf"))
     fig
 end
 
 let ϵ = -0.2
     fig, axs = plt.subplots(1, 2; figsize=(6.2, 2.9))
-    data, _ = produce_or_load(datadir("nonbps_kink"), NonBPSKink(ϵ)) do parameters
+    data, _ = produce_or_load(datadir("deformed_kink"), DeformedKink(ϵ)) do parameters
         return simulation(parameters; sampling=5)
     end
     @unpack x, t, η, H = data
@@ -66,6 +66,6 @@ let ϵ = -0.2
         norm=mpl.colors.CenteredNorm(),
     )
     axs[2].set_title(raw"$\eta(t, x)$")
-    fig.savefig(plotsdir("nonbps_kink", "zoom.pdf"))
+    fig.savefig(plotsdir("deformed_kink", "zoom.pdf"))
     fig
 end
