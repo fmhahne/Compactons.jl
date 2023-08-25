@@ -45,7 +45,7 @@ let l = 0.2, V = 0.0, α = 0.25, v₀ = 0.0, model = toy
     axs[1].axvline(2√2; linewidth=0.5, color="black", linestyle="dashed")
     axs[1].set_title(raw"$\chi(t, x)$ (simulação)")
 
-    function ϕ(x)
+    function φ(x)
         if 0 < x < l / 4
             -x^2 / 2
         elseif l / 4 < x < 3l / 4
@@ -56,7 +56,7 @@ let l = 0.2, V = 0.0, α = 0.25, v₀ = 0.0, model = toy
             0.0
         end
     end
-    f(x) = ϕ(x - √2 / 2 + l / 2)
+    f(x) = φ(x - √2 / 2 + l / 2)
 
     n = 21
     axs[2].plot(x, χ[:, n]; color="black", label="Simulação")

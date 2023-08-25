@@ -24,9 +24,9 @@ function simulation(parameters::TriangularDelta)
     x = (-tmax):dx:tmax
     xsave = x[begin:sampling:end]
 
-    ϕ₀ = zero(x)
-    ∂ₜϕ₀ = A * δ.(x; ϵ)
+    φ₀ = zero(x)
+    ∂ₜφ₀ = A * δ.(x; ϵ)
 
-    ϕ, H = producedata(tanh_gordon(k), ∂ₜϕ₀, ϕ₀, tsave; dx, dt, sampling)
-    return Dict("x" => xsave, "t" => tsave, "ϕ" => ϕ, "H" => H)
+    φ, H = producedata(tanh_gordon(k), ∂ₜφ₀, φ₀, tsave; dx, dt, sampling)
+    return Dict("x" => xsave, "t" => tsave, "φ" => φ, "H" => H)
 end

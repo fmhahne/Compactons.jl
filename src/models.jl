@@ -9,14 +9,14 @@ quadratic = Model(η -> mod(η, 2) - mod(η, 2)^2 / 2, η -> sign(mod(η, 2)) - 
 
 toy = Model(η -> abs(mod(η - 1, 2) - 1), η -> sign(mod(η - 1, 2) - sign(mod(η - 1, 2))))
 
-klein_gordon = Model(ϕ -> ϕ^2 / 2, ϕ -> ϕ)
+klein_gordon = Model(φ -> φ^2 / 2, φ -> φ)
 
 function tanh_gordon(k)
     if k == 0
         return klein_gordon
     end
     return Model(
-        ϕ -> exp(-k) * ϕ^2 / 2 + log(cosh(k * ϕ)) / k, ϕ -> exp(-k) * ϕ + tanh(k * ϕ)
+        φ -> exp(-k) * φ^2 / 2 + log(cosh(k * φ)) / k, φ -> exp(-k) * φ + tanh(k * φ)
     )
 end
 
