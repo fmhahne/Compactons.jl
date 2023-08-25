@@ -5,7 +5,7 @@ include(srcdir("plots.jl"))
 
 let ϵs = [-0.15, 0.15, -0.30, 0.30]
     fig, axs = plt.subplots(
-        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false
+        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, layout="compressed"
     )
 
     cmap = mpl.cm.get_cmap("magma")
@@ -30,7 +30,7 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
         cb.autoscale()
     end
 
-    shared_colorbar!(fig, cb)
+    fig.colorbar(cb; ax=axs[:], aspect=40)
 
     fig.savefig(plotsdir("deformed_kink", "hamiltonian-borders.pdf"))
     fig

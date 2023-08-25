@@ -5,7 +5,7 @@ include(srcdir("plots.jl"))
 xlim = (-5, 5) .+ π / 2
 
 let V = 0.0, v₀ = 0.0, l = 1.0
-    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), sharey=true, tight_layout=false)
+    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), sharey=true, layout="compressed")
 
     norm = mpl.colors.SymLogNorm(1e-5; clip=true)
     cmap = mpl.cm.get_cmap("magma")
@@ -30,14 +30,14 @@ let V = 0.0, v₀ = 0.0, l = 1.0
         cb.autoscale()
     end
 
-    shared_colorbar!(fig, cb)
+    fig.colorbar(cb; ax=axs[:])
 
     fig.savefig(plotsdir("kink_oscillon_superposition", "non_zero_p.pdf"))
     fig
 end
 
 let V = 0.0, v₀ = 0.0, l = 1.0
-    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), sharey=true, tight_layout=false)
+    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), sharey=true, layout="compressed")
 
     norm = mpl.colors.CenteredNorm()
     cmap = mpl.cm.get_cmap("RdBu")
@@ -64,7 +64,7 @@ let V = 0.0, v₀ = 0.0, l = 1.0
         cb.autoscale()
     end
 
-    shared_colorbar!(fig, cb)
+    fig.colorbar(cb; ax=axs[:])
 
     fig.savefig(plotsdir("kink_oscillon_superposition", "zero_p.pdf"))
     fig

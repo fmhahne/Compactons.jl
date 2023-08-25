@@ -33,7 +33,7 @@ end
 
 let l = 0.5, α = 0.0, v₀ = 0.0
     fig, axs = plt.subplots(
-        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false
+        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, layout="compressed"
     )
 
     norm = mpl.colors.CenteredNorm()
@@ -58,7 +58,7 @@ let l = 0.5, α = 0.0, v₀ = 0.0
         cb.autoscale()
     end
 
-    shared_colorbar!(fig, cb)
+    fig.colorbar(cb; ax=axs[:], aspect=40)
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "V.pdf"))
     fig
@@ -66,7 +66,7 @@ end
 
 let l = 1.0, V = 0.6, v₀ = 0.0
     fig, axs = plt.subplots(
-        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false
+        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, layout="compressed"
     )
 
     norm = mpl.colors.CenteredNorm()
@@ -91,7 +91,7 @@ let l = 1.0, V = 0.6, v₀ = 0.0
         cb.autoscale()
     end
 
-    shared_colorbar!(fig, cb)
+    fig.colorbar(cb; ax=axs[:], aspect=40)
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "alpha.pdf"))
     fig
@@ -99,7 +99,7 @@ end
 
 let l = 0.75, V = 0.8, α = 0.0
     fig, axs = plt.subplots(
-        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, tight_layout=false
+        2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, layout="compressed"
     )
 
     norm = mpl.colors.CenteredNorm()
@@ -124,7 +124,7 @@ let l = 0.75, V = 0.8, α = 0.0
         cb.autoscale()
     end
 
-    shared_colorbar!(fig, cb)
+    fig.colorbar(cb; ax=axs[:], aspect=40)
 
     fig.savefig(plotsdir("kink_oscillon_scattering", "v0.pdf"))
     fig

@@ -37,15 +37,6 @@ function heatmap!(ax, x, t, data; colorbar=false, kwargs...)
     return nothing
 end
 
-function shared_colorbar!(fig, cb)
-    fig.tight_layout()
-    fig.subplots_adjust(; right=0.85)
-    cax = fig.add_axes([0.87, 0.16, 0.015, 0.74])
-    fig.colorbar(cb; cax=cax)
-
-    return nothing
-end
-
 function show_kink_borders!(ax; color="black")
     ax.axvline(0; linewidth=0.5, color=color, linestyle="dashed")
     ax.axvline(float(π); linewidth=0.5, color=color, linestyle="dashed")

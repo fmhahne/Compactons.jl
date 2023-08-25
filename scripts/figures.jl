@@ -52,7 +52,7 @@ let l = 2, V = 0.6, v₀s = [0, 0.5], αs = [0, 0.25]
 end
 
 let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
-    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), tight_layout=false, sharey=true)
+    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), sharey=true)
     norm = mpl.colors.CenteredNorm()
     cmap = "RdBu"
     cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
@@ -71,7 +71,8 @@ let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
         cb.autoscale()
     end
 
-    shared_colorbar!(fig, cb)
+    fig.colorbar(cb; ax=axs[2])
+    fig.tight_layout()
     fig.savefig(plotsdir("oscillon.pdf"))
     fig
 end
