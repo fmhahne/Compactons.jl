@@ -4,7 +4,6 @@ authors = ["Fernando Miguel Hahne <fernandomhahne@gmail.com>"]
 version = "0.1.0"
 
 [deps]
-CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 CodecZlib = "944b1d66-785c-5afd-91f1-9de20f533193"
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 DrWatson = "634d3b9d-ee7a-5ddf-bec9-22491ea816e1"
@@ -15,7 +14,6 @@ LoopVectorization = "bdcacae8-1622-11e9-2a5c-532679323890"
 Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
-Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
 Roots = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
 SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 TensorOperations = "6aa20fa7-93e2-5fca-9bc0-fbd0db3c71a2"
