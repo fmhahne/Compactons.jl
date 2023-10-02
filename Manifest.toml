@@ -2,7 +2,7 @@
 
 julia_version = "1.9.3"
 manifest_format = "2.0"
-project_hash = "c85cf3838cfe665ce46a09288995dd12a1639d5b"
+project_hash = "d97093dd665fb49ec296a65520cd81dd2e07bba7"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "f5c25e8a5b29b5e941b7408bc8cc79fea4d9ef9a"
@@ -273,6 +273,12 @@ version = "5.18.0"
 
     [deps.DiffEqNoiseProcess.weakdeps]
     ReverseDiff = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
+
+[[deps.DiffEqPhysics]]
+deps = ["DiffEqBase", "DiffEqCallbacks", "ForwardDiff", "LinearAlgebra", "Printf", "Random", "RecipesBase", "RecursiveArrayTools", "Reexport", "SciMLBase", "StaticArraysCore"]
+git-tree-sha1 = "9b5b8b3bf426aaa2eac937850470d799a5ba7782"
+uuid = "055956cb-9e8b-5191-98cc-73ae4a59e68a"
+version = "3.11.0"
 
 [[deps.DiffResults]]
 deps = ["StaticArraysCore"]
