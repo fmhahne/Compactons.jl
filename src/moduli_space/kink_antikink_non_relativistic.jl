@@ -24,7 +24,7 @@ function moduli_space(params::KinkAntikinkNonRelModuliSpace)
     end
 
     q0 = π / 2
-    p0 = -v / metric(q0)
+    p0 = -metric(q0) * v
     tspan = (0.0, tmax)
     tsave = 0.0:dt:tmax
 
