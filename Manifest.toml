@@ -224,9 +224,9 @@ version = "5.43.0"
 
 [[deps.DiffEqBase]]
 deps = ["ArrayInterface", "ChainRulesCore", "DataStructures", "DocStringExtensions", "EnumX", "EnzymeCore", "FastBroadcast", "ForwardDiff", "FunctionWrappers", "FunctionWrappersWrappers", "LinearAlgebra", "Logging", "Markdown", "MuladdMacro", "Parameters", "PreallocationTools", "PrecompileTools", "Printf", "RecursiveArrayTools", "Reexport", "Requires", "SciMLBase", "SciMLOperators", "Setfield", "SparseArrays", "Static", "StaticArraysCore", "Statistics", "Tricks", "TruncatedStacktraces", "ZygoteRules"]
-git-tree-sha1 = "22ab786efaef7b9ccb66a272d7cc2471bea76ba9"
+git-tree-sha1 = "96e97e5f6794c1c0d4309d64eaafacb80485da1d"
 uuid = "2b5f629d-d688-5b77-993f-72d75c75574e"
-version = "6.130.4"
+version = "6.131.0"
 
     [deps.DiffEqBase.extensions]
     DiffEqBaseDistributionsExt = "Distributions"
@@ -635,10 +635,10 @@ deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[deps.LinearSolve]]
-deps = ["ArrayInterface", "ConcreteStructs", "DocStringExtensions", "EnumX", "EnzymeCore", "FastLapackInterface", "GPUArraysCore", "InteractiveUtils", "KLU", "Krylov", "Libdl", "LinearAlgebra", "PrecompileTools", "Preferences", "RecursiveFactorization", "Reexport", "Requires", "SciMLBase", "SciMLOperators", "Setfield", "SparseArrays", "Sparspak", "SuiteSparse", "UnPack"]
-git-tree-sha1 = "ba01f7a97d3d8bd711b2c00a8a68c887d8a85c9d"
+deps = ["ArrayInterface", "ConcreteStructs", "DocStringExtensions", "EnumX", "EnzymeCore", "FastLapackInterface", "GPUArraysCore", "InteractiveUtils", "KLU", "Krylov", "Libdl", "LinearAlgebra", "MKL_jll", "PrecompileTools", "Preferences", "RecursiveFactorization", "Reexport", "Requires", "SciMLBase", "SciMLOperators", "Setfield", "SparseArrays", "Sparspak", "SuiteSparse", "UnPack"]
+git-tree-sha1 = "55dc29b3fb5592d78abcdd18cfa0ec7ae324749e"
 uuid = "7ed4a6bd-45f5-4d41-b270-4a48e9bafcae"
-version = "2.8.1"
+version = "2.9.0"
 
     [deps.LinearSolve.extensions]
     LinearSolveBlockDiagonalsExt = "BlockDiagonals"
@@ -648,7 +648,6 @@ version = "2.8.1"
     LinearSolveIterativeSolversExt = "IterativeSolvers"
     LinearSolveKernelAbstractionsExt = "KernelAbstractions"
     LinearSolveKrylovKitExt = "KrylovKit"
-    LinearSolveMKLExt = "MKL_jll"
     LinearSolveMetalExt = "Metal"
     LinearSolvePardisoExt = "Pardiso"
 
@@ -660,7 +659,6 @@ version = "2.8.1"
     IterativeSolvers = "42fd0dbc-a981-5370-80f2-aaf504508153"
     KernelAbstractions = "63c18a36-062a-441e-b654-da1e3ab1ce7c"
     KrylovKit = "0b1a1467-8014-51b9-945f-bf0ae24f4b77"
-    MKL_jll = "856f044c-d86e-5d09-b602-aeab76dc8ba7"
     Metal = "dde4c033-4e86-420c-a63e-0dd931031962"
     Pardiso = "46dd5b70-b6fb-5a00-ae2d-e8fea33afaf2"
 
@@ -762,9 +760,9 @@ version = "1.2.0"
 
 [[deps.NonlinearSolve]]
 deps = ["ADTypes", "ArrayInterface", "ConcreteStructs", "DiffEqBase", "EnumX", "FiniteDiff", "ForwardDiff", "LineSearches", "LinearAlgebra", "LinearSolve", "PrecompileTools", "RecursiveArrayTools", "Reexport", "SciMLBase", "SimpleNonlinearSolve", "SparseArrays", "SparseDiffTools", "StaticArraysCore", "UnPack"]
-git-tree-sha1 = "847f6b564d74422440850a99912c314595be4023"
+git-tree-sha1 = "7032be911404fe667e2a7ccd464ba5f2532797f2"
 uuid = "8913a72c-1f9b-4ce2-8d82-65094dcecaec"
-version = "2.0.0"
+version = "2.0.1"
 
 [[deps.OffsetArrays]]
 deps = ["Adapt"]
@@ -807,9 +805,9 @@ version = "6.57.0"
 
 [[deps.PDMats]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "bf6085e8bd7735e68c210c6e5d81f9a6fe192060"
+git-tree-sha1 = "528664265c9c36b3ecdb6d721d47aaab52ddf267"
 uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
-version = "0.11.19"
+version = "0.11.24"
 
 [[deps.PackageExtensionCompat]]
 git-tree-sha1 = "fb28e33b8a95c4cee25ce296c817d89cc2e53518"
@@ -1024,14 +1022,16 @@ version = "0.6.39"
 
 [[deps.SciMLBase]]
 deps = ["ADTypes", "ArrayInterface", "ChainRulesCore", "CommonSolve", "ConstructionBase", "Distributed", "DocStringExtensions", "EnumX", "FillArrays", "FunctionWrappersWrappers", "IteratorInterfaceExtensions", "LinearAlgebra", "Logging", "Markdown", "PrecompileTools", "Preferences", "RecipesBase", "RecursiveArrayTools", "Reexport", "RuntimeGeneratedFunctions", "SciMLOperators", "StaticArraysCore", "Statistics", "SymbolicIndexingInterface", "Tables", "TruncatedStacktraces", "ZygoteRules"]
-git-tree-sha1 = "e7c518184850701c91df0e898241c07e03c7f367"
+git-tree-sha1 = "0842f7f77bf2d9546e0bbc543d03be3d53a30600"
 uuid = "0bca4576-84f4-4d90-8ffe-ffa030f20462"
-version = "2.0.7"
+version = "2.1.0"
 
     [deps.SciMLBase.extensions]
+    PyCallExt = "PyCall"
     ZygoteExt = "Zygote"
 
     [deps.SciMLBase.weakdeps]
+    PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
     Zygote = "e88e6eb3-aa80-5325-afca-941959d7151f"
 
 [[deps.SciMLNLSolve]]
@@ -1228,9 +1228,9 @@ version = "2.0.4"
 
 [[deps.StridedViews]]
 deps = ["LinearAlgebra", "PackageExtensionCompat"]
-git-tree-sha1 = "bba5f6e1170e442aa7b7acd1a37b8df24001c3b0"
+git-tree-sha1 = "cf857ff7de76f39e5daef6d032e8a74279ddff6a"
 uuid = "4db3bf67-4bd7-4b4e-b153-31dc3fb37143"
-version = "0.2.0"
+version = "0.2.1"
 
     [deps.StridedViews.extensions]
     StridedViewsCUDAExt = "CUDA"
