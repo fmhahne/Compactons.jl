@@ -25,7 +25,9 @@ export collectivecoordinates
 export KKa, KKab
 export KinkKinkBorder
 export TriangularDelta
-export moduli_space, KinkAntikinkNonRelModuliSpace, KinkAntikinkRelModuliSpace
+export moduli_space
+export KinkAntikinkNonRelModuliSpace, KinkAntikinkRelModuliSpace
+export KinkKinkNonRelModuliSpace
 export DeformedKinkModuliSpace
 
 include("collectivecoordinates.jl")
@@ -35,6 +37,7 @@ include("moduli_space.jl")
 include("moduli_space/deformed_kink.jl")
 include("moduli_space/kink_antikink_non_relativistic.jl")
 include("moduli_space/kink_antikink_relativistic.jl")
+include("moduli_space/kink_kink_non_relativistic.jl")
 include("simulations.jl")
 include("simulations/deformed_kink.jl")
 include("simulations/kink_antikink.jl")
