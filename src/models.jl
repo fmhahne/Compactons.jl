@@ -20,7 +20,7 @@ function tanh_gordon(k)
     )
 end
 
-function generalizedmodel(k)
+function generalized_model(k)
     return Model(
         η -> (2 - k) / 2 * (1 - abs(mod(η, 2) - 1)^(k + 1)),
         η ->

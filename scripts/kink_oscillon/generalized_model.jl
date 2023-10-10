@@ -6,7 +6,7 @@ let η = -3:1e-3:3, x = -0.5:1e-3:4
     fig, axs = plt.subplots(1, 2; figsize=(6.2, 3))
 
     for k in 0:0.25:1
-        axs[1].plot(η, generalizedmodel(k).V.(η); label="\$k = $k\$")
+        axs[1].plot(η, generalized_model(k).V.(η); label="\$k = $k\$")
     end
 
     axs[1].set_xlabel(raw"$\eta$")
@@ -34,7 +34,7 @@ let α = 0.25, l = 1.0, V = 0.0, v₀ = 0.0
         params = @strdict l V α v₀ k
         data, _ = produce_or_load(datadir("generalized_model"), params) do params
             @unpack l, V, α, v₀, k = params
-            model = generalizedmodel(k)
+            model = generalized_model(k)
 
             dx = 5e-4
             x = -3:dx:3
