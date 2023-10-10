@@ -16,8 +16,8 @@ function δ(x; ϵ)
     end
 end
 
-function simulation(parameters::TriangularDelta)
-    @unpack k, ϵ, A, dx, dt, tmax, sampling = parameters
+function simulation(params::TriangularDelta)
+    @unpack k, ϵ, A, dx, dt, tmax, sampling = params
 
     tsave = 0.0:(dx * sampling):tmax
 

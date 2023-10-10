@@ -2,8 +2,8 @@ struct DeformedKink{T<:Real}
     ϵ::T
 end
 
-function simulation(parameters::DeformedKink; dx=1e-3, sampling=10)
-    ϵ = parameters.ϵ
+function simulation(params::DeformedKink; dx=1e-3, sampling=10)
+    ϵ = params.ϵ
     tsave = 0.0:(dx * sampling):10.0
 
     x = (-tsave[end]):dx:tsave[end]

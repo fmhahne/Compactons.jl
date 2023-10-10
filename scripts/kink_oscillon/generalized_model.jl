@@ -31,9 +31,9 @@ let α = 0.25, l = 1.0, V = 0.0, v₀ = 0.0
     fig, ax = plt.subplots()
 
     for k in 0.98:0.01:1.02
-        parameters = @strdict l V α v₀ k
-        data, _ = produce_or_load(datadir("generalized_model"), parameters) do parameters
-            @unpack l, V, α, v₀, k = parameters
+        params = @strdict l V α v₀ k
+        data, _ = produce_or_load(datadir("generalized_model"), params) do params
+            @unpack l, V, α, v₀, k = params
             model = generalizedmodel(k)
 
             dx = 5e-4

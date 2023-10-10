@@ -6,8 +6,8 @@
     sampling::Int = 10
 end
 
-function simulation(parameters::KinkKink; dx=1e-3, sampling=10)
-    @unpack V, dx, dt, tmax, sampling = parameters
+function simulation(params::KinkKink; dx=1e-3, sampling=10)
+    @unpack V, dx, dt, tmax, sampling = params
     tsave = 0.0:(dx * sampling):tmax
 
     x = (-tmax):dx:tmax
@@ -33,8 +33,8 @@ end
     xmax::T = 20.0
 end
 
-function simulation(parameters::KinkKinkBorder)
-    @unpack V, dx, dt, tmax, xmax = parameters
+function simulation(params::KinkKinkBorder)
+    @unpack V, dx, dt, tmax, xmax = params
     tsave = 0.0:1e-3:tmax
     x = -5.0:dx:5.0
 

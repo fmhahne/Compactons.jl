@@ -5,8 +5,8 @@ include(srcdir("plots.jl"))
 fig, axs = plt.subplots(3, 2; figsize=(6, 5), sharex="col", sharey="row")
 
 for (i, k) in enumerate([0.0, 1.0, 10.0])
-    parameters = TriangularDelta(; ϵ=1e-2, k)
-    data, _ = produce_or_load(datadir("triangular_delta"), parameters, simulation)
+    params = TriangularDelta(; ϵ=1e-2, k)
+    data, _ = produce_or_load(datadir("triangular_delta"), params, simulation)
     @unpack x, t, ϕ, H = data
 
     heatmap!(axs[i, 1], x, t, ϕ; colorbar=true, cmap="RdBu", norm=mpl.colors.CenteredNorm())

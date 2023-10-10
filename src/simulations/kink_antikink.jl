@@ -6,8 +6,8 @@
     sampling::Int = 10
 end
 
-function simulation(parameters::KinkAntikink)
-    @unpack V, dx, dt, tmax, sampling = parameters
+function simulation(params::KinkAntikink)
+    @unpack V, dx, dt, tmax, sampling = params
     tsave = 0.0:(dx * sampling):tmax
 
     x = (-tmax):dx:tmax

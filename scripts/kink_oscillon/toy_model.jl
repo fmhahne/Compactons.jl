@@ -5,9 +5,9 @@ include(srcdir("plots.jl"))
 
 let l = 1.0, V = 0.0, α = 0.25, v₀ = 0.0, model = toy
     x₀ = -(2√2 - x_R(α, V; l, v₀) - x_L(α, V; l, v₀)) / 2
-    parameters = KinkOscillon(; l, V, α, v₀, x₀, model)
-    data, _ = produce_or_load(datadir("toy_model"), parameters) do parameters
-        return simulation(parameters; dx=5e-4, sampling=20)
+    params = KinkOscillon(; l, V, α, v₀, x₀, model)
+    data, _ = produce_or_load(datadir("toy_model"), params) do params
+        return simulation(params; dx=5e-4, sampling=20)
     end
     @unpack x, t, η, H = data
     χ = η - toykink.(t', x)
@@ -31,9 +31,9 @@ end
 
 let l = 0.2, V = 0.0, α = 0.25, v₀ = 0.0, model = toy
     x₀ = -(√2 - x_R(α, V; l, v₀) - x_L(α, V; l, v₀)) / 2
-    parameters = KinkOscillon(; l, V, α, v₀, x₀, model)
-    data, _ = produce_or_load(datadir("toy_model"), parameters) do parameters
-        return simulation(parameters; dx=5e-4, sampling=20)
+    params = KinkOscillon(; l, V, α, v₀, x₀, model)
+    data, _ = produce_or_load(datadir("toy_model"), params) do params
+        return simulation(params; dx=5e-4, sampling=20)
     end
     @unpack x, t, η, H = data
     χ = η - toykink.(t', x)
@@ -78,9 +78,9 @@ end
 
 let l = 0.2, V = 0.75, α = 0.0, v₀ = 0.0, model = toy
     x₀ = -(√2 - x_R(α, V; l, v₀) - x_L(α, V; l, v₀)) / 2
-    parameters = KinkOscillon(; l, V, α, v₀, x₀, model)
-    data, _ = produce_or_load(datadir("toy_model"), parameters) do parameters
-        return simulation(parameters; dx=5e-4, sampling=20)
+    params = KinkOscillon(; l, V, α, v₀, x₀, model)
+    data, _ = produce_or_load(datadir("toy_model"), params) do params
+        return simulation(params; dx=5e-4, sampling=20)
     end
     @unpack x, t, η, H = data
     χ = η - toykink.(t', x)

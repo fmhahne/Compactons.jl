@@ -42,8 +42,8 @@ end
 
 let ϵ = -0.2
     fig, axs = plt.subplots(1, 2; figsize=(6.2, 2.9))
-    data, _ = produce_or_load(datadir("deformed_kink"), DeformedKink(ϵ)) do parameters
-        return simulation(parameters; sampling=5)
+    data, _ = produce_or_load(datadir("deformed_kink"), DeformedKink(ϵ)) do params
+        return simulation(params; sampling=5)
     end
     @unpack x, t, η, H = data
 

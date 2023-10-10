@@ -24,8 +24,8 @@ function cceq!(q̈, q̇, q, (model, η, xspan, quadgk_kwargs), t)
     return nothing
 end
 
-function collectivecoordinates(parameters)
-    return error("Collective coordinates $(typeof(parameters)) not implemented")
+function collectivecoordinates(params)
+    return error("Collective coordinates $(typeof(params)) not implemented")
 end
 
 # Kink-kink scattering
@@ -48,8 +48,8 @@ function xspanKKa(q)
     return (-π / 2 - a, π / 2 + a)
 end
 
-function collectivecoordinates(parameters::KKa)
-    @unpack v, tmax, quadgk_kwargs = parameters
+function collectivecoordinates(params::KKa)
+    @unpack v, tmax, quadgk_kwargs = params
     q̇₀ = [-v]
     q₀ = [π / 2]
 
@@ -77,8 +77,8 @@ function xspanKKab(q)
     return (-π / (2b) - a, π / (2b) + a)
 end
 
-function collectivecoordinates(parameters::KKab)
-    @unpack v, tmax, quadgk_kwargs = parameters
+function collectivecoordinates(params::KKab)
+    @unpack v, tmax, quadgk_kwargs = params
     q̇₀ = [-v, 0.0]
     q₀ = [π / (2 * γ(v)), γ(v)]
 

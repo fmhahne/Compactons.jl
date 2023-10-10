@@ -24,4 +24,4 @@ function produce_data(model, ∂ₜϕ₀, ϕ₀, tsave; dx, dt=dx / 10, sampling
     return ϕ, H
 end
 
-simulation(parameters) = error("Simulation $(typeof(parameters)) not implemented")
+simulation(params) = error("Simulation $(typeof(params)) not implemented")

@@ -31,8 +31,8 @@ function getenergies(u, t, integrator)
     return [E₁; E₂; E₃]
 end
 
-function simulation(parameters::KinkOscillon; dx=1e-3, sampling=10)
-    @unpack l, V, α, v₀, x₀, model = parameters
+function simulation(params::KinkOscillon; dx=1e-3, sampling=10)
+    @unpack l, V, α, v₀, x₀, model = params
     tsave = 0.0:(dx * sampling):10.0
 
     x = (-tsave[end]):dx:tsave[end]
