@@ -13,7 +13,7 @@ using TensorOperations
 export γ, boost
 export Model
 export signumgordon, quadratic, toy, generalizedmodel
-export field_equation!, gethamiltonian, getenergy, 𝒯
+export field_equation!, gethamiltonian, 𝒯
 export produce_data, simulation
 export KinkAntikink, KinkKink, KinkOscillon, DeformedKink
 export kink, ∂ₜkink, ∂ₓkink
