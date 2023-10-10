@@ -32,7 +32,7 @@ function generalizedmodel(k)
     )
 end
 
-function fieldeq!(∂ₜₜφ, ∂ₜφ, φ, (model, dx), t)
+function field_equation!(∂ₜₜφ, ∂ₜφ, φ, (model, dx), t)
     N = length(φ)
 
     ∂ₜₜφ[1] = 0

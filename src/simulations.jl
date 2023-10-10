@@ -7,7 +7,7 @@ function producedata(model, ∂ₜφ₀, φ₀, tsave; dx, dt=dx / 10, sampling=
     N = length(φ₀)
     tspan = (tsave[begin], tsave[end])
 
-    prob = SecondOrderODEProblem(fieldeq!, ∂ₜφ₀, φ₀, tspan, (model, dx))
+    prob = SecondOrderODEProblem(field_equation!, ∂ₜφ₀, φ₀, tspan, (model, dx))
     sol = solve(
         prob,
         RK4();

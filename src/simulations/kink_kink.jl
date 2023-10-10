@@ -45,7 +45,7 @@ function simulation(parameters::KinkKinkBorder)
     xR_idxs = SavedValues(Float64, Int64)
     cbidxs = SavingCallback(get_right_idx, xR_idxs; saveat=tsave)
 
-    prob = SecondOrderODEProblem(fieldeq!, ∂ₜη₀, η₀, (0.0, tmax), (quadratic, dx))
+    prob = SecondOrderODEProblem(field_equation!, ∂ₜη₀, η₀, (0.0, tmax), (quadratic, dx))
     sol = solve(
         prob, RK4(); adaptive=false, dt=0.1dx, save_everystep=false, callback=cbidxs
     )
