@@ -52,7 +52,7 @@ function simulation(parameters::KinkOscillon; dx=1e-3, sampling=10)
     energies = SavedValues(Float64, Vector{Float64})
     cbenergies = SavingCallback(getenergies, energies; saveat=tsave)
 
-    η, H = producedata(model, ∂ₜη₀, η₀, tsave; dx, sampling, callbacks=[cbenergies])
+    η, H = produce_data(model, ∂ₜη₀, η₀, tsave; dx, sampling, callbacks=[cbenergies])
     E = reduce(hcat, energies.saveval)
 
     return Dict(

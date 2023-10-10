@@ -1,4 +1,4 @@
-function producedata(model, ∂ₜφ₀, φ₀, tsave; dx, dt=dx / 10, sampling=10, callbacks=[])
+function produce_data(model, ∂ₜφ₀, φ₀, tsave; dx, dt=dx / 10, sampling=10, callbacks=[])
     savedhamiltonian = SavedValues(Float64, Vector{Float64})
     cbhamiltonian = SavingCallback(gethamiltonian, savedhamiltonian; saveat=tsave)
 

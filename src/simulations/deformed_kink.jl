@@ -12,6 +12,6 @@ function simulation(parameters::DeformedKink; dx=1e-3, sampling=10)
     η₀ = kink.(x / (1.0 + ϵ) .+ π / 2)
     ∂ₜη₀ = zero(x)
 
-    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling)
+    η, H = produce_data(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling)
     return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end

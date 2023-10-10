@@ -27,6 +27,6 @@ function simulation(parameters::TriangularDelta)
     φ₀ = zero(x)
     ∂ₜφ₀ = A * δ.(x; ϵ)
 
-    φ, H = producedata(tanh_gordon(k), ∂ₜφ₀, φ₀, tsave; dx, dt, sampling)
+    φ, H = produce_data(tanh_gordon(k), ∂ₜφ₀, φ₀, tsave; dx, dt, sampling)
     return Dict("x" => xsave, "t" => tsave, "φ" => φ, "H" => H)
 end

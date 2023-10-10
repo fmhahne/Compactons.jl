@@ -47,7 +47,7 @@ let α = 0.25, l = 1.0, V = 0.0, v₀ = 0.0
                 oscillon(α * l, x + l / 2, V; l, v₀)
             ∂ₜη₀ = @. ∂ₜoscillon(α * l, x + l / 2, V; l, v₀)
 
-            η, H = producedata(model, ∂ₜη₀, η₀, tsave; dx, dt=dx / 10, sampling=10)
+            η, H = produce_data(model, ∂ₜη₀, η₀, tsave; dx, dt=dx / 10, sampling=10)
             return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
         end
 

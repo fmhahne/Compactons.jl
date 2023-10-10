@@ -16,7 +16,7 @@ function simulation(parameters::KinkKink; dx=1e-3, sampling=10)
     η₀ = @. kink(0.0, x + π / γ(V), V) + kink(0.0, x, -V) - 2
     ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(V), V) + ∂ₜkink(0.0, x, -V)
 
-    η, H = producedata(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=0.1dx)
+    η, H = produce_data(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=0.1dx)
     return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 

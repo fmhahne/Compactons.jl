@@ -14,7 +14,7 @@ export γ, boost
 export Model
 export signumgordon, quadratic, toy, generalizedmodel
 export field_equation!, gethamiltonian, getenergy, 𝒯
-export producedata, simulation
+export produce_data, simulation
 export KinkAntikink, KinkKink, KinkOscillon, DeformedKink
 export kink, ∂ₜkink, ∂ₓkink
 export oscillon, ∂ₜoscillon, ∂ₓoscillon
