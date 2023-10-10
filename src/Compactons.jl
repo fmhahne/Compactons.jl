@@ -21,7 +21,7 @@ export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
 export toykink
 export generalizedkink, x₀
-export collectivecoordinates
+export collective_coordinates
 export KKa, KKab
 export KinkKinkBorder
 export TriangularDelta
@@ -30,7 +30,7 @@ export KinkAntikinkNonRelModuliSpace, KinkAntikinkRelModuliSpace
 export KinkKinkNonRelModuliSpace
 export DeformedKinkModuliSpace
 
-include("collectivecoordinates.jl")
+include("collective_coordinates.jl")
 include("lorentz.jl")
 include("models.jl")
 include("moduli_space.jl")

@@ -20,12 +20,12 @@ for v in vsave
     append!(xRmins, minimum(xRs))
 
     cca_params = KKa(; v, tmax)
-    data, _ = produce_or_load(datadir("KKa"), cca_params, collectivecoordinates)
+    data, _ = produce_or_load(datadir("KKa"), cca_params, collective_coordinates)
     @unpack solution = data
     append!(xRmins_a, π / 2 + minimum(solution[2, :]))
 
     ccab_params = KKab(; v, tmax)
-    data, _ = produce_or_load(datadir("KKab"), ccab_params, collectivecoordinates)
+    data, _ = produce_or_load(datadir("KKab"), ccab_params, collective_coordinates)
     @unpack solution = data
     append!(xRmins_ab, minimum(@. π / 2 / solution[4, :] + solution[3, :]))
 end

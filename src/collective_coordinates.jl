@@ -24,7 +24,7 @@ function cceq!(q̈, q̇, q, (model, η, xspan, quadgk_kwargs), t)
     return nothing
 end
 
-function collectivecoordinates(params)
+function collective_coordinates(params)
     return error("Collective coordinates $(typeof(params)) not implemented")
 end
 
@@ -48,7 +48,7 @@ function xspanKKa(q)
     return (-π / 2 - a, π / 2 + a)
 end
 
-function collectivecoordinates(params::KKa)
+function collective_coordinates(params::KKa)
     @unpack v, tmax, quadgk_kwargs = params
     q̇₀ = [-v]
     q₀ = [π / 2]
@@ -77,7 +77,7 @@ function xspanKKab(q)
     return (-π / (2b) - a, π / (2b) + a)
 end
 
-function collectivecoordinates(params::KKab)
+function collective_coordinates(params::KKab)
     @unpack v, tmax, quadgk_kwargs = params
     q̇₀ = [-v, 0.0]
     q₀ = [π / (2 * γ(v)), γ(v)]
