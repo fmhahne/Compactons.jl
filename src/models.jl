@@ -3,7 +3,7 @@ struct Model
     V′::Function
 end
 
-signumgordon = Model(ϕ -> abs(ϕ), ϕ -> sign(ϕ))
+signum_gordon = Model(ϕ -> abs(ϕ), ϕ -> sign(ϕ))
 
 quadratic = Model(η -> mod(η, 2) - mod(η, 2)^2 / 2, η -> sign(mod(η, 2)) - mod(η, 2))
 
