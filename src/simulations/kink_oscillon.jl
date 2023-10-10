@@ -7,7 +7,7 @@
     model::Model = quadratic
 end
 
-function getenergies(u, t, integrator)
+function get_energies(u, t, integrator)
     ϕ = @views u[(end ÷ 2 + 1):end]
     ∂ₜϕ = @views u[begin:(end ÷ 2)]
 
@@ -50,7 +50,7 @@ function simulation(params::KinkOscillon; dx=1e-3, sampling=10)
     end
 
     energies = SavedValues(Float64, Vector{Float64})
-    cbenergies = SavingCallback(getenergies, energies; saveat=tsave)
+    cbenergies = SavingCallback(get_energies, energies; saveat=tsave)
 
     η, H = produce_data(model, ∂ₜη₀, η₀, tsave; dx, sampling, callbacks=[cbenergies])
     E = reduce(hcat, energies.saveval)
