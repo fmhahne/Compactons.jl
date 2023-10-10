@@ -44,7 +44,7 @@ function simulation(params::KinkOscillon; dx=1e-3, sampling=10)
     η₀ += if model == quadratic
         kink.(0, x)
     elseif model == toy
-        toykink.(0, x)
+        toy_kink.(0, x)
     else
         error("Kink not implemented")
     end

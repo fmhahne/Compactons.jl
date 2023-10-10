@@ -10,7 +10,7 @@ let l = 1.0, V = 0.0, α = 0.25, v₀ = 0.0, model = toy
         return simulation(params; dx=5e-4, sampling=20)
     end
     @unpack x, t, η, H = data
-    χ = η - toykink.(t', x)
+    χ = η - toy_kink.(t', x)
 
     fig, axs = plt.subplots(1, 2; figsize=(6.2, 2.8))
     heatmap!(axs[1, 1], x, t, χ; norm=mpl.colors.CenteredNorm(), cmap="RdBu", colorbar=true)
@@ -36,7 +36,7 @@ let l = 0.2, V = 0.0, α = 0.25, v₀ = 0.0, model = toy
         return simulation(params; dx=5e-4, sampling=20)
     end
     @unpack x, t, η, H = data
-    χ = η - toykink.(t', x)
+    χ = η - toy_kink.(t', x)
 
     fig, axs = plt.subplots(1, 2; figsize=(6.2, 2.8))
     heatmap!(axs[1, 1], x, t, χ; norm=mpl.colors.CenteredNorm(), cmap="RdBu", colorbar=true)
@@ -83,7 +83,7 @@ let l = 0.2, V = 0.75, α = 0.0, v₀ = 0.0, model = toy
         return simulation(params; dx=5e-4, sampling=20)
     end
     @unpack x, t, η, H = data
-    χ = η - toykink.(t', x)
+    χ = η - toy_kink.(t', x)
 
     χC(t, x) = l^2 / 48
 

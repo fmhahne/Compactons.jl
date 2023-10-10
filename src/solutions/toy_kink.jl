@@ -1,9 +1,9 @@
 """
-    toykink(t, x)
+    toy_kink(t, x)
 
 Field ``η(t, x)`` for a kink at rest in the toy model.
 """
-function toykink(t, x)
+function toy_kink(t, x)
     if x ≤ 0
         return 0.0
     elseif x ≤ √2
