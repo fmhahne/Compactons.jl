@@ -1,22 +1,22 @@
 @with_kw struct KinkKink{T<:Real}
-    V::T
+    v::T
     dx::T = 1e-3
     dt::T = 0.1dx
     tmax::T = 10.0
     sampling::Int = 10
 end
 
-function simulation(params::KinkKink; dx=1e-3, sampling=10)
-    @unpack V, dx, dt, tmax, sampling = params
+function simulation(params::KinkKink)
+    @unpack v, dx, dt, tmax, sampling = params
     tsave = 0.0:(dx * sampling):tmax
 
     x = (-tmax):dx:tmax
     xsave = x[begin:sampling:end]
 
-    η₀ = @. kink(0.0, x + π / γ(V), V) + kink(0.0, x, -V) - 2
-    ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(V), V) + ∂ₜkink(0.0, x, -V)
+    η₀ = @. kink(0.0, x + π / γ(v), v) + kink(0.0, x, -v) - 2
+    ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(v), v) + ∂ₜkink(0.0, x, -v)
 
-    η, H = produce_data(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling=sampling, dt=0.1dx)
+    η, H = produce_data(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling, dt=0.1dx)
     return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 
@@ -26,7 +26,7 @@ function get_right_idx(u, t, integrator)
 end
 
 @with_kw struct KinkKinkBorder{T<:Real}
-    V::T
+    v::T
     dx::T = 1e-3
     dt::T = 0.1dx
     tmax::T = 20.0
@@ -34,13 +34,13 @@ end
 end
 
 function simulation(params::KinkKinkBorder)
-    @unpack V, dx, dt, tmax, xmax = params
+    @unpack v, dx, dt, tmax, xmax = params
     tsave = 0.0:1e-3:tmax
     x = -5.0:dx:5.0
 
     xR = Float64[]
-    η₀ = @. kink(0.0, x + π / γ(V), V) + kink(0.0, x, -V) - 2
-    ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(V), V) + ∂ₜkink(0.0, x, -V)
+    η₀ = @. kink(0.0, x + π / γ(v), v) + kink(0.0, x, -v) - 2
+    ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(v), v) + ∂ₜkink(0.0, x, -v)
 
     xR_idxs = SavedValues(Float64, Int64)
     cbidxs = SavingCallback(get_right_idx, xR_idxs; saveat=tsave)

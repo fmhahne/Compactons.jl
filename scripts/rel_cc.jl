@@ -2,14 +2,14 @@ using Compactons
 using DrWatson
 include(srcdir("plots.jl"))
 
-dt = 1e-2
+saveat = 1e-2
 tmax = 50.0
-ts = 0:dt:tmax
+ts = 0:saveat:tmax
 vs = 0.001:0.001:0.5
 
 middle = zeros(Float64, (length(ts), length(vs)))
 for (i, v) in enumerate(vs)
-    params = KinkAntikinkRelModuliSpace(; v, dt, tmax)
+    params = KinkAntikinkRelModuliSpace(; v, saveat, tmax)
     data, _ = produce_or_load(
         datadir("moduli_space", "kink_antikink_relativistic"), params, moduli_space
     )

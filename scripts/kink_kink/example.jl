@@ -2,8 +2,8 @@ using DrWatson
 using Compactons
 include(srcdir("plots.jl"))
 
-V = 0.65
-params = KinkKink(; V)
+v = 0.65
+params = KinkKink(; v)
 data, _ = produce_or_load(datadir("kink_kink"), params, simulation)
 @unpack x, t, η, H = data
 
@@ -19,5 +19,6 @@ axs[2].set_xlim(-7, 7)
 axs[2].set_title(raw"$\mathcal{H}(t,x)$")
 axs[2].label_outer()
 
+Base.mkpath(plotsdir("kink_kink"))
 fig.savefig(plotsdir("kink_kink", "example.pdf"))
 fig

@@ -1,11 +1,11 @@
 @with_kw struct KinkAntikinkRelModuliSpace{T<:Real}
     v::T
     tmax::T = 10.0
-    dt::T = 1e-2
+    saveat::T = 1e-2
 end
 
 function moduli_space(params::KinkAntikinkRelModuliSpace)
-    @unpack v, tmax, dt = params
+    @unpack v, tmax, saveat = params
 
     function g_aa(a, b)
         if abs(a) >= π / (2 * b)
@@ -56,9 +56,9 @@ function moduli_space(params::KinkAntikinkRelModuliSpace)
     q0 = [π / (2 * γ(v)); γ(v)]
     p0 = metric(q0) * [-v; 0.0]
     tspan = (0.0, tmax)
-    tsave = 0.0:dt:tmax
+    tsave = 0.0:saveat:tmax
 
     prob = HamiltonianProblem(moduli_space_hamiltonian, p0, q0, tspan, (metric, potential))
-    sol = solve(prob; saveat=tsave)
+    sol = solve(prob; saveat)
     return Dict("t" => tsave, "a" => sol[3, :], "b" => sol[4, :])
 end
