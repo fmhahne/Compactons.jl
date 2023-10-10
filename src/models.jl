@@ -3,20 +3,20 @@ struct Model
     V′::Function
 end
 
-signumgordon = Model(φ -> abs(φ), φ -> sign(φ))
+signumgordon = Model(ϕ -> abs(ϕ), ϕ -> sign(ϕ))
 
 quadratic = Model(η -> mod(η, 2) - mod(η, 2)^2 / 2, η -> sign(mod(η, 2)) - mod(η, 2))
 
 toy = Model(η -> abs(mod(η - 1, 2) - 1), η -> sign(mod(η - 1, 2) - sign(mod(η - 1, 2))))
 
-klein_gordon = Model(φ -> φ^2 / 2, φ -> φ)
+klein_gordon = Model(ϕ -> ϕ^2 / 2, ϕ -> ϕ)
 
 function tanh_gordon(k)
     if k == 0
         return klein_gordon
     end
     return Model(
-        φ -> exp(-k) * φ^2 / 2 + log(cosh(k * φ)) / k, φ -> exp(-k) * φ + tanh(k * φ)
+        ϕ -> exp(-k) * ϕ^2 / 2 + log(cosh(k * ϕ)) / k, ϕ -> exp(-k) * ϕ + tanh(k * ϕ)
     )
 end
 
@@ -32,43 +32,43 @@ function generalizedmodel(k)
     )
 end
 
-function field_equation!(∂ₜₜφ, ∂ₜφ, φ, (model, dx), t)
-    N = length(φ)
+function field_equation!(∂ₜₜϕ, ∂ₜϕ, ϕ, (model, dx), t)
+    N = length(ϕ)
 
-    ∂ₜₜφ[1] = 0
+    ∂ₜₜϕ[1] = 0
     @tturbo for i in 2:(N - 1)
-        ∂ₜₜφ[i] = (φ[i + 1] + φ[i - 1] - 2φ[i]) / dx^2 - model.V′(φ[i])
+        ∂ₜₜϕ[i] = (ϕ[i + 1] + ϕ[i - 1] - 2ϕ[i]) / dx^2 - model.V′(ϕ[i])
     end
-    ∂ₜₜφ[N] = 0
+    ∂ₜₜϕ[N] = 0
 
     return nothing
 end
 
-𝒯(∂ₜφ, ∂ₓφ) = (∂ₜφ^2 + ∂ₓφ^2) / 2
+𝒯(∂ₜϕ, ∂ₓϕ) = (∂ₜϕ^2 + ∂ₓϕ^2) / 2
 
 function gethamiltonian(u, t, integrator)
-    φ = @views u[(end ÷ 2 + 1):end]
-    ∂ₜφ = @views u[begin:(end ÷ 2)]
+    ϕ = @views u[(end ÷ 2 + 1):end]
+    ∂ₜϕ = @views u[begin:(end ÷ 2)]
 
-    N = length(φ)
+    N = length(ϕ)
     model, dx = integrator.p
     save_idxs = integrator.opts.save_idxs .- N
 
-    H = zero(φ)
+    H = zero(ϕ)
     for i in intersect(2:(N - 1), save_idxs)
-        @inbounds H[i] = 𝒯(∂ₜφ[i], (φ[i + 1] - φ[i - 1]) / (2dx)) + model.V(φ[i])
+        @inbounds H[i] = 𝒯(∂ₜϕ[i], (ϕ[i + 1] - ϕ[i - 1]) / (2dx)) + model.V(ϕ[i])
     end
 
     return H[save_idxs]
 end
 
 function getenergy(u, t, integrator)
-    φ = @views u[(end ÷ 2 + 1):end]
-    ∂ₜφ = @views u[begin:(end ÷ 2)]
+    ϕ = @views u[(end ÷ 2 + 1):end]
+    ∂ₜϕ = @views u[begin:(end ÷ 2)]
 
-    N = length(φ)
+    N = length(ϕ)
     model, dx = integrator.p
 
     return dx *
-           sum(𝒯(∂ₜφ[i], (φ[i + 1] - φ[i - 1]) / (2dx)) + model.V(φ[i]) for i in 2:(N - 1))
+           sum(𝒯(∂ₜϕ[i], (ϕ[i + 1] - ϕ[i - 1]) / (2dx)) + model.V(ϕ[i]) for i in 2:(N - 1))
 end

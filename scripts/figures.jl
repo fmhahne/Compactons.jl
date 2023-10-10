@@ -61,13 +61,13 @@ let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
     for (ax, V) in zip(axs, Vs)
         x = (-V * l):1e-3:(l + Δ + V * l)
         t = (-l):1e-3:l
-        φ = oscillon.(t', x, V; l, v₀)
+        ϕ = oscillon.(t', x, V; l, v₀)
 
-        heatmap!(ax, x, t, φ; cmap=cmap, norm=norm)
+        heatmap!(ax, x, t, ϕ; cmap=cmap, norm=norm)
         ax.set_title("\$ V = $V \$")
         ax.label_outer()
 
-        cb.set_array(φ)
+        cb.set_array(ϕ)
         cb.autoscale()
     end
 

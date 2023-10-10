@@ -1,13 +1,13 @@
-function produce_data(model, ∂ₜφ₀, φ₀, tsave; dx, dt=dx / 10, sampling=10, callbacks=[])
+function produce_data(model, ∂ₜϕ₀, ϕ₀, tsave; dx, dt=dx / 10, sampling=10, callbacks=[])
     savedhamiltonian = SavedValues(Float64, Vector{Float64})
     cbhamiltonian = SavingCallback(gethamiltonian, savedhamiltonian; saveat=tsave)
 
     callback = CallbackSet(cbhamiltonian, callbacks...)
 
-    N = length(φ₀)
+    N = length(ϕ₀)
     tspan = (tsave[begin], tsave[end])
 
-    prob = SecondOrderODEProblem(field_equation!, ∂ₜφ₀, φ₀, tspan, (model, dx))
+    prob = SecondOrderODEProblem(field_equation!, ∂ₜϕ₀, ϕ₀, tspan, (model, dx))
     sol = solve(
         prob,
         RK4();
@@ -18,10 +18,10 @@ function produce_data(model, ∂ₜφ₀, φ₀, tsave; dx, dt=dx / 10, sampling
         callback=callback,
     )
 
-    φ = reduce(hcat, sol.u)
+    ϕ = reduce(hcat, sol.u)
     H = reduce(hcat, savedhamiltonian.saveval)
 
-    return φ, H
+    return ϕ, H
 end
 
 simulation(parameters) = error("Simulation $(typeof(parameters)) not implemented")

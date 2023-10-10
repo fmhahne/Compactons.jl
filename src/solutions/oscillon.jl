@@ -42,7 +42,7 @@ end
 """
     oscillon(t, x; l=1.0, v₀=0.0)
 
-Field ``φ(t,x)`` for a signum--Gordon oscillon at rest, with size ``l`` and swaying velocity
+Field ``ϕ(t,x)`` for a signum--Gordon oscillon at rest, with size ``l`` and swaying velocity
 ``v₀``.
 """
 function oscillon(t, x; l=1.0, v₀=0.0)
@@ -63,7 +63,7 @@ end
 """
     ∂ₜoscillon(t, x; l=1.0, v₀=0.0)
 
-Partial derivative ``∂ₜφ(t,x)`` for an signum--Gordon oscillon at rest, with size ``l`` and
+Partial derivative ``∂ₜϕ(t,x)`` for an signum--Gordon oscillon at rest, with size ``l`` and
 swaying velocity ``v₀``.
 """
 function ∂ₜoscillon(t, x; l=1.0, v₀=0.0)
@@ -83,7 +83,7 @@ end
 """
     ∂ₓoscillon(t, x; l=1.0, v₀=0.0)
 
-Partial derivative ``∂ₜφ(t,x)`` for an signum--Gordon oscillon at rest, with size ``l`` and
+Partial derivative ``∂ₜϕ(t,x)`` for an signum--Gordon oscillon at rest, with size ``l`` and
 swaying velocity ``v₀``.
 """
 function ∂ₓoscillon(t, x; l=1.0, v₀=0.0)
@@ -106,7 +106,7 @@ end
 """
     oscillon(t, x, V; l=1.0, v₀=0.0)
 
-Field ``φ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity ``V``. On its
+Field ``ϕ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity ``V``. On its
 frame of reference, the oscillon is of size ``l`` and swaying velocity ``v₀``.
 """
 function oscillon(t, x, V; l=1.0, v₀=0.0)
@@ -118,7 +118,7 @@ end
 """
     ∂ₜoscillon(t, x, V; l=1.0, v₀=0.0)
 
-Partial derivative ``∂ₜφ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity
+Partial derivative ``∂ₜϕ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity
 ``V``. On its frame of reference, the oscillon is of size ``l`` and swaying velocity ``v₀``.
 """
 function ∂ₜoscillon(t, x, V; l=1.0, v₀=0.0)
@@ -130,7 +130,7 @@ end
 """
     ∂ₓoscillon(t, x, V; l=1.0, v₀=0.0)
 
-Partial derivative ``∂ₓφ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity
+Partial derivative ``∂ₓϕ(t,x)`` for a signum--Gordon oscillon moving uniformly with velocity
 ``V``. On its frame of reference, the oscillon is of size ``l`` and swaying velocity ``v₀``.
 """
 function ∂ₓoscillon(t, x, V; l=1.0, v₀=0.0)

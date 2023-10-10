@@ -14,9 +14,9 @@ const N = length(x)
 
 tsave = 0:1e-2:1.0
 
-φ₀ = oscillon.(0.0, x, 0.1)
-∂ₜφ₀ = ∂ₜoscillon.(0.0, x, 0.1)
-field1, hamiltonian1 = produce_data(signumgordon, ∂ₜφ₀, φ₀, tsave; dx, sampling=1)
+ϕ₀ = oscillon.(0.0, x, 0.1)
+∂ₜϕ₀ = ∂ₜoscillon.(0.0, x, 0.1)
+field1, hamiltonian1 = produce_data(signumgordon, ∂ₜϕ₀, ϕ₀, tsave; dx, sampling=1)
 
 for (i, t) in enumerate(tsave)
     @test field1[:, i] ≈ oscillon.(t, x, 0.1) atol = 1e-3

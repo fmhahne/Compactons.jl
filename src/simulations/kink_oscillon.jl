@@ -8,23 +8,23 @@
 end
 
 function getenergies(u, t, integrator)
-    φ = @views u[(end ÷ 2 + 1):end]
-    ∂ₜφ = @views u[begin:(end ÷ 2)]
+    ϕ = @views u[(end ÷ 2 + 1):end]
+    ∂ₜϕ = @views u[begin:(end ÷ 2)]
 
-    N = length(φ)
+    N = length(ϕ)
     model, dx = integrator.p
 
     N₁ = N ÷ 2
     N₂ = N ÷ 2 + round(Int, π / dx)
 
-    E₁ = dx * sum(𝒯(∂ₜφ[i], (φ[i + 1] - φ[i - 1]) / (2dx)) + model.V(φ[i]) for i in 2:N₁)
+    E₁ = dx * sum(𝒯(∂ₜϕ[i], (ϕ[i + 1] - ϕ[i - 1]) / (2dx)) + model.V(ϕ[i]) for i in 2:N₁)
     E₂ =
         dx *
-        sum(𝒯(∂ₜφ[i], (φ[i + 1] - φ[i - 1]) / (2dx)) + model.V(φ[i]) for i in (N₁ + 1):N₂) -
+        sum(𝒯(∂ₜϕ[i], (ϕ[i + 1] - ϕ[i - 1]) / (2dx)) + model.V(ϕ[i]) for i in (N₁ + 1):N₂) -
         π / 2
     E₃ =
         dx * sum(
-            𝒯(∂ₜφ[i], (φ[i + 1] - φ[i - 1]) / (2dx)) + model.V(φ[i]) for
+            𝒯(∂ₜϕ[i], (ϕ[i + 1] - ϕ[i - 1]) / (2dx)) + model.V(ϕ[i]) for
             i in (N₂ + 1):(N - 1)
         )
 
