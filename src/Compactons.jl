@@ -20,7 +20,7 @@ export kink, ∂ₜkink, ∂ₓkink
 export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
 export toykink
-export generalizedkink, x₀
+export generalized_kink, x₀
 export collective_coordinates
 export KKa, KKab
 export KinkKinkBorder
@@ -44,7 +44,7 @@ include("simulations/kink_antikink.jl")
 include("simulations/kink_kink.jl")
 include("simulations/kink_oscillon.jl")
 include("simulations/triangular_delta.jl")
-include("solutions/generalizedkink.jl")
+include("solutions/generalized_kink.jl")
 include("solutions/kink.jl")
 include("solutions/oscillon.jl")
 include("solutions/toykink.jl")

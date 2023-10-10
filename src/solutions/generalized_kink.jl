@@ -6,11 +6,11 @@ function bps(η, x, k)
 end
 
 """
-    generalizedkink(t, x; k)
+    generalized_kink(t, x; k)
 
 Field ``η(t, x)`` for a kink at rest in the generalized model with parameter ``k``.
 """
-function generalizedkink(t, x; k)
+function generalized_kink(t, x; k)
     if x < 0
         0
     elseif x ≤ 2 * x₀(k)

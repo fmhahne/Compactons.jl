@@ -15,7 +15,7 @@ let η = -3:1e-3:3, x = -0.5:1e-3:4
     axs[1].set_xlim(η[begin], η[end])
 
     for k in 0:0.25:1
-        axs[2].plot(x, generalizedkink.(0, x; k=k); label="\$k = $k\$")
+        axs[2].plot(x, generalized_kink.(0, x; k=k); label="\$k = $k\$")
     end
 
     axs[2].set_xlabel(raw"$x$")
@@ -43,7 +43,7 @@ let α = 0.25, l = 1.0, V = 0.0, v₀ = 0.0
             tspan = tsave[1], tsave[end]
             xsave = x[begin:10:end]
 
-            η₀ = @. generalizedkink(0, x + x₀(k); k=k) +
+            η₀ = @. generalized_kink(0, x + x₀(k); k=k) +
                 oscillon(α * l, x + l / 2, V; l, v₀)
             ∂ₜη₀ = @. ∂ₜoscillon(α * l, x + l / 2, V; l, v₀)
 
@@ -52,7 +52,7 @@ let α = 0.25, l = 1.0, V = 0.0, v₀ = 0.0
         end
 
         @unpack x, t, η, H = data
-        χ = η - generalizedkink.(t', x .+ x₀(k); k=k)
+        χ = η - generalized_kink.(t', x .+ x₀(k); k=k)
 
         ax.plot(x, χ[:, end] - χ[end:-1:1, end]; label="\$k=$k\$")
     end
