@@ -1,6 +1,6 @@
 function produce_data(model, ∂ₜϕ₀, ϕ₀, tsave; dx, dt=dx / 10, sampling=10, callbacks=[])
     savedhamiltonian = SavedValues(Float64, Vector{Float64})
-    cbhamiltonian = SavingCallback(gethamiltonian, savedhamiltonian; saveat=tsave)
+    cbhamiltonian = SavingCallback(get_hamiltonian, savedhamiltonian; saveat=tsave)
 
     callback = CallbackSet(cbhamiltonian, callbacks...)
 

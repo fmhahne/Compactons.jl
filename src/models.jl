@@ -46,7 +46,7 @@ end
 
 𝒯(∂ₜϕ, ∂ₓϕ) = (∂ₜϕ^2 + ∂ₓϕ^2) / 2
 
-function gethamiltonian(u, t, integrator)
+function get_hamiltonian(u, t, integrator)
     ϕ = @views u[(end ÷ 2 + 1):end]
     ∂ₜϕ = @views u[begin:(end ÷ 2)]
 
