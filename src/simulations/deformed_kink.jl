@@ -1,12 +1,16 @@
-struct DeformedKink{T<:Real}
+@with_kw struct DeformedKink{T<:Real}
     ϵ::T
+    dx::T = 1e-3
+    dt::T = 0.1dx
+    tmax::T = 10.0
+    sampling::Int = 10
 end
 
-function simulation(params::DeformedKink; dx=1e-3, sampling=10)
-    ϵ = params.ϵ
-    tsave = 0.0:(dx * sampling):10.0
+function simulation(params::DeformedKink)
+    @unpack ϵ, dx, dt, tmax, sampling = params
+    tsave = 0.0:(dx * sampling):tmax
 
-    x = (-tsave[end]):dx:tsave[end]
+    x = (-tmax):dx:tmax
     xsave = x[begin:sampling:end]
 
     η₀ = kink.(x / (1.0 + ϵ) .+ π / 2)

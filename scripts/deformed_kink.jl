@@ -12,7 +12,7 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
     cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
 
     for (ϵ, ax) in zip(ϵs, Iterators.flatten(eachrow(axs)))
-        data, _ = produce_or_load(datadir("deformed_kink"), DeformedKink(ϵ), simulation)
+        data, _ = produce_or_load(datadir("deformed_kink"), DeformedKink(; ϵ), simulation)
         @unpack x, t, η, H = data
 
         data, _ = produce_or_load(
@@ -36,15 +36,17 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
 
     fig.colorbar(cb; ax=axs[:], aspect=40)
 
-    fig.savefig(plotsdir("deformed_kink", "hamiltonian-borders.pdf"))
+    Base.mkpath(plotsdir("deformed_kink"))
+    fig.savefig(plotsdir("deformed_kink", "hamiltonian.pdf"))
     fig
 end
 
-let ϵ = -0.2
+let ϵ = -0.2, sampling = 5
     fig, axs = plt.subplots(1, 2; figsize=(6.2, 2.9))
-    data, _ = produce_or_load(datadir("deformed_kink"), DeformedKink(ϵ)) do params
-        return simulation(params; sampling=5)
-    end
+
+    data, _ = produce_or_load(
+        datadir("deformed_kink"), DeformedKink(; ϵ, sampling), simulation
+    )
     @unpack x, t, η, H = data
 
     heatmap!(axs[1], x, t, H; colorbar=true, cmap="magma", norm=mpl.colors.SymLogNorm(1e-5))
@@ -70,6 +72,8 @@ let ϵ = -0.2
         norm=mpl.colors.CenteredNorm(),
     )
     axs[2].set_title(raw"$\eta(t, x)$")
+
+    Base.mkpath(plotsdir("deformed_kink"))
     fig.savefig(plotsdir("deformed_kink", "zoom.pdf"))
     fig
 end
