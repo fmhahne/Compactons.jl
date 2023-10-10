@@ -2,10 +2,12 @@ module Compactons
 
 using DiffEqPhysics
 using DifferentialEquations
+using FiniteDiff
 using HypergeometricFunctions: _₂F₁general2 as _₂F₁
 using LinearAlgebra
 using LoopVectorization
 using Parameters
+using QuadGK
 using Roots
 using SpecialFunctions: gamma as Γ
 using TensorOperations
@@ -22,7 +24,7 @@ export x_L, x_R, L
 export toy_kink
 export generalized_kink, x₀
 export collective_coordinates
-export KKa, KKab
+export KKa, KKab, KKaC
 export KinkKinkBorder
 export TriangularDelta
 export moduli_space
@@ -35,6 +37,7 @@ include("lorentz.jl")
 include("models.jl")
 include("moduli_space.jl")
 include("moduli_space/deformed_kink.jl")
+include("moduli_space/kink_antikink_derrick.jl")
 include("moduli_space/kink_antikink_non_relativistic.jl")
 include("moduli_space/kink_antikink_relativistic.jl")
 include("moduli_space/kink_kink_non_relativistic.jl")
