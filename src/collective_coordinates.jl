@@ -13,7 +13,7 @@ function cceq!(q̈, q̇, q, (model, η, xspan, quadgk_kwargs), t)
         xi,
         xf;
         quadgk_kwargs...,
-        )
+    )
     q̈ .= -g \ f
     return nothing
 end
@@ -29,6 +29,7 @@ end
 @with_kw struct KKa{T<:Real}
     v::T
     tmax::T = 10.0
+    saveat::T = 0.01
     quadgk_kwargs = (atol=1e-6, order=20)
 end
 
@@ -43,14 +44,15 @@ function xspanKKa(q)
 end
 
 function collective_coordinates(params::KKa)
-    @unpack v, tmax, quadgk_kwargs = params
+    @unpack v, tmax, quadgk_kwargs, saveat = params
     q̇₀ = [-v]
     q₀ = [π / 2]
 
     prob = SecondOrderODEProblem(
         cceq!, q̇₀, q₀, (0.0, tmax), (quadratic, ηKKa, xspanKKa, quadgk_kwargs)
     )
-    return Dict("solution" => solve(prob; saveat=1e-2))
+    sol = solve(prob; saveat)
+    return Dict("solution" => sol)
 end
 
 # Position and Derrick mode
@@ -58,6 +60,7 @@ end
 @with_kw struct KKab{T<:Real}
     v::T
     tmax::T = 10.0
+    saveat::T = 0.01
     quadgk_kwargs = (atol=1e-6, order=20)
 end
 
@@ -72,12 +75,13 @@ function xspanKKab(q)
 end
 
 function collective_coordinates(params::KKab)
-    @unpack v, tmax, quadgk_kwargs = params
+    @unpack v, tmax, quadgk_kwargs, saveat = params
     q̇₀ = [-v, 0.0]
     q₀ = [π / (2 * γ(v)), γ(v)]
 
     prob = SecondOrderODEProblem(
         cceq!, q̇₀, q₀, (0.0, tmax), (quadratic, ηKKab, xspanKKab, quadgk_kwargs)
     )
-    return Dict("solution" => solve(prob))
+    sol = solve(prob; saveat)
+    return Dict("solution" => sol)
 end
