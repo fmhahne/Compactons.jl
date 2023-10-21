@@ -40,7 +40,7 @@ end
 
 function xspanKKa(q)
     a = q[1]
-    return (-π / 2 - a, π / 2 + a)
+    return (-π / 2 - abs(a), π / 2 + abs(a))
 end
 
 function collective_coordinates(params::KKa)
@@ -71,7 +71,7 @@ end
 
 function xspanKKab(q)
     a, b = q
-    return (-π / (2b) - a, π / (2b) + a)
+    return (-π / (2b) - abs(a), π / (2b) + abs(a))
 end
 
 function collective_coordinates(params::KKab)
