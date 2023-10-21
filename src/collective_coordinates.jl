@@ -5,22 +5,16 @@ function cceq!(q̈, q̇, q, (model, η, xspan, quadgk_kwargs), t)
     ∂²η_∂q∂x(x) = FiniteDiff.finite_difference_derivative(∂η_∂q, x)
 
     xi, xf = xspan(q)
-
     g, _ = quadgk(x -> ∂η_∂q(x) * ∂η_∂q(x)', xi, xf; quadgk_kwargs...)
-    g⁻¹ = inv(g)
-
     f, _ = quadgk(
-        x -> ∂²η_∂q∂x(x) * ∂η_∂x(x) + model.V′(η(x, q)) * ∂η_∂q(x), xi, xf; quadgk_kwargs...
-    )
-
-    Γ = zeros(eltype(q), length(q), length(q), length(q))
-    for (l, j, k) in zip(eachindex(q), eachindex(q), eachindex(q))
-        @inbounds Γ[l, j, k], _ = quadgk(
-            x -> ∂η_∂q(x)[l] * ∂²η_∂q∂q(x)[j, k], xi, xf; quadgk_kwargs...
+        x ->
+            ∂²η_∂q∂x(x) * ∂η_∂x(x) +
+            (model.V′(η(x, q)) + dot(q̇', ∂²η_∂q∂q(x), q̇)) * ∂η_∂q(x),
+        xi,
+        xf;
+        quadgk_kwargs...,
         )
-    end
-
-    @tensor q̈[i] = -g⁻¹[i, l] * (f[l] + Γ[l, j, k] * q̇[j] * q̇[k])
+    q̈ .= -g \ f
     return nothing
 end
 

@@ -10,7 +10,6 @@ using Parameters
 using QuadGK
 using Roots
 using SpecialFunctions: gamma as Γ
-using TensorOperations
 
 export γ, boost
 export Model
