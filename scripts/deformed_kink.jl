@@ -16,11 +16,11 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
         @unpack x, t, η, H = data
 
         data, _ = produce_or_load(
-            datadir("deformed_kink", "moduli_space"),
-            DeformedKinkModuliSpace(; ϵ),
-            moduli_space,
+            datadir("deformed_kink", "collective_coordinates"),
+            CCDeformedKink(; ϵ),
+            collective_coordinates,
         )
-        @unpack b = data
+        @unpack t, b = data
 
         heatmap!(ax, x, t, H; cmap=cmap, norm=norm)
         ax.plot(π ./ (2 * b), t; color="lime")

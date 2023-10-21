@@ -1,6 +1,5 @@
 module Compactons
 
-using DiffEqPhysics
 using DifferentialEquations
 using FiniteDiff
 using HypergeometricFunctions: _₂F₁general2 as _₂F₁
@@ -26,19 +25,12 @@ export collective_coordinates
 export KKa, KKab, KKaC
 export KinkKinkBorder
 export TriangularDelta
-export moduli_space
-export KinkAntikinkNonRelModuliSpace, KinkAntikinkRelModuliSpace
-export KinkKinkNonRelModuliSpace
-export DeformedKinkModuliSpace
+export CCDeformedKink
 
 include("collective_coordinates.jl")
+include("collective_coordinates/deformed_kink.jl")
 include("lorentz.jl")
 include("models.jl")
-include("moduli_space.jl")
-include("moduli_space/deformed_kink.jl")
-include("moduli_space/kink_antikink_non_relativistic.jl")
-include("moduli_space/kink_antikink_relativistic.jl")
-include("moduli_space/kink_kink_non_relativistic.jl")
 include("simulations.jl")
 include("simulations/deformed_kink.jl")
 include("simulations/kink_antikink.jl")
