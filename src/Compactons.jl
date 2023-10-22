@@ -26,9 +26,11 @@ export KKa, KKab, KKaC
 export KinkKinkBorder
 export TriangularDelta
 export CCDeformedKink
+export CCKinkAntikink, ηKAK
 
 include("collective_coordinates.jl")
 include("collective_coordinates/deformed_kink.jl")
+include("collective_coordinates/kink_antikink.jl")
 include("lorentz.jl")
 include("models.jl")
 include("simulations.jl")
