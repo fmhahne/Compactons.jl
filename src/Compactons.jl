@@ -22,15 +22,17 @@ export x_L, x_R, L
 export toy_kink
 export generalized_kink, x₀
 export collective_coordinates
-export KKa, KKab, KKaC
 export KinkKinkBorder
 export TriangularDelta
 export CCDeformedKink
 export CCKinkAntikink, ηKAK
+export CCKinkKinkNonRel, CCKinkKinkNonRelMode
+export CCKinkKinkRel, CCKinkKinkRelMode
 
 include("collective_coordinates.jl")
 include("collective_coordinates/deformed_kink.jl")
 include("collective_coordinates/kink_antikink.jl")
+include("collective_coordinates/kink_kink.jl")
 include("lorentz.jl")
 include("models.jl")
 include("simulations.jl")
