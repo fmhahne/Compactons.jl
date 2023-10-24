@@ -13,7 +13,7 @@ using SpecialFunctions: gamma as Γ
 export γ, boost
 export Model
 export signum_gordon, quadratic, toy, generalized_model
-export field_equation!, get_hamiltonian, 𝒯
+export field_equation!, get_hamiltonian, get_energy, 𝒯
 export produce_data, simulation
 export KinkAntikink, KinkKink, KinkOscillon, DeformedKink
 export kink, ∂ₜkink, ∂ₓkink

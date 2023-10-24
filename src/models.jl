@@ -61,3 +61,14 @@ function get_hamiltonian(u, t, integrator)
 
     return H[save_idxs]
 end
+
+function get_energy(u, t, integrator)
+    ϕ = @views u[(end ÷ 2 + 1):end]
+    ∂ₜϕ = @views u[begin:(end ÷ 2)]
+
+    N = length(ϕ)
+    model, dx = integrator.p
+
+    return dx *
+           sum(𝒯(∂ₜϕ[i], (ϕ[i + 1] - ϕ[i - 1]) / (2dx)) + model.V(ϕ[i]) for i in 2:(N - 1))
+end
