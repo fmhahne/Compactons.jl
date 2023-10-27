@@ -1,9 +1,8 @@
 using DrWatson
 using Compactons
-using DifferentialEquations
 include(srcdir("plots.jl"))
 
-vsave = 0.0:0.001:0.499
+vsave = 0.0:0.001:0.5
 sampling = 10
 dx = 5e-3
 saveat = dx * sampling
@@ -12,11 +11,10 @@ tsave = 0.0:saveat:tmax
 
 let η0s = []
     for v in vsave
-        data, _ = produce_or_load(
-            datadir("kink_antikink"), KinkAntikink(; v, dx, tmax, sampling), simulation
-        )
-        @unpack η = data
-        push!(η0s, η[end ÷ 2 + 1, :])
+        params = KinkAntikinkMiddle(; v, dx, tmax)
+        data, _ = produce_or_load(datadir("kink_antikink", "middle"), params, simulation)
+        @unpack η0 = data
+        push!(η0s, η0)
     end
 
     middle = hcat(η0s...)
@@ -28,7 +26,7 @@ let η0s = []
     fig.colorbar(img)
 
     Base.mkpath(plotsdir("kink_antikink"))
-    fig.savefig(plotsdir("kink_antikink", "middle_point.pdf"))
+    fig.savefig(plotsdir("kink_antikink", "middle.pdf"))
     fig
 end
 

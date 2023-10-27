@@ -11,14 +11,16 @@ tsave = 0.0:saveat:tmax
 
 let η0s = []
     for v in vsave
+        params = KinkAntikinkMiddle(; v, dx, tmax, sampling)
         data, _ = produce_or_load(
-            datadir("kink_antikink"),
-            KinkAntikink(; v, dx, tmax, sampling),
+            datadir("kink_antikink", "middle"),
+            params,
             simulation;
             filename=params -> savename(params; sigdigits=10),
+            force=true,
         )
-        @unpack η = data
-        push!(η0s, η[end ÷ 2 + 1, :])
+        @unpack η0 = data
+        push!(η0s, η0)
     end
 
     middle = hcat(η0s...)

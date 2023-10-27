@@ -15,13 +15,15 @@ export Model
 export signum_gordon, quadratic, toy, generalized_model
 export field_equation!, get_hamiltonian, get_energy, 𝒯
 export produce_data, simulation
-export KinkAntikink, KinkKink, KinkOscillon, DeformedKink
+export KinkAntikink, KinkAntikinkMiddle
+export KinkKink, KinkKinkBorder
+export KinkOscillon
+export DeformedKink
 export kink, ∂ₜkink, ∂ₓkink
 export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
 export toy_kink
 export generalized_kink, x₀
-export KinkKinkBorder
 export TriangularDelta
 export collective_coordinates, potential, metric
 export CCDeformedKink
