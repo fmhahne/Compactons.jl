@@ -21,12 +21,13 @@ export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
 export toy_kink
 export generalized_kink, x₀
-export collective_coordinates
 export KinkKinkBorder
 export TriangularDelta
+export collective_coordinates, potential, metric
 export CCDeformedKink
 export CCKinkAntikink, ηKAK
-export CCKinkKinkNonRel, CCKinkKinkNonRelMode
+export CCKinkKinkNonRel, xspanKK_non_rel, ηKK_non_rel, ηKK_non_rel_mode
+export CCKinkKinkNonRelMode, xspanKK_rel, ηKK_rel, ηKK_rel_mode
 export CCKinkKinkRel, CCKinkKinkRelMode
 
 include("collective_coordinates.jl")
