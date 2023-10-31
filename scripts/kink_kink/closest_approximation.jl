@@ -61,6 +61,6 @@ ax.plot(vsave2, xRmins_rel; label="Relativistic")
 ax.plot(vsave2, xRmins_rel_mode; label="Relativistic with internal mode")
 ax.set_xlabel(raw"$v$")
 ax.set_ylabel(raw"$x_{R,\mathrm{min}}$")
-ax.legend(; frameon=true)
+ax.legend()
 fig.savefig(plotsdir("kink_kink", "closest_approximation.pdf"))
 fig
