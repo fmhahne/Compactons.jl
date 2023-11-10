@@ -17,6 +17,7 @@ export field_equation!, get_hamiltonian, get_energy, 𝒯
 export produce_data, simulation
 export KinkAntikink, KinkAntikinkMiddle
 export KinkKink, KinkKinkBorder
+export KinkAntikinkKink
 export KinkOscillon
 export DeformedKink
 export kink, ∂ₜkink, ∂ₓkink
@@ -41,6 +42,7 @@ include("models.jl")
 include("simulations.jl")
 include("simulations/deformed_kink.jl")
 include("simulations/kink_antikink.jl")
+include("simulations/kink_antikink_kink.jl")
 include("simulations/kink_kink.jl")
 include("simulations/kink_oscillon.jl")
 include("simulations/triangular_delta.jl")
