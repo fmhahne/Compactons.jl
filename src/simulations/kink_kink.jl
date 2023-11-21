@@ -16,7 +16,7 @@ function simulation(params::KinkKink)
     η₀ = @. kink(0.0, x + π / γ(v), v) + kink(0.0, x, -v) - 2
     ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(v), v) + ∂ₜkink(0.0, x, -v)
 
-    η, H = produce_data(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling, dt=0.1dx)
+    η, H = produce_data(quadratic, ∂ₜη₀, η₀, tsave; dx, sampling, dt)
     return Dict("x" => xsave, "t" => tsave, "η" => η, "H" => H)
 end
 
@@ -47,7 +47,7 @@ function simulation(params::KinkKinkBorder)
 
     prob = SecondOrderODEProblem(field_equation!, ∂ₜη₀, η₀, (0.0, tmax), (quadratic, dx))
     sol = solve(
-        prob, RK4(); adaptive=false, dt=0.1dx, save_everystep=false, callback=cbidxs
+        prob, RK4(); adaptive=false, dt, save_everystep=false, callback=cbidxs
     )
 
     return Dict("x" => x, "xR_idxs" => xR_idxs)
