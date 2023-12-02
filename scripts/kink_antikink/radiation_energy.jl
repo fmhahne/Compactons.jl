@@ -11,14 +11,12 @@ tsave = 0.0:saveat:tmax
 
 let Es = []
     for v in 0:1e-3:0.4
+        params = KinkAntikinkRadiationEnergy(; v, dx, tmax, sampling)
         data, _ = produce_or_load(
-            datadir("kink_antikink"), KinkAntikink(; v, dx, tmax, sampling), simulation
+            datadir("kink_antikink", "radiation_energy"), params, simulation
         )
-        @unpack H, x = data
-        i = findfirst(x .> π)
-        Δx = (x[end] - x[begin]) / (length(x) - 1)
-        E = vec(2 * Δx * sum(H[i:end, :]; dims=1)) / γ(v) / π
-        push!(Es, E)
+        @unpack E_rad = data
+        push!(Es, E_rad / (π * γ(v)))
     end
 
     Es = hcat(Es...)

@@ -15,7 +15,7 @@ export Model
 export signum_gordon, quadratic, toy, generalized_model
 export field_equation!, get_hamiltonian, get_energy, 𝒯
 export produce_data, simulation
-export KinkAntikink, KinkAntikinkMiddle
+export KinkAntikink, KinkAntikinkMiddle, KinkAntikinkRadiationEnergy
 export KinkKink, KinkKinkBorder
 export KinkAntikinkKink
 export KinkOscillon
