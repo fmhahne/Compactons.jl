@@ -38,7 +38,6 @@ function simulation(params::KinkKinkBorder)
     tsave = 0.0:1e-3:tmax
     x = -5.0:dx:5.0
 
-    xR = Float64[]
     η₀ = @. kink(0.0, x + π / γ(v), v) + kink(0.0, x, -v) - 2
     ∂ₜη₀ = @. ∂ₜkink(0, x + π / γ(v), v) + ∂ₜkink(0.0, x, -v)
 
@@ -46,9 +45,7 @@ function simulation(params::KinkKinkBorder)
     cbidxs = SavingCallback(get_right_idx, xR_idxs; saveat=tsave)
 
     prob = SecondOrderODEProblem(field_equation!, ∂ₜη₀, η₀, (0.0, tmax), (quadratic, dx))
-    sol = solve(
-        prob, RK4(); adaptive=false, dt, save_everystep=false, callback=cbidxs
-    )
+    solve(prob, RK4(); adaptive=false, dt, save_everystep=false, callback=cbidxs)
 
     return Dict("x" => x, "xR_idxs" => xR_idxs)
 end
