@@ -33,7 +33,4 @@ jobs:
           arch: ${{ matrix.arch }}
       - uses: julia-actions/cache@v1
       - uses: julia-actions/julia-buildpkg@v1
-
-      - name: Run tests
-        run: >
-          julia --project=. --color=yes test/runtests.jl
+      - uses: julia-actions/julia-runtest@v1
