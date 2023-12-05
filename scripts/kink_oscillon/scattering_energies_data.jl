@@ -1,9 +1,9 @@
 using Printf
 using JLD2, CodecZlib
-using UnPack
+using DrWatson
 using Compactons
 
-mkpath("data/kink_oscillon_scattering_energies")
+mkpath(datadir("kink_oscillon_scattering_energies"))
 
 let l = 1.0, V = 0.75
     energies = Dict()
@@ -19,7 +19,7 @@ let l = 1.0, V = 0.75
         end
     end
 
-    filename = "data/kink_oscillon_scattering_energies/l=$l,V=$V.jld2"
+    filename = datadir("kink_oscillon_scattering_energies", "l=$l,V=$V.jld2")
     jldsave(filename, true; energies)
 end
 
@@ -37,7 +37,7 @@ let l = 1.0, α = 0.0
         end
     end
 
-    filename = "data/kink_oscillon_scattering_energies/l=$l,alpha=$α.jld2"
+    filename = datadir("kink_oscillon_scattering_energies", "l=$l,alpha=$α.jld2")
     jldsave(filename, true; energies)
 end
 
@@ -55,7 +55,7 @@ let l = 1.0, v₀ = 0.0
         end
     end
 
-    filename = "data/kink_oscillon_scattering_energies/l=$l,v0=$v₀.jld2"
+    filename = datadir("kink_oscillon_scattering_energies", "l=$l,v0=$v₀.jld2")
     jldsave(filename, true; energies)
 end
 
@@ -73,7 +73,7 @@ let V = 0.75, α = 0.0
         end
     end
 
-    filename = "data/kink_oscillon_scattering_energies/V=$V,alpha=$α.jld2"
+    filename = datadir("kink_oscillon_scattering_energies", "V=$V,alpha=$α.jld2")
     jldsave(filename, true; energies)
 end
 
@@ -91,7 +91,7 @@ let V = 0.75, v₀ = 0.0
         end
     end
 
-    filename = "data/kink_oscillon_scattering_energies/V=$V,v0=$v₀.jld2"
+    filename = datadir("kink_oscillon_scattering_energies", "V=$V,v0=$v₀.jld2")
     jldsave(filename, true; energies)
 end
 
@@ -109,6 +109,6 @@ let α = 0.00, v₀ = 0.0
         end
     end
 
-    filename = "data/kink_oscillon_scattering_energies/alpha=$α,v0=$v₀.jld2"
+    filename = datadir("kink_oscillon_scattering_energies", "alpha=$α,v0=$v₀.jld2")
     jldsave(filename, true; energies)
 end
