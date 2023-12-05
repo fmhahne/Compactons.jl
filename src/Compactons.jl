@@ -17,7 +17,6 @@ export field_equation!, get_hamiltonian, get_energy, 𝒯
 export produce_data, simulation
 export KinkAntikink, KinkAntikinkMiddle, KinkAntikinkRadiationEnergy
 export KinkKink, KinkKinkBorder
-export KinkAntikinkKink
 export KinkOscillon
 export DeformedKink
 export kink, ∂ₜkink, ∂ₓkink
@@ -25,7 +24,6 @@ export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
 export toy_kink
 export generalized_kink, x₀
-export TriangularDelta
 export collective_coordinates, potential, metric
 export CCDeformedKink
 export CCKinkAntikink, ηKAK
@@ -42,10 +40,8 @@ include("models.jl")
 include("simulations.jl")
 include("simulations/deformed_kink.jl")
 include("simulations/kink_antikink.jl")
-include("simulations/kink_antikink_kink.jl")
 include("simulations/kink_kink.jl")
 include("simulations/kink_oscillon.jl")
-include("simulations/triangular_delta.jl")
 include("solutions/generalized_kink.jl")
 include("solutions/kink.jl")
 include("solutions/oscillon.jl")
