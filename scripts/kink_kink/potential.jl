@@ -38,5 +38,6 @@ end
 axs[2].legend()
 axs[2].set_xlabel(raw"$a$")
 
+mkpath(plotsdir("kink_kink"))
 fig.savefig(plotsdir("kink_kink", "non_rel_mode_potential.pdf"))
 fig

@@ -2,6 +2,8 @@ using DrWatson
 using Compactons
 include(srcdir("plots.jl"))
 
+mkpath(plotsdir("kink_oscillon_superposition"))
+
 xlim = (-5, 5) .+ π / 2
 
 let V = 0.0, v₀ = 0.0, l = 1.0

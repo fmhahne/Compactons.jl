@@ -197,5 +197,6 @@ fig.tight_layout()
 fig.subplots_adjust(; right=0.85)
 cax = fig.add_axes([0.88, 0.15, 0.015, 0.7])
 fig.colorbar(cb; cax=cax)
-# fig.savefig(plotsdir("kink_oscillon_scattering", "energies.pdf"))
+mkpath(plotsdir("kink_oscillon_scattering"))
+fig.savefig(plotsdir("kink_oscillon_scattering", "energies.pdf"))
 fig

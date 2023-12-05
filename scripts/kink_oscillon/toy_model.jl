@@ -3,6 +3,8 @@ using DifferentialEquations
 using Compactons
 include(srcdir("plots.jl"))
 
+mkpath(plotsdir("toy_model"))
+
 let l = 1.0, V = 0.0, α = 0.25, v₀ = 0.0, model = toy
     x₀ = -(2√2 - x_R(α, V; l, v₀) - x_L(α, V; l, v₀)) / 2
     params = KinkOscillon(; l, V, α, v₀, x₀, model)

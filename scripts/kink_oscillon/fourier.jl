@@ -73,6 +73,7 @@ let l = 1.0, α = 0.75, v₀ = 0.0, ns = [31, 61, 91]
     fig.subplots_adjust(; bottom=0.18)
     fig.legend(handles, labels; loc="lower center", ncol=2, bbox_to_anchor=(0.5, 0))
 
+    mkpath(plotsdir("kink_oscillon_superposition"))
     fig.savefig(plotsdir("kink_oscillon_superposition", "comparison.pdf"))
     fig
 end

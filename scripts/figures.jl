@@ -2,6 +2,8 @@ using DrWatson
 using Compactons
 include(srcdir("plots.jl"))
 
+mkpath(plotsdir())
+
 let η = -3:1e-3:3
     fig, ax = plt.subplots()
 
@@ -47,6 +49,7 @@ let l = 2, V = 0.6, v₀s = [0, 0.5], αs = [0, 0.25]
         ax.legend()
     end
 
+    mkpath(plotsdir("kink_oscillon_scattering"))
     fig.savefig(plotsdir("kink_oscillon_scattering", "initial.pdf"))
     fig
 end

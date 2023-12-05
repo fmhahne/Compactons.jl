@@ -2,6 +2,8 @@ using DrWatson
 using Compactons
 include(srcdir("plots.jl"))
 
+mkpath(plotsdir("kink_oscillon_scattering"))
+
 ls = 0.5:0.5:2.0
 Vs = 0.0:0.25:0.75
 αs = 0.0:0.25:0.75
