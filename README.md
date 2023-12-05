@@ -4,7 +4,7 @@
 
 Simulations for interacting compactons in scalar field theories with non-analytical (V-shaped) potentials.
 
-## Prequisites
+## Prerequisites
 
 Install official Julia binaries:
 
