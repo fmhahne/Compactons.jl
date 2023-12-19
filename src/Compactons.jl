@@ -19,6 +19,7 @@ export KinkAntikink, KinkAntikinkMiddle, KinkAntikinkRadiationEnergy
 export KinkKink, KinkKinkBorder
 export KinkOscillon
 export DeformedKink
+export SymOscillonScattering
 export kink, ∂ₜkink, ∂ₓkink
 export oscillon, ∂ₜoscillon, ∂ₓoscillon
 export x_L, x_R, L
@@ -42,6 +43,7 @@ include("simulations/deformed_kink.jl")
 include("simulations/kink_antikink.jl")
 include("simulations/kink_kink.jl")
 include("simulations/kink_oscillon.jl")
+include("simulations/oscillon_scattering.jl")
 include("solutions/generalized_kink.jl")
 include("solutions/kink.jl")
 include("solutions/oscillon.jl")
