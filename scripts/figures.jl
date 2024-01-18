@@ -55,27 +55,32 @@ let l = 2, V = 0.6, v₀s = [0, 0.5], αs = [0, 0.25]
 end
 
 let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
-    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.1), sharey=true)
-    norm = mpl.colors.CenteredNorm()
-    cmap = "RdBu"
-    cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
+    fig, axs = plt.subplots(2, 2; figsize=(6.2, 5.5))
 
     Δ = v₀ * l / 2
-    for (ax, V) in zip(axs, Vs)
+    for (i, V) in enumerate(Vs)
         x = (-V * l):1e-3:(l + Δ + V * l)
         t = (-l):1e-3:l
         ϕ = oscillon.(t', x, V; l, v₀)
 
-        heatmap!(ax, x, t, ϕ; cmap=cmap, norm=norm)
-        ax.set_title("\$ V = $V \$")
-        ax.label_outer()
+        heatmap!(
+            axs[1, i], x, t, ϕ; cmap="RdBu", norm=mpl.colors.CenteredNorm(), colorbar=true
+        )
+        axs[1, i].set_title("\$ V = $V \$")
 
-        cb.set_array(ϕ)
-        cb.autoscale()
+        for t_plot in [0.0, 0.125, 0.25, 0.375]
+            idx = findfirst(t .>= t_plot)
+            axs[2, i].plot(x, ϕ[:, idx]; label="\$\\phi($t_plot, x)\$")
+        end
+
+        axs[2, i].set_xlabel(raw"$x$")
     end
-
-    fig.colorbar(cb; ax=axs[2])
     fig.tight_layout()
+
+    handles, labels = axs[2, 1].get_legend_handles_labels()
+    fig.subplots_adjust(; bottom=0.15)
+    fig.legend(handles, labels; loc="lower center", ncol=2, bbox_to_anchor=(0.5, 0))
+
     fig.savefig(plotsdir("oscillon.pdf"))
     fig
 end
