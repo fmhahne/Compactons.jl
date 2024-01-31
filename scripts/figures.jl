@@ -66,7 +66,7 @@ let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
         heatmap!(
             axs[1, i], x, t, ϕ; cmap="RdBu", norm=mpl.colors.CenteredNorm(), colorbar=true
         )
-        axs[1, i].set_title("\$ V = $V \$")
+        axs[1, i].set_title("\$ v = $V \$")
 
         for t_plot in [0.0, 0.125, 0.25, 0.375]
             idx = findfirst(t .>= t_plot)
