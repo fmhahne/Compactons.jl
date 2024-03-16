@@ -85,6 +85,32 @@ let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
     fig
 end
 
+let l = 1.0, v₀ = 0.6, Vs = [0.0, 0.4]
+    fig, axs = plt.subplots(1, 2; figsize=(6.2, 3.0), sharey=true)
+    norm = mpl.colors.CenteredNorm()
+    cmap = "RdBu"
+    cb = mpl.cm.ScalarMappable(; norm=norm, cmap=cmap)
+
+    Δ = v₀ * l / 2
+    for (ax, V) in zip(axs, Vs)
+        x = (-V * l):1e-3:(l + Δ + V * l)
+        t = (-l):1e-3:l
+        ϕ = oscillon.(t', x, V; l, v₀)
+
+        heatmap!(ax, x, t, ϕ; cmap=cmap, norm=norm)
+        ax.set_title("\$ v = $V \$")
+        ax.label_outer()
+
+        cb.set_array(ϕ)
+        cb.autoscale()
+    end
+
+    fig.colorbar(cb; ax=axs[2])
+    fig.tight_layout()
+    fig.savefig(plotsdir("oscillon-heatmaps.pdf"))
+    fig
+end
+
 let x = -0.1:1e-3:(π + 0.1)
     fig, ax = plt.subplots()
     ax.plot(x, kink.(x); label=raw"$\eta_K(x)$", color="black")

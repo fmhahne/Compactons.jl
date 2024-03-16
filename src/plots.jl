@@ -7,17 +7,18 @@ const mpl = PyPlot.matplotlib
 
 rcParams = PyDict(PyPlot.matplotlib."rcParams")
 
+rcParams["axes.linewidth"] = 0.5
 rcParams["figure.autolayout"] = true
-rcParams["figure.figsize"] = 4.5, 2.78
 rcParams["figure.dpi"] = 250
+rcParams["figure.figsize"] = 4.5, 2.78
 rcParams["font.size"] = 8
+rcParams["grid.linewidth"] = 0.5
 rcParams["legend.frameon"] = false
 rcParams["lines.linewidth"] = 1
-rcParams["axes.linewidth"] = 0.5
-rcParams["grid.linewidth"] = 0.5
+rcParams["savefig.transparent"] = true
 rcParams["xtick.major.width"] = 0.5
-rcParams["ytick.major.width"] = 0.5
 rcParams["xtick.minor.width"] = 0.5
+rcParams["ytick.major.width"] = 0.5
 rcParams["ytick.minor.width"] = 0.5
 
 axes_grid1 = pyimport("mpl_toolkits.axes_grid1")

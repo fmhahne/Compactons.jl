@@ -53,7 +53,7 @@ let l = 0.5, α = 0.0, v₀ = 0.0
         show_kink_borders!(ax)
 
         ax.set_xlim(xlim...)
-        ax.set_title("\$V = $V\$")
+        ax.set_title("\$v = $V\$")
         ax.label_outer()
 
         cb.set_array(χ)

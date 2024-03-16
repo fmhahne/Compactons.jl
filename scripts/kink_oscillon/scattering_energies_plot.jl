@@ -47,7 +47,7 @@ let l = 1.0, V = 0.75, ax = axs[1, 1]
     )
     ax.set_xlabel(raw"$v_0$")
     ax.set_ylabel(raw"$\alpha$")
-    ax.set_title("\$ l=$l \$, \$ V=$V \$")
+    ax.set_title("\$ l=$l \$, \$ v=$V \$")
 
     cb.set_array(image)
     cb.autoscale()
@@ -73,7 +73,7 @@ let l = 1.0, α = 0.0, ax = axs[1, 2]
         aspect="auto",
         norm=norm,
     )
-    ax.set_xlabel(raw"$V$")
+    ax.set_xlabel(raw"$v$")
     ax.set_ylabel(raw"$v_0$")
     ax.set_title("\$ l=$l \$, \$ \\alpha=$α \$")
 
@@ -101,7 +101,7 @@ let l = 1.0, v₀ = 0.0, ax = axs[1, 3]
         aspect="auto",
         norm=norm,
     )
-    ax.set_xlabel(raw"$V$")
+    ax.set_xlabel(raw"$v$")
     ax.set_ylabel(raw"$\alpha$")
     ax.set_title("\$ l=$l \$, \$ v_0=$v₀ \$")
 
@@ -131,7 +131,7 @@ let V = 0.75, α = 0.0, ax = axs[2, 1]
     )
     ax.set_xlabel(raw"$l$")
     ax.set_ylabel(raw"$v_0$")
-    ax.set_title("\$ V=$V \$, \$ \\alpha=$α \$")
+    ax.set_title("\$ v=$V \$, \$ \\alpha=$α \$")
 
     cb.set_array(image)
     cb.autoscale()
@@ -159,7 +159,7 @@ let V = 0.75, v₀ = 0.0, ax = axs[2, 2]
     )
     ax.set_xlabel(raw"$l$")
     ax.set_ylabel(raw"$\alpha$")
-    ax.set_title("\$ V=$V \$, \$ v_0=$v₀ \$")
+    ax.set_title("\$ v=$V \$, \$ v_0=$v₀ \$")
 
     cb.set_array(image)
     cb.autoscale()
@@ -186,7 +186,7 @@ let α = 0.00, v₀ = 0.0, ax = axs[2, 3]
         norm=norm,
     )
     ax.set_xlabel(raw"$l$")
-    ax.set_ylabel(raw"$V$")
+    ax.set_ylabel(raw"$v$")
     ax.set_title("\$ \\alpha=$α \$, \$ v_0=$v₀ \$")
 
     cb.set_array(image)

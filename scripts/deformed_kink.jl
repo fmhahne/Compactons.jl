@@ -2,6 +2,8 @@ using DrWatson
 using Compactons
 include(srcdir("plots.jl"))
 
+Base.mkpath(plotsdir("deformed_kink"))
+
 let ϵs = [-0.15, 0.15, -0.30, 0.30]
     fig, axs = plt.subplots(
         2, 2; figsize=(6.2, 5.8), sharex=true, sharey=true, layout="compressed"
@@ -15,16 +17,7 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
         data, _ = produce_or_load(datadir("deformed_kink"), DeformedKink(; ϵ), simulation)
         @unpack x, t, η, H = data
 
-        data, _ = produce_or_load(
-            datadir("deformed_kink", "collective_coordinates"),
-            CCDeformedKink(; ϵ),
-            collective_coordinates,
-        )
-        @unpack t, b = data
-
         heatmap!(ax, x, t, H; cmap=cmap, norm=norm)
-        ax.plot(π ./ (2 * b), t; color="lime")
-        ax.plot(-π ./ (2 * b), t; color="lime")
 
         ax.set_xlim(-5, 5)
         ax.set_title("\$\\epsilon = $ϵ \$")
@@ -35,9 +28,21 @@ let ϵs = [-0.15, 0.15, -0.30, 0.30]
     end
 
     fig.colorbar(cb; ax=axs[:], aspect=40)
-
-    Base.mkpath(plotsdir("deformed_kink"))
     fig.savefig(plotsdir("deformed_kink", "hamiltonian.pdf"))
+
+    for (ϵ, ax) in zip(ϵs, Iterators.flatten(eachrow(axs)))
+        data, _ = produce_or_load(
+            datadir("deformed_kink", "collective_coordinates"),
+            CCDeformedKink(; ϵ),
+            collective_coordinates,
+        )
+        @unpack t, b = data
+
+        ax.plot(π ./ (2 * b), t; color="lime")
+        ax.plot(-π ./ (2 * b), t; color="lime")
+    end
+
+    fig.savefig(plotsdir("deformed_kink", "hamiltonian_and_borders.pdf"))
     fig
 end
 
@@ -73,7 +78,6 @@ let ϵ = -0.2, sampling = 5
     )
     axs[2].set_title(raw"$\eta(t, x)$")
 
-    Base.mkpath(plotsdir("deformed_kink"))
     fig.savefig(plotsdir("deformed_kink", "zoom.pdf"))
     fig
 end
